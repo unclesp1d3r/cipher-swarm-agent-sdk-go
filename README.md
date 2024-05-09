@@ -157,6 +157,7 @@ You can override the default server globally using the `WithServerIndex` option 
 | # | Server | Variables |
 | - | ------ | --------- |
 | 0 | `https://{defaultHost}` | `defaultHost` (default is `www.example.com`) |
+| 1 | `http://{hostAddress}:{hostPort}` | `hostAddress` (default is `localhost`), `hostPort` (default is `8080`) |
 
 #### Example
 
@@ -172,7 +173,7 @@ import (
 
 func main() {
 	s := cipherswarmagentsdkgo.New(
-		cipherswarmagentsdkgo.WithServerIndex(0),
+		cipherswarmagentsdkgo.WithServerIndex(1),
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
@@ -194,6 +195,8 @@ func main() {
 
 Some of the server options above contain variables. If you want to set the values of those variables, the following options are provided for doing so:
  * `WithDefaultHost string`
+ * `WithHostAddress string`
+ * `WithHostPort string`
 
 ### Override Server URL Per-Client
 

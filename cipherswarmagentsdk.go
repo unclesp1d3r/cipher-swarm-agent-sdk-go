@@ -14,7 +14,10 @@ import (
 
 // ServerList contains the list of servers available to the SDK
 var ServerList = []string{
+	// The production server
 	"https://{defaultHost}",
+	// The insecure server
+	"http://{hostAddress}:{hostPort}",
 }
 
 // HTTPClient provides an interface for suplying the SDK with a custom HTTP client
@@ -123,6 +126,32 @@ func WithDefaultHost(defaultHost string) SDKOption {
 	}
 }
 
+// WithHostAddress allows setting the hostAddress variable for url substitution
+func WithHostAddress(hostAddress string) SDKOption {
+	return func(sdk *CipherSwarmAgentSDK) {
+		for idx := range sdk.sdkConfiguration.ServerDefaults {
+			if _, ok := sdk.sdkConfiguration.ServerDefaults[idx]["hostAddress"]; !ok {
+				continue
+			}
+
+			sdk.sdkConfiguration.ServerDefaults[idx]["hostAddress"] = fmt.Sprintf("%v", hostAddress)
+		}
+	}
+}
+
+// WithHostPort allows setting the hostPort variable for url substitution
+func WithHostPort(hostPort string) SDKOption {
+	return func(sdk *CipherSwarmAgentSDK) {
+		for idx := range sdk.sdkConfiguration.ServerDefaults {
+			if _, ok := sdk.sdkConfiguration.ServerDefaults[idx]["hostPort"]; !ok {
+				continue
+			}
+
+			sdk.sdkConfiguration.ServerDefaults[idx]["hostPort"] = fmt.Sprintf("%v", hostPort)
+		}
+	}
+}
+
 // WithClient allows the overriding of the default HTTP client used by the SDK
 func WithClient(client HTTPClient) SDKOption {
 	return func(sdk *CipherSwarmAgentSDK) {
@@ -165,12 +194,16 @@ func New(opts ...SDKOption) *CipherSwarmAgentSDK {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "v1",
-			SDKVersion:        "0.0.4",
+			SDKVersion:        "0.0.5",
 			GenVersion:        "2.326.3",
-			UserAgent:         "speakeasy-sdk/go 0.0.4 2.326.3 v1 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
+			UserAgent:         "speakeasy-sdk/go 0.0.5 2.326.3 v1 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
 			ServerDefaults: []map[string]string{
 				{
 					"defaultHost": "www.example.com",
+				},
+				{
+					"hostAddress": "localhost",
+					"hostPort":    "8080",
 				},
 			},
 			Hooks: hooks.New(),
