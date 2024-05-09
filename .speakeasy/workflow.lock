@@ -1,0 +1,14 @@
+speakeasyVersion: 1.285.2
+sources: {}
+targets: {}
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        CipherSwarm_agent_api:
+            inputs:
+                - location: https://raw.githubusercontent.com/unclesp1d3r/CipherSwarm/main/swagger/v1/swagger.json
+    targets:
+        golang-sdk:
+            target: go
+            source: CipherSwarm_agent_api

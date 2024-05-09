@@ -1,0 +1,13 @@
+# DeviceStatus
+
+
+## Fields
+
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `DeviceID`                                                                     | *int64*                                                                        | :heavy_check_mark:                                                             | N/A                                                                            |
+| `DeviceName`                                                                   | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `DeviceType`                                                                   | [components.TheTypeOfTheDevice](../../models/components/thetypeofthedevice.md) | :heavy_check_mark:                                                             | N/A                                                                            |
+| `Speed`                                                                        | *int64*                                                                        | :heavy_check_mark:                                                             | N/A                                                                            |
+| `Utilization`                                                                  | *int64*                                                                        | :heavy_check_mark:                                                             | N/A                                                                            |
+| `Temperature`                                                                  | *int64*                                                                        | :heavy_check_mark:                                                             | N/A                                                                            |
