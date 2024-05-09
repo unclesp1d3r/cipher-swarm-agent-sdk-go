@@ -20,7 +20,7 @@ It has been generated successfully based on your OpenAPI spec. However, it is no
 ## SDK Installation
 
 ```bash
-go get github.com/unclesp1d3r/cipherswarm-agent-sdk
+go get github.com/unclesp1d3r/cipherswarm-agent-sdk-go
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -34,14 +34,14 @@ package main
 
 import (
 	"context"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"log"
 )
 
 func main() {
-	s := cipherswarmagentsdk.New(
-		cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	s := cipherswarmagentsdkgo.New(
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
 	var id int64 = 969902
@@ -113,15 +113,15 @@ package main
 import (
 	"context"
 	"errors"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/sdkerrors"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/sdkerrors"
 	"log"
 )
 
 func main() {
-	s := cipherswarmagentsdk.New(
-		cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	s := cipherswarmagentsdkgo.New(
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
 	var id int64 = 969902
@@ -165,15 +165,15 @@ package main
 
 import (
 	"context"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"log"
 )
 
 func main() {
-	s := cipherswarmagentsdk.New(
-		cipherswarmagentsdk.WithServerIndex(0),
-		cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	s := cipherswarmagentsdkgo.New(
+		cipherswarmagentsdkgo.WithServerIndex(0),
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
 	var id int64 = 969902
@@ -203,15 +203,15 @@ package main
 
 import (
 	"context"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"log"
 )
 
 func main() {
-	s := cipherswarmagentsdk.New(
-		cipherswarmagentsdk.WithServerURL("https://{defaultHost}"),
-		cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	s := cipherswarmagentsdkgo.New(
+		cipherswarmagentsdkgo.WithServerURL("https://{defaultHost}"),
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
 	var id int64 = 969902
@@ -275,13 +275,13 @@ package main
 
 import (
 	"context"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"log"
 )
 
 func main() {
-	s := cipherswarmagentsdk.New(
-		cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	s := cipherswarmagentsdkgo.New(
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
 	var id int64 = 969902

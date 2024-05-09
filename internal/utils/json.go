@@ -13,7 +13,7 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/types"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
 
 	"github.com/ericlagergren/decimal"
 )

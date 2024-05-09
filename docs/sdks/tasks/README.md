@@ -25,15 +25,15 @@ Request a new task from the server, if available.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
 
@@ -73,15 +73,15 @@ Request the task information from the server.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     var id int64 = 576214
@@ -122,16 +122,16 @@ Submit a cracked hash result for a task.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/types"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     var id int64 = 150559
@@ -179,16 +179,16 @@ Submit a status update for a task. This includes the status of the current guess
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/types"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     var id int64 = 584703
@@ -272,15 +272,15 @@ Accept an offered task from the server.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     var id int64 = 262707
@@ -322,15 +322,15 @@ Notify the server that the task is exhausted. This will mark the task as complet
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     var id int64 = 461909
@@ -371,15 +371,15 @@ Abandon a task. This will mark the task as abandoned. Usually used when the clie
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     var id int64 = 446205

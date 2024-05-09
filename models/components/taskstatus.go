@@ -3,7 +3,7 @@
 package components
 
 import (
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/internal/utils"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/utils"
 	"time"
 )
 

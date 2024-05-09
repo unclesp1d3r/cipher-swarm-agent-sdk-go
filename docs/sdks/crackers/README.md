@@ -19,20 +19,20 @@ Check for a cracker update, based on the operating system and version.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var operatingSystem *string = cipherswarmagentsdk.String("<value>")
+    var operatingSystem *string = cipherswarmagentsdkgo.String("<value>")
 
-    var version *string = cipherswarmagentsdk.String("<value>")
+    var version *string = cipherswarmagentsdkgo.String("<value>")
     
     ctx := context.Background()
     res, err := s.Crackers.CheckForCrackerUpdate(ctx, operatingSystem, version)

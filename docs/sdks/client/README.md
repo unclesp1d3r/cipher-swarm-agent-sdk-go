@@ -20,15 +20,15 @@ Returns the configuration for the agent.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
 
@@ -68,15 +68,15 @@ Authenticates the client. This is used to verify that the client is able to conn
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
 

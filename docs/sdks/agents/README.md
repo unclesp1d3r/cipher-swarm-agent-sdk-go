@@ -23,15 +23,15 @@ Returns an agent
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     var id int64 = 969902
@@ -73,15 +73,15 @@ Updates an agent
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     var id int64 = 828119
@@ -134,15 +134,15 @@ Send a heartbeat for an agent to keep it alive.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     var id int64 = 397037
@@ -184,15 +184,15 @@ Returns the last benchmark date for an agent
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     var id int64 = 714635
@@ -234,15 +234,15 @@ Submit a benchmark for an agent
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
 )
 
 func main() {
-    s := cipherswarmagentsdk.New(
-        cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     var id int64 = 946448

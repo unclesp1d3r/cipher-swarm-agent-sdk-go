@@ -3,7 +3,7 @@
 package operations
 
 import (
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 )
 
 type CheckForCrackerUpdateRequest struct {

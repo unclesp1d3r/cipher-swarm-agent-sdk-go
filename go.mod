@@ -1,4 +1,4 @@
-module github.com/unclesp1d3r/cipherswarm-agent-sdk
+module github.com/unclesp1d3r/cipherswarm-agent-sdk-go
 
 go 1.20
 

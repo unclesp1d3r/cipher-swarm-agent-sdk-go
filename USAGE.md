@@ -4,14 +4,14 @@ package main
 
 import (
 	"context"
-	cipherswarmagentsdk "github.com/unclesp1d3r/cipherswarm-agent-sdk"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk/models/components"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"log"
 )
 
 func main() {
-	s := cipherswarmagentsdk.New(
-		cipherswarmagentsdk.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	s := cipherswarmagentsdkgo.New(
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
 	var id int64 = 969902
