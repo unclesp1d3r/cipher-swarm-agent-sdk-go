@@ -25,23 +25,3 @@ func (o *UpdateAgentRequest) GetAgentUpdate() *components.AgentUpdate {
 	}
 	return o.AgentUpdate
 }
-
-type UpdateAgentResponse struct {
-	HTTPMeta components.HTTPMetadata
-	// successful
-	Agent *components.Agent
-}
-
-func (o *UpdateAgentResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
-		return components.HTTPMetadata{}
-	}
-	return o.HTTPMeta
-}
-
-func (o *UpdateAgentResponse) GetAgent() *components.Agent {
-	if o == nil {
-		return nil
-	}
-	return o.Agent
-}

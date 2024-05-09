@@ -28,12 +28,4 @@ func (o *SubmitStatusRequest) GetTaskStatus() components.TaskStatus {
 }
 
 type SubmitStatusResponse struct {
-	HTTPMeta components.HTTPMetadata
-}
-
-func (o *SubmitStatusResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
-		return components.HTTPMetadata{}
-	}
-	return o.HTTPMeta
 }

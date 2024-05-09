@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/cenkalti/backoff/v4"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/hooks"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/utils"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
@@ -28,7 +29,7 @@ func newAttacks(sdkConfig sdkConfiguration) *Attacks {
 
 // ShowAttack - show attack
 // Returns an attack by id. This is used to get the details of an attack.
-func (s *Attacks) ShowAttack(ctx context.Context, id int64) (*operations.ShowAttackResponse, error) {
+func (s *Attacks) ShowAttack(ctx context.Context, id int64, opts ...operations.Option) (*components.Attack, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "showAttack",
@@ -39,6 +40,16 @@ func (s *Attacks) ShowAttack(ctx context.Context, id int64) (*operations.ShowAtt
 		ID: id,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/attacks/{id}", request, nil)
 	if err != nil {
@@ -56,40 +67,64 @@ func (s *Attacks) ShowAttack(ctx context.Context, id int64) (*operations.ShowAtt
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"401", "404", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
-	}
-
-	res := &operations.ShowAttackResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
 	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
@@ -108,7 +143,7 @@ func (s *Attacks) ShowAttack(ctx context.Context, id int64) (*operations.ShowAtt
 				return nil, err
 			}
 
-			res.Attack = &out
+			return &out, nil
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -133,13 +168,11 @@ func (s *Attacks) ShowAttack(ctx context.Context, id int64) (*operations.ShowAtt
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
-
-	return res, nil
 }
 
 // HashListAttack - Get the hash list
 // Returns the hash list for an attack.
-func (s *Attacks) HashListAttack(ctx context.Context, id int64) (*operations.HashListAttackResponse, error) {
+func (s *Attacks) HashListAttack(ctx context.Context, id int64, opts ...operations.Option) (io.ReadCloser, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "hashListAttack",
@@ -150,6 +183,16 @@ func (s *Attacks) HashListAttack(ctx context.Context, id int64) (*operations.Has
 		ID: id,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/attacks/{id}/hash_list", request, nil)
 	if err != nil {
@@ -167,28 +210,59 @@ func (s *Attacks) HashListAttack(ctx context.Context, id int64) (*operations.Has
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"404", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
@@ -196,17 +270,8 @@ func (s *Attacks) HashListAttack(ctx context.Context, id int64) (*operations.Has
 		}
 	}
 
-	res := &operations.HashListAttackResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
-	}
-
 	if (httpRes.StatusCode == 200) && utils.MatchContentType(httpRes.Header.Get("Content-Type"), `text/plain`) {
-		res.Stream = httpRes.Body
-
-		return res, nil
+		return httpRes.Body, nil
 	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
@@ -231,6 +296,4 @@ func (s *Attacks) HashListAttack(ctx context.Context, id int64) (*operations.Has
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
-
-	return res, nil
 }

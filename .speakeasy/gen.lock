@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 11fa8266-8454-49fd-ba7b-d5f8744980cc
 management:
-  docChecksum: dcc5dcf3032aed0b4f995f86038b134b
+  docChecksum: 1428f0c941bd107ee0f1028abbd88d54
   docVersion: v1
-  speakeasyVersion: 1.285.2
+  speakeasyVersion: 1.285.3
   generationVersion: 2.326.3
-  releaseVersion: 0.0.5
-  configChecksum: e053d03d5c5eb14be3d36050113a7267
+  releaseVersion: 0.1.0
+  configChecksum: 68539fb2c98c4bf12cf42a630bb7b696
 features:
   go:
     additionalDependencies: 0.1.0
@@ -21,6 +21,7 @@ features:
     intellisenseMarkdownSupport: 0.1.0
     nullables: 0.1.0
     responseFormat: 0.1.1
+    retries: 2.82.2
     sdkHooks: 0.1.0
 generatedFiles:
   - agents.go
@@ -46,26 +47,8 @@ generatedFiles:
   - internal/utils/retries.go
   - internal/utils/security.go
   - internal/utils/utils.go
-  - /models/operations/showagent.go
-  - /models/operations/updateagent.go
-  - /models/operations/heartbeatagent.go
-  - /models/operations/lastbenchmarkagent.go
-  - /models/operations/submitbenchmarkagent.go
-  - /models/operations/showattack.go
-  - /models/operations/hashlistattack.go
-  - /models/operations/checkforcrackerupdate.go
-  - /models/operations/newtask.go
-  - /models/operations/showtask.go
-  - /models/operations/submitcrack.go
-  - /models/operations/submitstatus.go
-  - /models/operations/accepttask.go
-  - /models/operations/exhaustedtask.go
-  - /models/operations/abandontask.go
-  - /models/operations/configuration.go
-  - /models/operations/authenticate.go
   - /models/components/agent.go
   - /models/components/advancedagentconfiguration.go
-  - /models/components/httpmetadata.go
   - /models/components/agentupdate.go
   - /models/components/agentlastbenchmark.go
   - /models/components/hashcatbenchmark.go
@@ -82,40 +65,22 @@ generatedFiles:
   - /models/components/security.go
   - /models/sdkerrors/errorobject.go
   - /models/sdkerrors/stateerror.go
-  - docs/models/operations/showagentrequest.md
-  - docs/models/operations/showagentresponse.md
-  - docs/models/operations/updateagentrequest.md
-  - docs/models/operations/updateagentresponse.md
-  - docs/models/operations/heartbeatagentrequest.md
-  - docs/models/operations/heartbeatagentresponse.md
-  - docs/models/operations/lastbenchmarkagentrequest.md
-  - docs/models/operations/lastbenchmarkagentresponse.md
-  - docs/models/operations/submitbenchmarkagentrequest.md
-  - docs/models/operations/submitbenchmarkagentresponse.md
-  - docs/models/operations/showattackrequest.md
-  - docs/models/operations/showattackresponse.md
-  - docs/models/operations/hashlistattackrequest.md
-  - docs/models/operations/hashlistattackresponse.md
-  - docs/models/operations/checkforcrackerupdaterequest.md
-  - docs/models/operations/checkforcrackerupdateresponse.md
-  - docs/models/operations/newtaskresponse.md
-  - docs/models/operations/showtaskrequest.md
-  - docs/models/operations/showtaskresponse.md
-  - docs/models/operations/submitcrackrequest.md
-  - docs/models/operations/submitcrackresponse.md
-  - docs/models/operations/submitstatusrequest.md
-  - docs/models/operations/submitstatusresponse.md
-  - docs/models/operations/accepttaskrequest.md
-  - docs/models/operations/accepttaskresponse.md
-  - docs/models/operations/exhaustedtaskrequest.md
-  - docs/models/operations/exhaustedtaskresponse.md
-  - docs/models/operations/abandontaskrequest.md
-  - docs/models/operations/abandontaskresponse.md
-  - docs/models/operations/configurationresponse.md
-  - docs/models/operations/authenticateresponse.md
+  - /models/operations/showagent.go
+  - /models/operations/updateagent.go
+  - /models/operations/heartbeatagent.go
+  - /models/operations/lastbenchmarkagent.go
+  - /models/operations/submitbenchmarkagent.go
+  - /models/operations/showattack.go
+  - /models/operations/hashlistattack.go
+  - /models/operations/checkforcrackerupdate.go
+  - /models/operations/showtask.go
+  - /models/operations/submitcrack.go
+  - /models/operations/submitstatus.go
+  - /models/operations/accepttask.go
+  - /models/operations/exhaustedtask.go
+  - /models/operations/abandontask.go
   - docs/models/components/agent.md
   - docs/models/components/advancedagentconfiguration.md
-  - docs/models/components/httpmetadata.md
   - docs/models/components/agentupdate.md
   - docs/models/components/agentlastbenchmark.md
   - docs/models/components/hashcatbenchmark.md
@@ -133,12 +98,35 @@ generatedFiles:
   - docs/models/components/security.md
   - docs/models/sdkerrors/errorobject.md
   - docs/models/sdkerrors/stateerror.md
+  - docs/models/operations/showagentrequest.md
+  - docs/models/operations/updateagentrequest.md
+  - docs/models/operations/heartbeatagentrequest.md
+  - docs/models/operations/heartbeatagentresponse.md
+  - docs/models/operations/lastbenchmarkagentrequest.md
+  - docs/models/operations/submitbenchmarkagentrequest.md
+  - docs/models/operations/submitbenchmarkagentresponse.md
+  - docs/models/operations/showattackrequest.md
+  - docs/models/operations/hashlistattackrequest.md
+  - docs/models/operations/checkforcrackerupdaterequest.md
+  - docs/models/operations/showtaskrequest.md
+  - docs/models/operations/submitcrackrequest.md
+  - docs/models/operations/submitcrackresponse.md
+  - docs/models/operations/submitstatusrequest.md
+  - docs/models/operations/submitstatusresponse.md
+  - docs/models/operations/accepttaskrequest.md
+  - docs/models/operations/accepttaskresponse.md
+  - docs/models/operations/exhaustedtaskrequest.md
+  - docs/models/operations/exhaustedtaskresponse.md
+  - docs/models/operations/abandontaskrequest.md
+  - docs/models/operations/abandontaskresponse.md
   - docs/sdks/cipherswarmagentsdk/README.md
+  - docs/models/operations/option.md
   - docs/sdks/agents/README.md
   - docs/sdks/attacks/README.md
   - docs/sdks/crackers/README.md
   - docs/sdks/tasks/README.md
   - docs/sdks/client/README.md
   - USAGE.md
+  - models/operations/options.go
   - .gitattributes
   - internal/hooks/hooks.go

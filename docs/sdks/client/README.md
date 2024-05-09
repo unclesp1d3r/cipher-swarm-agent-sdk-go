@@ -38,7 +38,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.AgentConfiguration != nil {
+    if res != nil {
         // handle response
     }
 }
@@ -46,14 +46,15 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 
 ### Response
 
-**[*operations.ConfigurationResponse](../../models/operations/configurationresponse.md), error**
+**[*components.AgentConfiguration](../../models/components/agentconfiguration.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |
@@ -86,7 +87,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.AuthenticationResult != nil {
+    if res != nil {
         // handle response
     }
 }
@@ -94,14 +95,15 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 
 ### Response
 
-**[*operations.AuthenticateResponse](../../models/operations/authenticateresponse.md), error**
+**[*components.AuthenticationResult](../../models/components/authenticationresult.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |

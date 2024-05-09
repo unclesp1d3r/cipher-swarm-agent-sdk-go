@@ -2,10 +2,6 @@
 
 package operations
 
-import (
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
-)
-
 type CheckForCrackerUpdateRequest struct {
 	// operating_system
 	OperatingSystem *string `queryParam:"style=form,explode=true,name=operating_system"`
@@ -25,24 +21,4 @@ func (o *CheckForCrackerUpdateRequest) GetVersion() *string {
 		return nil
 	}
 	return o.Version
-}
-
-type CheckForCrackerUpdateResponse struct {
-	HTTPMeta components.HTTPMetadata
-	// operating system not found
-	CrackerUpdate *components.CrackerUpdate
-}
-
-func (o *CheckForCrackerUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
-		return components.HTTPMetadata{}
-	}
-	return o.HTTPMeta
-}
-
-func (o *CheckForCrackerUpdateResponse) GetCrackerUpdate() *components.CrackerUpdate {
-	if o == nil {
-		return nil
-	}
-	return o.CrackerUpdate
 }

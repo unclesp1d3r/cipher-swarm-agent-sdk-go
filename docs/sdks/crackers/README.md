@@ -39,7 +39,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.CrackerUpdate != nil {
+    if res != nil {
         // handle response
     }
 }
@@ -47,16 +47,17 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
-| `operatingSystem`                                     | **string*                                             | :heavy_minus_sign:                                    | operating_system                                      |
-| `version`                                             | **string*                                             | :heavy_minus_sign:                                    | version                                               |
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `operatingSystem`                                        | **string*                                                | :heavy_minus_sign:                                       | operating_system                                         |
+| `version`                                                | **string*                                                | :heavy_minus_sign:                                       | version                                                  |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 
 ### Response
 
-**[*operations.CheckForCrackerUpdateResponse](../../models/operations/checkforcrackerupdateresponse.md), error**
+**[*components.CrackerUpdate](../../models/components/crackerupdate.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 400                   | application/json      |

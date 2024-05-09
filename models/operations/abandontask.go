@@ -2,10 +2,6 @@
 
 package operations
 
-import (
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
-)
-
 type AbandonTaskRequest struct {
 	// id
 	ID int64 `pathParam:"style=simple,explode=false,name=id"`
@@ -19,12 +15,4 @@ func (o *AbandonTaskRequest) GetID() int64 {
 }
 
 type AbandonTaskResponse struct {
-	HTTPMeta components.HTTPMetadata
-}
-
-func (o *AbandonTaskResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
-		return components.HTTPMetadata{}
-	}
-	return o.HTTPMeta
 }

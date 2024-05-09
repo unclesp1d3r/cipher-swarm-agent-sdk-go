@@ -7,10 +7,10 @@
     </a>
 </div>
 
-
 ## 🏗 **Welcome to your new SDK!** 🏗
 
 It has been generated successfully based on your OpenAPI spec. However, it is not yet ready for production use. Here are some next steps:
+
 - [ ] 🛠 Make your SDK feel handcrafted by [customizing it](https://www.speakeasyapi.dev/docs/customize-sdks)
 - [ ] ♻️ Refine your SDK quickly by iterating locally with the [Speakeasy CLI](https://github.com/speakeasy-api/speakeasy)
 - [ ] 🎁 Publish your SDK to package managers by [configuring automatic publishing](https://www.speakeasyapi.dev/docs/advanced-setup/publish-sdks)
@@ -51,7 +51,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Agent != nil {
+	if res != nil {
 		// handle response
 	}
 }
@@ -184,7 +184,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Agent != nil {
+	if res != nil {
 		// handle response
 	}
 }
@@ -224,7 +224,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Agent != nil {
+	if res != nil {
 		// handle response
 	}
 }
@@ -294,7 +294,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Agent != nil {
+	if res != nil {
 		// handle response
 	}
 }
@@ -307,6 +307,96 @@ func main() {
 
 
 <!-- End Special Types [types] -->
+
+<!-- Start Retries [retries] -->
+## Retries
+
+Some of the endpoints in this SDK support retries. If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API. However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
+
+To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call by using the `WithRetries` option:
+```go
+package main
+
+import (
+	"context"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/utils"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	"log"
+	"models/operations"
+)
+
+func main() {
+	s := cipherswarmagentsdkgo.New(
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	)
+
+	var id int64 = 969902
+
+	ctx := context.Background()
+	res, err := s.Agents.ShowAgent(ctx, id, operations.WithRetries(
+		utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 1,
+				MaxInterval:     50,
+				Exponent:        1.1,
+				MaxElapsedTime:  100,
+			},
+			RetryConnectionErrors: false,
+		}))
+	if err != nil {
+		log.Fatal(err)
+	}
+	if res != nil {
+		// handle response
+	}
+}
+
+```
+
+If you'd like to override the default retry strategy for all operations that support retries, you can use the `WithRetryConfig` option at SDK initialization:
+```go
+package main
+
+import (
+	"context"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/utils"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	"log"
+)
+
+func main() {
+	s := cipherswarmagentsdkgo.New(
+		cipherswarmagentsdkgo.WithRetryConfig(
+			utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 1,
+					MaxInterval:     50,
+					Exponent:        1.1,
+					MaxElapsedTime:  100,
+				},
+				RetryConnectionErrors: false,
+			}),
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	)
+
+	var id int64 = 969902
+
+	ctx := context.Background()
+	res, err := s.Agents.ShowAgent(ctx, id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if res != nil {
+		// handle response
+	}
+}
+
+```
+<!-- End Retries [retries] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 

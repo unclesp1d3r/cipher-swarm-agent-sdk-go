@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/cenkalti/backoff/v4"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/hooks"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/utils"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
@@ -29,13 +30,23 @@ func newTasks(sdkConfig sdkConfiguration) *Tasks {
 
 // NewTask - Request a new task from server
 // Request a new task from the server, if available.
-func (s *Tasks) NewTask(ctx context.Context) (*operations.NewTaskResponse, error) {
+func (s *Tasks) NewTask(ctx context.Context, opts ...operations.Option) (*components.Task, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "newTask",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := url.JoinPath(baseURL, "/api/v1/client/tasks/new")
 	if err != nil {
@@ -53,40 +64,64 @@ func (s *Tasks) NewTask(ctx context.Context) (*operations.NewTaskResponse, error
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"401", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
-	}
-
-	res := &operations.NewTaskResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
 	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
@@ -105,7 +140,7 @@ func (s *Tasks) NewTask(ctx context.Context) (*operations.NewTaskResponse, error
 				return nil, err
 			}
 
-			res.Task = &out
+			return &out, nil
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -119,13 +154,11 @@ func (s *Tasks) NewTask(ctx context.Context) (*operations.NewTaskResponse, error
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
-
-	return res, nil
 }
 
 // ShowTask - Request the task information
 // Request the task information from the server.
-func (s *Tasks) ShowTask(ctx context.Context, id int64) (*operations.ShowTaskResponse, error) {
+func (s *Tasks) ShowTask(ctx context.Context, id int64, opts ...operations.Option) (*components.Task, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "showTask",
@@ -136,6 +169,16 @@ func (s *Tasks) ShowTask(ctx context.Context, id int64) (*operations.ShowTaskRes
 		ID: id,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/tasks/{id}", request, nil)
 	if err != nil {
@@ -153,40 +196,64 @@ func (s *Tasks) ShowTask(ctx context.Context, id int64) (*operations.ShowTaskRes
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"401", "404", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
-	}
-
-	res := &operations.ShowTaskResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
 	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
@@ -205,7 +272,7 @@ func (s *Tasks) ShowTask(ctx context.Context, id int64) (*operations.ShowTaskRes
 				return nil, err
 			}
 
-			res.Task = &out
+			return &out, nil
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -220,13 +287,11 @@ func (s *Tasks) ShowTask(ctx context.Context, id int64) (*operations.ShowTaskRes
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
-
-	return res, nil
 }
 
 // SubmitCrack - Submit a cracked hash result for a task
 // Submit a cracked hash result for a task.
-func (s *Tasks) SubmitCrack(ctx context.Context, id int64, hashcatResult *components.HashcatResult) (*operations.SubmitCrackResponse, error) {
+func (s *Tasks) SubmitCrack(ctx context.Context, id int64, hashcatResult *components.HashcatResult, opts ...operations.Option) (*operations.SubmitCrackResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "submitCrack",
@@ -238,6 +303,16 @@ func (s *Tasks) SubmitCrack(ctx context.Context, id int64, hashcatResult *compon
 		HashcatResult: hashcatResult,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/tasks/{id}/submit_crack", request, nil)
 	if err != nil {
@@ -261,28 +336,59 @@ func (s *Tasks) SubmitCrack(ctx context.Context, id int64, hashcatResult *compon
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"404", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
@@ -290,12 +396,7 @@ func (s *Tasks) SubmitCrack(ctx context.Context, id int64, hashcatResult *compon
 		}
 	}
 
-	res := &operations.SubmitCrackResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
-	}
+	res := &operations.SubmitCrackResponse{}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
@@ -325,7 +426,7 @@ func (s *Tasks) SubmitCrack(ctx context.Context, id int64, hashcatResult *compon
 
 // SubmitStatus - Submit a status update for a task
 // Submit a status update for a task. This includes the status of the current guess and the devices.
-func (s *Tasks) SubmitStatus(ctx context.Context, id int64, taskStatus components.TaskStatus) (*operations.SubmitStatusResponse, error) {
+func (s *Tasks) SubmitStatus(ctx context.Context, id int64, taskStatus components.TaskStatus, opts ...operations.Option) (*operations.SubmitStatusResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "submitStatus",
@@ -337,6 +438,16 @@ func (s *Tasks) SubmitStatus(ctx context.Context, id int64, taskStatus component
 		TaskStatus: taskStatus,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/tasks/{id}/submit_status", request, nil)
 	if err != nil {
@@ -360,28 +471,59 @@ func (s *Tasks) SubmitStatus(ctx context.Context, id int64, taskStatus component
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"401", "404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
@@ -389,12 +531,7 @@ func (s *Tasks) SubmitStatus(ctx context.Context, id int64, taskStatus component
 		}
 	}
 
-	res := &operations.SubmitStatusResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
-	}
+	res := &operations.SubmitStatusResponse{}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
@@ -424,7 +561,7 @@ func (s *Tasks) SubmitStatus(ctx context.Context, id int64, taskStatus component
 
 // AcceptTask - Accept Task
 // Accept an offered task from the server.
-func (s *Tasks) AcceptTask(ctx context.Context, id int64) (*operations.AcceptTaskResponse, error) {
+func (s *Tasks) AcceptTask(ctx context.Context, id int64, opts ...operations.Option) (*operations.AcceptTaskResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "acceptTask",
@@ -435,6 +572,16 @@ func (s *Tasks) AcceptTask(ctx context.Context, id int64) (*operations.AcceptTas
 		ID: id,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/tasks/{id}/accept_task", request, nil)
 	if err != nil {
@@ -452,28 +599,59 @@ func (s *Tasks) AcceptTask(ctx context.Context, id int64) (*operations.AcceptTas
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
@@ -481,12 +659,7 @@ func (s *Tasks) AcceptTask(ctx context.Context, id int64) (*operations.AcceptTas
 		}
 	}
 
-	res := &operations.AcceptTaskResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
-	}
+	res := &operations.AcceptTaskResponse{}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
@@ -524,7 +697,7 @@ func (s *Tasks) AcceptTask(ctx context.Context, id int64) (*operations.AcceptTas
 
 // ExhaustedTask - Notify of Exhausted Task
 // Notify the server that the task is exhausted. This will mark the task as completed.
-func (s *Tasks) ExhaustedTask(ctx context.Context, id int64) (*operations.ExhaustedTaskResponse, error) {
+func (s *Tasks) ExhaustedTask(ctx context.Context, id int64, opts ...operations.Option) (*operations.ExhaustedTaskResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "exhaustedTask",
@@ -535,6 +708,16 @@ func (s *Tasks) ExhaustedTask(ctx context.Context, id int64) (*operations.Exhaus
 		ID: id,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/tasks/{id}/exhausted", request, nil)
 	if err != nil {
@@ -552,28 +735,59 @@ func (s *Tasks) ExhaustedTask(ctx context.Context, id int64) (*operations.Exhaus
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"401", "404", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
@@ -581,12 +795,7 @@ func (s *Tasks) ExhaustedTask(ctx context.Context, id int64) (*operations.Exhaus
 		}
 	}
 
-	res := &operations.ExhaustedTaskResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
-	}
+	res := &operations.ExhaustedTaskResponse{}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
@@ -614,7 +823,7 @@ func (s *Tasks) ExhaustedTask(ctx context.Context, id int64) (*operations.Exhaus
 
 // AbandonTask - Abandon Task
 // Abandon a task. This will mark the task as abandoned. Usually used when the client is unable to complete the task.
-func (s *Tasks) AbandonTask(ctx context.Context, id int64) (*operations.AbandonTaskResponse, error) {
+func (s *Tasks) AbandonTask(ctx context.Context, id int64, opts ...operations.Option) (*operations.AbandonTaskResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "abandonTask",
@@ -625,6 +834,16 @@ func (s *Tasks) AbandonTask(ctx context.Context, id int64) (*operations.AbandonT
 		ID: id,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/tasks/{id}/abandon", request, nil)
 	if err != nil {
@@ -642,28 +861,59 @@ func (s *Tasks) AbandonTask(ctx context.Context, id int64) (*operations.AbandonT
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"401", "404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
@@ -671,12 +921,7 @@ func (s *Tasks) AbandonTask(ctx context.Context, id int64) (*operations.AbandonT
 		}
 	}
 
-	res := &operations.AbandonTaskResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
-	}
+	res := &operations.AbandonTaskResponse{}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {

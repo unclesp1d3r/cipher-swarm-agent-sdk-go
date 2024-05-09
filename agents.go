@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/cenkalti/backoff/v4"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/hooks"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/utils"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
@@ -28,7 +29,7 @@ func newAgents(sdkConfig sdkConfiguration) *Agents {
 
 // ShowAgent - Gets an instance of an agent
 // Returns an agent
-func (s *Agents) ShowAgent(ctx context.Context, id int64) (*operations.ShowAgentResponse, error) {
+func (s *Agents) ShowAgent(ctx context.Context, id int64, opts ...operations.Option) (*components.Agent, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "showAgent",
@@ -39,6 +40,16 @@ func (s *Agents) ShowAgent(ctx context.Context, id int64) (*operations.ShowAgent
 		ID: id,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/agents/{id}", request, nil)
 	if err != nil {
@@ -56,40 +67,64 @@ func (s *Agents) ShowAgent(ctx context.Context, id int64) (*operations.ShowAgent
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"401", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
-	}
-
-	res := &operations.ShowAgentResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
 	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
@@ -108,7 +143,7 @@ func (s *Agents) ShowAgent(ctx context.Context, id int64) (*operations.ShowAgent
 				return nil, err
 			}
 
-			res.Agent = &out
+			return &out, nil
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -131,13 +166,11 @@ func (s *Agents) ShowAgent(ctx context.Context, id int64) (*operations.ShowAgent
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
-
-	return res, nil
 }
 
 // UpdateAgent - Updates the agent
 // Updates an agent
-func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *components.AgentUpdate) (*operations.UpdateAgentResponse, error) {
+func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *components.AgentUpdate, opts ...operations.Option) (*components.Agent, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "updateAgent",
@@ -149,6 +182,16 @@ func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *compone
 		AgentUpdate: agentUpdate,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/agents/{id}", request, nil)
 	if err != nil {
@@ -172,40 +215,64 @@ func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *compone
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"401", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
-	}
-
-	res := &operations.UpdateAgentResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
 	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
@@ -224,7 +291,7 @@ func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *compone
 				return nil, err
 			}
 
-			res.Agent = &out
+			return &out, nil
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -247,13 +314,11 @@ func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *compone
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
-
-	return res, nil
 }
 
 // HeartbeatAgent - Send a heartbeat for an agent
 // Send a heartbeat for an agent to keep it alive.
-func (s *Agents) HeartbeatAgent(ctx context.Context, id int64) (*operations.HeartbeatAgentResponse, error) {
+func (s *Agents) HeartbeatAgent(ctx context.Context, id int64, opts ...operations.Option) (*operations.HeartbeatAgentResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "heartbeatAgent",
@@ -264,6 +329,16 @@ func (s *Agents) HeartbeatAgent(ctx context.Context, id int64) (*operations.Hear
 		ID: id,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/agents/{id}/heartbeat", request, nil)
 	if err != nil {
@@ -281,28 +356,59 @@ func (s *Agents) HeartbeatAgent(ctx context.Context, id int64) (*operations.Hear
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"401", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
@@ -310,12 +416,7 @@ func (s *Agents) HeartbeatAgent(ctx context.Context, id int64) (*operations.Hear
 		}
 	}
 
-	res := &operations.HeartbeatAgentResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
-	}
+	res := &operations.HeartbeatAgentResponse{}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
@@ -351,7 +452,7 @@ func (s *Agents) HeartbeatAgent(ctx context.Context, id int64) (*operations.Hear
 
 // LastBenchmarkAgent - last_benchmark agent
 // Returns the last benchmark date for an agent
-func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64) (*operations.LastBenchmarkAgentResponse, error) {
+func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64, opts ...operations.Option) (*components.AgentLastBenchmark, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "lastBenchmarkAgent",
@@ -362,6 +463,16 @@ func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64) (*operations.
 		ID: id,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/agents/{id}/last_benchmark", request, nil)
 	if err != nil {
@@ -379,40 +490,64 @@ func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64) (*operations.
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"401", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
 			return nil, err
 		}
-	}
-
-	res := &operations.LastBenchmarkAgentResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
 	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
@@ -431,7 +566,7 @@ func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64) (*operations.
 				return nil, err
 			}
 
-			res.AgentLastBenchmark = &out
+			return &out, nil
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -454,13 +589,11 @@ func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64) (*operations.
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
-
-	return res, nil
 }
 
 // SubmitBenchmarkAgent - submit_benchmark agent
 // Submit a benchmark for an agent
-func (s *Agents) SubmitBenchmarkAgent(ctx context.Context, id int64, requestBody []components.HashcatBenchmark) (*operations.SubmitBenchmarkAgentResponse, error) {
+func (s *Agents) SubmitBenchmarkAgent(ctx context.Context, id int64, requestBody []components.HashcatBenchmark, opts ...operations.Option) (*operations.SubmitBenchmarkAgentResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "submitBenchmarkAgent",
@@ -472,6 +605,16 @@ func (s *Agents) SubmitBenchmarkAgent(ctx context.Context, id int64, requestBody
 		RequestBody: requestBody,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionRetries,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/client/agents/{id}/submit_benchmark", request, nil)
 	if err != nil {
@@ -495,28 +638,59 @@ func (s *Agents) SubmitBenchmarkAgent(ctx context.Context, id int64, requestBody
 		return nil, err
 	}
 
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
+	globalRetryConfig := s.sdkConfiguration.RetryConfig
+	retryConfig := o.Retries
+	if retryConfig == nil {
+		if globalRetryConfig == nil {
+			retryConfig = &utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 500,
+					MaxInterval:     60000,
+					Exponent:        1.5,
+					MaxElapsedTime:  3600000,
+				},
+				RetryConnectionErrors: true,
+			}
+		} else {
+			retryConfig = globalRetryConfig
+		}
 	}
 
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
+	httpRes, err := utils.Retry(ctx, utils.Retries{
+		Config: retryConfig,
+		StatusCodes: []string{
+			"5XX",
+			"429",
+		},
+	}, func() (*http.Response, error) {
+		if req.Body != nil {
+			copyBody, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = copyBody
 		}
 
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{"400", "401", "4XX", "5XX"}, httpRes.StatusCode) {
-		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
-			return nil, err
-		} else if _httpRes != nil {
-			httpRes = _httpRes
+			return nil, backoff.Permanent(err)
 		}
+
+		httpRes, err := s.sdkConfiguration.Client.Do(req)
+		if err != nil || httpRes == nil {
+			if err != nil {
+				err = fmt.Errorf("error sending request: %w", err)
+			} else {
+				err = fmt.Errorf("error sending request: no response")
+			}
+
+			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		}
+		return httpRes, err
+	})
+	if err != nil {
+		return nil, err
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 		if err != nil {
@@ -524,12 +698,7 @@ func (s *Agents) SubmitBenchmarkAgent(ctx context.Context, id int64, requestBody
 		}
 	}
 
-	res := &operations.SubmitBenchmarkAgentResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
-	}
+	res := &operations.SubmitBenchmarkAgentResponse{}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {

@@ -4,8 +4,8 @@ package components
 
 type AdvancedAgentConfiguration struct {
 	AgentUpdateInterval *int64  `json:"agent_update_interval"`
-	UseNativeHashcat    *bool   `json:"use_native_hashcat,omitempty"`
-	BackendDevice       *string `json:"backend_device,omitempty"`
+	UseNativeHashcat    *bool   `json:"use_native_hashcat"`
+	BackendDevice       *string `json:"backend_device"`
 }
 
 func (o *AdvancedAgentConfiguration) GetAgentUpdateInterval() *int64 {

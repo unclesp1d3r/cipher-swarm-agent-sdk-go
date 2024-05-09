@@ -3,16 +3,16 @@
 package components
 
 type Agent struct {
-	ID                    int64                       `json:"id"`
-	Name                  string                      `json:"name"`
-	ClientSignature       string                      `json:"client_signature"`
-	CommandParameters     *string                     `json:"command_parameters"`
-	CPUOnly               bool                        `json:"cpu_only"`
-	Trusted               bool                        `json:"trusted"`
-	IgnoreErrors          bool                        `json:"ignore_errors"`
-	OperatingSystem       string                      `json:"operating_system"`
-	Devices               []string                    `json:"devices"`
-	AdvancedConfiguration *AdvancedAgentConfiguration `json:"advanced_configuration,omitempty"`
+	ID                    int64                      `json:"id"`
+	Name                  string                     `json:"name"`
+	ClientSignature       string                     `json:"client_signature"`
+	CommandParameters     *string                    `json:"command_parameters"`
+	CPUOnly               bool                       `json:"cpu_only"`
+	Trusted               bool                       `json:"trusted"`
+	IgnoreErrors          bool                       `json:"ignore_errors"`
+	OperatingSystem       string                     `json:"operating_system"`
+	Devices               []string                   `json:"devices"`
+	AdvancedConfiguration AdvancedAgentConfiguration `json:"advanced_configuration"`
 }
 
 func (o *Agent) GetID() int64 {
@@ -78,9 +78,9 @@ func (o *Agent) GetDevices() []string {
 	return o.Devices
 }
 
-func (o *Agent) GetAdvancedConfiguration() *AdvancedAgentConfiguration {
+func (o *Agent) GetAdvancedConfiguration() AdvancedAgentConfiguration {
 	if o == nil {
-		return nil
+		return AdvancedAgentConfiguration{}
 	}
 	return o.AdvancedConfiguration
 }

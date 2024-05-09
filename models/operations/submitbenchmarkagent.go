@@ -27,12 +27,4 @@ func (o *SubmitBenchmarkAgentRequest) GetRequestBody() []components.HashcatBench
 }
 
 type SubmitBenchmarkAgentResponse struct {
-	HTTPMeta components.HTTPMetadata
-}
-
-func (o *SubmitBenchmarkAgentResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
-		return components.HTTPMetadata{}
-	}
-	return o.HTTPMeta
 }

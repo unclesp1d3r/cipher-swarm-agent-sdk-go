@@ -41,7 +41,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.Agent != nil {
+    if res != nil {
         // handle response
     }
 }
@@ -49,15 +49,16 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
-| `id`                                                  | *int64*                                               | :heavy_check_mark:                                    | id                                                    |
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 
 ### Response
 
-**[*operations.ShowAgentResponse](../../models/operations/showagentresponse.md), error**
+**[*components.Agent](../../models/components/agent.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
@@ -101,7 +102,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.Agent != nil {
+    if res != nil {
         // handle response
     }
 }
@@ -114,11 +115,12 @@ func main() {
 | `ctx`                                                             | [context.Context](https://pkg.go.dev/context#Context)             | :heavy_check_mark:                                                | The context to use for the request.                               |
 | `id`                                                              | *int64*                                                           | :heavy_check_mark:                                                | id                                                                |
 | `agentUpdate`                                                     | [*components.AgentUpdate](../../models/components/agentupdate.md) | :heavy_minus_sign:                                                | N/A                                                               |
+| `opts`                                                            | [][operations.Option](../../models/operations/option.md)          | :heavy_minus_sign:                                                | The options for this request.                                     |
 
 
 ### Response
 
-**[*operations.UpdateAgentResponse](../../models/operations/updateagentresponse.md), error**
+**[*components.Agent](../../models/components/agent.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
@@ -160,10 +162,11 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
-| `id`                                                  | *int64*                                               | :heavy_check_mark:                                    | id                                                    |
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 
 ### Response
@@ -202,7 +205,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.AgentLastBenchmark != nil {
+    if res != nil {
         // handle response
     }
 }
@@ -210,15 +213,16 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
-| `id`                                                  | *int64*                                               | :heavy_check_mark:                                    | id                                                    |
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 
 ### Response
 
-**[*operations.LastBenchmarkAgentResponse](../../models/operations/lastbenchmarkagentresponse.md), error**
+**[*components.AgentLastBenchmark](../../models/components/agentlastbenchmark.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
@@ -274,6 +278,7 @@ func main() {
 | `ctx`                                                                        | [context.Context](https://pkg.go.dev/context#Context)                        | :heavy_check_mark:                                                           | The context to use for the request.                                          |
 | `id`                                                                         | *int64*                                                                      | :heavy_check_mark:                                                           | id                                                                           |
 | `requestBody`                                                                | [][components.HashcatBenchmark](../../models/components/hashcatbenchmark.md) | :heavy_minus_sign:                                                           | N/A                                                                          |
+| `opts`                                                                       | [][operations.Option](../../models/operations/option.md)                     | :heavy_minus_sign:                                                           | The options for this request.                                                |
 
 
 ### Response

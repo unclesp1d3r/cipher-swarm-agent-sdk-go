@@ -27,12 +27,4 @@ func (o *SubmitCrackRequest) GetHashcatResult() *components.HashcatResult {
 }
 
 type SubmitCrackResponse struct {
-	HTTPMeta components.HTTPMetadata
-}
-
-func (o *SubmitCrackResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
-		return components.HTTPMetadata{}
-	}
-	return o.HTTPMeta
 }

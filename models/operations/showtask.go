@@ -2,10 +2,6 @@
 
 package operations
 
-import (
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
-)
-
 type ShowTaskRequest struct {
 	// id
 	ID int64 `pathParam:"style=simple,explode=false,name=id"`
@@ -16,24 +12,4 @@ func (o *ShowTaskRequest) GetID() int64 {
 		return 0
 	}
 	return o.ID
-}
-
-type ShowTaskResponse struct {
-	HTTPMeta components.HTTPMetadata
-	// successful
-	Task *components.Task
-}
-
-func (o *ShowTaskResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
-		return components.HTTPMetadata{}
-	}
-	return o.HTTPMeta
-}
-
-func (o *ShowTaskResponse) GetTask() *components.Task {
-	if o == nil {
-		return nil
-	}
-	return o.Task
 }
