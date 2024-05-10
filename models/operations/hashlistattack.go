@@ -2,6 +2,11 @@
 
 package operations
 
+import (
+	"io"
+	"net/http"
+)
+
 type HashListAttackRequest struct {
 	// id
 	ID int64 `pathParam:"style=simple,explode=false,name=id"`
@@ -12,4 +17,44 @@ func (o *HashListAttackRequest) GetID() int64 {
 		return 0
 	}
 	return o.ID
+}
+
+type HashListAttackResponse struct {
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
+	// successful
+	// The Close method must be called on this field, even if it is not used, to prevent resource leaks.
+	Stream io.ReadCloser
+}
+
+func (o *HashListAttackResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *HashListAttackResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *HashListAttackResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *HashListAttackResponse) GetStream() io.ReadCloser {
+	if o == nil {
+		return nil
+	}
+	return o.Stream
 }

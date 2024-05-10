@@ -30,7 +30,7 @@ func newClient(sdkConfig sdkConfiguration) *Client {
 
 // Configuration - Get Agent Configuration
 // Returns the configuration for the agent.
-func (s *Client) Configuration(ctx context.Context, opts ...operations.Option) (*components.AgentConfiguration, error) {
+func (s *Client) Configuration(ctx context.Context, opts ...operations.Option) (*operations.ConfigurationResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "configuration",
@@ -124,6 +124,12 @@ func (s *Client) Configuration(ctx context.Context, opts ...operations.Option) (
 		}
 	}
 
+	res := &operations.ConfigurationResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
@@ -140,7 +146,7 @@ func (s *Client) Configuration(ctx context.Context, opts ...operations.Option) (
 				return nil, err
 			}
 
-			return &out, nil
+			res.AgentConfiguration = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -153,11 +159,13 @@ func (s *Client) Configuration(ctx context.Context, opts ...operations.Option) (
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
+
+	return res, nil
 }
 
 // Authenticate Client
 // Authenticates the client. This is used to verify that the client is able to connect to the server.
-func (s *Client) Authenticate(ctx context.Context, opts ...operations.Option) (*components.AuthenticationResult, error) {
+func (s *Client) Authenticate(ctx context.Context, opts ...operations.Option) (*operations.AuthenticateResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "authenticate",
@@ -251,6 +259,12 @@ func (s *Client) Authenticate(ctx context.Context, opts ...operations.Option) (*
 		}
 	}
 
+	res := &operations.AuthenticateResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
@@ -267,7 +281,7 @@ func (s *Client) Authenticate(ctx context.Context, opts ...operations.Option) (*
 				return nil, err
 			}
 
-			return &out, nil
+			res.AuthenticationResult = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -280,4 +294,6 @@ func (s *Client) Authenticate(ctx context.Context, opts ...operations.Option) (*
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
+
+	return res, nil
 }

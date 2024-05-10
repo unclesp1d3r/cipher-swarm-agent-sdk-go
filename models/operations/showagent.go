@@ -2,6 +2,11 @@
 
 package operations
 
+import (
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	"net/http"
+)
+
 type ShowAgentRequest struct {
 	// id
 	ID int64 `pathParam:"style=simple,explode=false,name=id"`
@@ -12,4 +17,43 @@ func (o *ShowAgentRequest) GetID() int64 {
 		return 0
 	}
 	return o.ID
+}
+
+type ShowAgentResponse struct {
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
+	// successful
+	Agent *components.Agent
+}
+
+func (o *ShowAgentResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *ShowAgentResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *ShowAgentResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *ShowAgentResponse) GetAgent() *components.Agent {
+	if o == nil {
+		return nil
+	}
+	return o.Agent
 }

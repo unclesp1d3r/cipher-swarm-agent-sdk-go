@@ -41,7 +41,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res != nil {
+    if res.Agent != nil {
         // handle response
     }
 }
@@ -58,7 +58,7 @@ func main() {
 
 ### Response
 
-**[*components.Agent](../../models/components/agent.md), error**
+**[*operations.ShowAgentResponse](../../models/operations/showagentresponse.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
@@ -102,7 +102,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res != nil {
+    if res.Agent != nil {
         // handle response
     }
 }
@@ -120,7 +120,7 @@ func main() {
 
 ### Response
 
-**[*components.Agent](../../models/components/agent.md), error**
+**[*operations.UpdateAgentResponse](../../models/operations/updateagentresponse.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
@@ -205,7 +205,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res != nil {
+    if res.AgentLastBenchmark != nil {
         // handle response
     }
 }
@@ -222,7 +222,7 @@ func main() {
 
 ### Response
 
-**[*components.AgentLastBenchmark](../../models/components/agentlastbenchmark.md), error**
+**[*operations.LastBenchmarkAgentResponse](../../models/operations/lastbenchmarkagentresponse.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |

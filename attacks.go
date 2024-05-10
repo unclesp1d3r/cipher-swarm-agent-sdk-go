@@ -29,7 +29,7 @@ func newAttacks(sdkConfig sdkConfiguration) *Attacks {
 
 // ShowAttack - show attack
 // Returns an attack by id. This is used to get the details of an attack.
-func (s *Attacks) ShowAttack(ctx context.Context, id int64, opts ...operations.Option) (*components.Attack, error) {
+func (s *Attacks) ShowAttack(ctx context.Context, id int64, opts ...operations.Option) (*operations.ShowAttackResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "showAttack",
@@ -127,6 +127,12 @@ func (s *Attacks) ShowAttack(ctx context.Context, id int64, opts ...operations.O
 		}
 	}
 
+	res := &operations.ShowAttackResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
@@ -143,7 +149,7 @@ func (s *Attacks) ShowAttack(ctx context.Context, id int64, opts ...operations.O
 				return nil, err
 			}
 
-			return &out, nil
+			res.Attack = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -168,11 +174,13 @@ func (s *Attacks) ShowAttack(ctx context.Context, id int64, opts ...operations.O
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
+
+	return res, nil
 }
 
 // HashListAttack - Get the hash list
 // Returns the hash list for an attack.
-func (s *Attacks) HashListAttack(ctx context.Context, id int64, opts ...operations.Option) (io.ReadCloser, error) {
+func (s *Attacks) HashListAttack(ctx context.Context, id int64, opts ...operations.Option) (*operations.HashListAttackResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "hashListAttack",
@@ -270,8 +278,16 @@ func (s *Attacks) HashListAttack(ctx context.Context, id int64, opts ...operatio
 		}
 	}
 
+	res := &operations.HashListAttackResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
 	if (httpRes.StatusCode == 200) && utils.MatchContentType(httpRes.Header.Get("Content-Type"), `text/plain`) {
-		return httpRes.Body, nil
+		res.Stream = httpRes.Body
+
+		return res, nil
 	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
@@ -296,4 +312,6 @@ func (s *Attacks) HashListAttack(ctx context.Context, id int64, opts ...operatio
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
+
+	return res, nil
 }

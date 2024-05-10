@@ -30,7 +30,7 @@ func newCrackers(sdkConfig sdkConfiguration) *Crackers {
 
 // CheckForCrackerUpdate - Check for Cracker Update
 // Check for a cracker update, based on the operating system and version.
-func (s *Crackers) CheckForCrackerUpdate(ctx context.Context, operatingSystem *string, version *string, opts ...operations.Option) (*components.CrackerUpdate, error) {
+func (s *Crackers) CheckForCrackerUpdate(ctx context.Context, operatingSystem *string, version *string, opts ...operations.Option) (*operations.CheckForCrackerUpdateResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "checkForCrackerUpdate",
@@ -133,6 +133,12 @@ func (s *Crackers) CheckForCrackerUpdate(ctx context.Context, operatingSystem *s
 		}
 	}
 
+	res := &operations.CheckForCrackerUpdateResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
@@ -149,7 +155,7 @@ func (s *Crackers) CheckForCrackerUpdate(ctx context.Context, operatingSystem *s
 				return nil, err
 			}
 
-			return &out, nil
+			res.CrackerUpdate = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -172,4 +178,6 @@ func (s *Crackers) CheckForCrackerUpdate(ctx context.Context, operatingSystem *s
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
+
+	return res, nil
 }

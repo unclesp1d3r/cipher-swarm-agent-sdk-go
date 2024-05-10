@@ -39,7 +39,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res != nil {
+    if res.CrackerUpdate != nil {
         // handle response
     }
 }
@@ -57,7 +57,7 @@ func main() {
 
 ### Response
 
-**[*components.CrackerUpdate](../../models/components/crackerupdate.md), error**
+**[*operations.CheckForCrackerUpdateResponse](../../models/operations/checkforcrackerupdateresponse.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 400                   | application/json      |

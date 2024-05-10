@@ -38,7 +38,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res != nil {
+    if res.AgentConfiguration != nil {
         // handle response
     }
 }
@@ -54,7 +54,7 @@ func main() {
 
 ### Response
 
-**[*components.AgentConfiguration](../../models/components/agentconfiguration.md), error**
+**[*operations.ConfigurationResponse](../../models/operations/configurationresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |
@@ -87,7 +87,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res != nil {
+    if res.AuthenticationResult != nil {
         // handle response
     }
 }
@@ -103,7 +103,7 @@ func main() {
 
 ### Response
 
-**[*components.AuthenticationResult](../../models/components/authenticationresult.md), error**
+**[*operations.AuthenticateResponse](../../models/operations/authenticateresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |

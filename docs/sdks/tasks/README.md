@@ -43,7 +43,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res != nil {
+    if res.Task != nil {
         // handle response
     }
 }
@@ -59,7 +59,7 @@ func main() {
 
 ### Response
 
-**[*components.Task](../../models/components/task.md), error**
+**[*operations.NewTaskResponse](../../models/operations/newtaskresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |
@@ -92,7 +92,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res != nil {
+    if res.Task != nil {
         // handle response
     }
 }
@@ -109,7 +109,7 @@ func main() {
 
 ### Response
 
-**[*components.Task](../../models/components/task.md), error**
+**[*operations.ShowTaskResponse](../../models/operations/showtaskresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |

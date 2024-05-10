@@ -30,7 +30,7 @@ func newTasks(sdkConfig sdkConfiguration) *Tasks {
 
 // NewTask - Request a new task from server
 // Request a new task from the server, if available.
-func (s *Tasks) NewTask(ctx context.Context, opts ...operations.Option) (*components.Task, error) {
+func (s *Tasks) NewTask(ctx context.Context, opts ...operations.Option) (*operations.NewTaskResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "newTask",
@@ -124,6 +124,12 @@ func (s *Tasks) NewTask(ctx context.Context, opts ...operations.Option) (*compon
 		}
 	}
 
+	res := &operations.NewTaskResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
@@ -140,7 +146,7 @@ func (s *Tasks) NewTask(ctx context.Context, opts ...operations.Option) (*compon
 				return nil, err
 			}
 
-			return &out, nil
+			res.Task = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -154,11 +160,13 @@ func (s *Tasks) NewTask(ctx context.Context, opts ...operations.Option) (*compon
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
+
+	return res, nil
 }
 
 // ShowTask - Request the task information
 // Request the task information from the server.
-func (s *Tasks) ShowTask(ctx context.Context, id int64, opts ...operations.Option) (*components.Task, error) {
+func (s *Tasks) ShowTask(ctx context.Context, id int64, opts ...operations.Option) (*operations.ShowTaskResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "showTask",
@@ -256,6 +264,12 @@ func (s *Tasks) ShowTask(ctx context.Context, id int64, opts ...operations.Optio
 		}
 	}
 
+	res := &operations.ShowTaskResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
@@ -272,7 +286,7 @@ func (s *Tasks) ShowTask(ctx context.Context, id int64, opts ...operations.Optio
 				return nil, err
 			}
 
-			return &out, nil
+			res.Task = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -287,6 +301,8 @@ func (s *Tasks) ShowTask(ctx context.Context, id int64, opts ...operations.Optio
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
+
+	return res, nil
 }
 
 // SubmitCrack - Submit a cracked hash result for a task
@@ -396,7 +412,11 @@ func (s *Tasks) SubmitCrack(ctx context.Context, id int64, hashcatResult *compon
 		}
 	}
 
-	res := &operations.SubmitCrackResponse{}
+	res := &operations.SubmitCrackResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
@@ -531,7 +551,11 @@ func (s *Tasks) SubmitStatus(ctx context.Context, id int64, taskStatus component
 		}
 	}
 
-	res := &operations.SubmitStatusResponse{}
+	res := &operations.SubmitStatusResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
@@ -659,7 +683,11 @@ func (s *Tasks) AcceptTask(ctx context.Context, id int64, opts ...operations.Opt
 		}
 	}
 
-	res := &operations.AcceptTaskResponse{}
+	res := &operations.AcceptTaskResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
@@ -795,7 +823,11 @@ func (s *Tasks) ExhaustedTask(ctx context.Context, id int64, opts ...operations.
 		}
 	}
 
-	res := &operations.ExhaustedTaskResponse{}
+	res := &operations.ExhaustedTaskResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
@@ -921,7 +953,11 @@ func (s *Tasks) AbandonTask(ctx context.Context, id int64, opts ...operations.Op
 		}
 	}
 
-	res := &operations.AbandonTaskResponse{}
+	res := &operations.AbandonTaskResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {

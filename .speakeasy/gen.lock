@@ -5,8 +5,8 @@ management:
   docVersion: v1
   speakeasyVersion: 1.285.3
   generationVersion: 2.326.3
-  releaseVersion: 0.1.0
-  configChecksum: 68539fb2c98c4bf12cf42a630bb7b696
+  releaseVersion: 0.1.2
+  configChecksum: efdc6ac14cacf50fa0bc345bf2379487
 features:
   go:
     additionalDependencies: 0.1.0
@@ -47,6 +47,23 @@ generatedFiles:
   - internal/utils/retries.go
   - internal/utils/security.go
   - internal/utils/utils.go
+  - /models/operations/showagent.go
+  - /models/operations/updateagent.go
+  - /models/operations/heartbeatagent.go
+  - /models/operations/lastbenchmarkagent.go
+  - /models/operations/submitbenchmarkagent.go
+  - /models/operations/showattack.go
+  - /models/operations/hashlistattack.go
+  - /models/operations/checkforcrackerupdate.go
+  - /models/operations/newtask.go
+  - /models/operations/showtask.go
+  - /models/operations/submitcrack.go
+  - /models/operations/submitstatus.go
+  - /models/operations/accepttask.go
+  - /models/operations/exhaustedtask.go
+  - /models/operations/abandontask.go
+  - /models/operations/configuration.go
+  - /models/operations/authenticate.go
   - /models/components/agent.go
   - /models/components/advancedagentconfiguration.go
   - /models/components/agentupdate.go
@@ -65,20 +82,37 @@ generatedFiles:
   - /models/components/security.go
   - /models/sdkerrors/errorobject.go
   - /models/sdkerrors/stateerror.go
-  - /models/operations/showagent.go
-  - /models/operations/updateagent.go
-  - /models/operations/heartbeatagent.go
-  - /models/operations/lastbenchmarkagent.go
-  - /models/operations/submitbenchmarkagent.go
-  - /models/operations/showattack.go
-  - /models/operations/hashlistattack.go
-  - /models/operations/checkforcrackerupdate.go
-  - /models/operations/showtask.go
-  - /models/operations/submitcrack.go
-  - /models/operations/submitstatus.go
-  - /models/operations/accepttask.go
-  - /models/operations/exhaustedtask.go
-  - /models/operations/abandontask.go
+  - docs/models/operations/showagentrequest.md
+  - docs/models/operations/showagentresponse.md
+  - docs/models/operations/updateagentrequest.md
+  - docs/models/operations/updateagentresponse.md
+  - docs/models/operations/heartbeatagentrequest.md
+  - docs/models/operations/heartbeatagentresponse.md
+  - docs/models/operations/lastbenchmarkagentrequest.md
+  - docs/models/operations/lastbenchmarkagentresponse.md
+  - docs/models/operations/submitbenchmarkagentrequest.md
+  - docs/models/operations/submitbenchmarkagentresponse.md
+  - docs/models/operations/showattackrequest.md
+  - docs/models/operations/showattackresponse.md
+  - docs/models/operations/hashlistattackrequest.md
+  - docs/models/operations/hashlistattackresponse.md
+  - docs/models/operations/checkforcrackerupdaterequest.md
+  - docs/models/operations/checkforcrackerupdateresponse.md
+  - docs/models/operations/newtaskresponse.md
+  - docs/models/operations/showtaskrequest.md
+  - docs/models/operations/showtaskresponse.md
+  - docs/models/operations/submitcrackrequest.md
+  - docs/models/operations/submitcrackresponse.md
+  - docs/models/operations/submitstatusrequest.md
+  - docs/models/operations/submitstatusresponse.md
+  - docs/models/operations/accepttaskrequest.md
+  - docs/models/operations/accepttaskresponse.md
+  - docs/models/operations/exhaustedtaskrequest.md
+  - docs/models/operations/exhaustedtaskresponse.md
+  - docs/models/operations/abandontaskrequest.md
+  - docs/models/operations/abandontaskresponse.md
+  - docs/models/operations/configurationresponse.md
+  - docs/models/operations/authenticateresponse.md
   - docs/models/components/agent.md
   - docs/models/components/advancedagentconfiguration.md
   - docs/models/components/agentupdate.md
@@ -98,27 +132,6 @@ generatedFiles:
   - docs/models/components/security.md
   - docs/models/sdkerrors/errorobject.md
   - docs/models/sdkerrors/stateerror.md
-  - docs/models/operations/showagentrequest.md
-  - docs/models/operations/updateagentrequest.md
-  - docs/models/operations/heartbeatagentrequest.md
-  - docs/models/operations/heartbeatagentresponse.md
-  - docs/models/operations/lastbenchmarkagentrequest.md
-  - docs/models/operations/submitbenchmarkagentrequest.md
-  - docs/models/operations/submitbenchmarkagentresponse.md
-  - docs/models/operations/showattackrequest.md
-  - docs/models/operations/hashlistattackrequest.md
-  - docs/models/operations/checkforcrackerupdaterequest.md
-  - docs/models/operations/showtaskrequest.md
-  - docs/models/operations/submitcrackrequest.md
-  - docs/models/operations/submitcrackresponse.md
-  - docs/models/operations/submitstatusrequest.md
-  - docs/models/operations/submitstatusresponse.md
-  - docs/models/operations/accepttaskrequest.md
-  - docs/models/operations/accepttaskresponse.md
-  - docs/models/operations/exhaustedtaskrequest.md
-  - docs/models/operations/exhaustedtaskresponse.md
-  - docs/models/operations/abandontaskrequest.md
-  - docs/models/operations/abandontaskresponse.md
   - docs/sdks/cipherswarmagentsdk/README.md
   - docs/models/operations/option.md
   - docs/sdks/agents/README.md

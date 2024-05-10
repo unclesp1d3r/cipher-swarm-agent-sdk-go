@@ -29,7 +29,7 @@ func newAgents(sdkConfig sdkConfiguration) *Agents {
 
 // ShowAgent - Gets an instance of an agent
 // Returns an agent
-func (s *Agents) ShowAgent(ctx context.Context, id int64, opts ...operations.Option) (*components.Agent, error) {
+func (s *Agents) ShowAgent(ctx context.Context, id int64, opts ...operations.Option) (*operations.ShowAgentResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "showAgent",
@@ -127,6 +127,12 @@ func (s *Agents) ShowAgent(ctx context.Context, id int64, opts ...operations.Opt
 		}
 	}
 
+	res := &operations.ShowAgentResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
@@ -143,7 +149,7 @@ func (s *Agents) ShowAgent(ctx context.Context, id int64, opts ...operations.Opt
 				return nil, err
 			}
 
-			return &out, nil
+			res.Agent = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -166,11 +172,13 @@ func (s *Agents) ShowAgent(ctx context.Context, id int64, opts ...operations.Opt
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
+
+	return res, nil
 }
 
 // UpdateAgent - Updates the agent
 // Updates an agent
-func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *components.AgentUpdate, opts ...operations.Option) (*components.Agent, error) {
+func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *components.AgentUpdate, opts ...operations.Option) (*operations.UpdateAgentResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "updateAgent",
@@ -275,6 +283,12 @@ func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *compone
 		}
 	}
 
+	res := &operations.UpdateAgentResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
@@ -291,7 +305,7 @@ func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *compone
 				return nil, err
 			}
 
-			return &out, nil
+			res.Agent = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -314,6 +328,8 @@ func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *compone
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
+
+	return res, nil
 }
 
 // HeartbeatAgent - Send a heartbeat for an agent
@@ -416,7 +432,11 @@ func (s *Agents) HeartbeatAgent(ctx context.Context, id int64, opts ...operation
 		}
 	}
 
-	res := &operations.HeartbeatAgentResponse{}
+	res := &operations.HeartbeatAgentResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
@@ -452,7 +472,7 @@ func (s *Agents) HeartbeatAgent(ctx context.Context, id int64, opts ...operation
 
 // LastBenchmarkAgent - last_benchmark agent
 // Returns the last benchmark date for an agent
-func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64, opts ...operations.Option) (*components.AgentLastBenchmark, error) {
+func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64, opts ...operations.Option) (*operations.LastBenchmarkAgentResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "lastBenchmarkAgent",
@@ -550,6 +570,12 @@ func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64, opts ...opera
 		}
 	}
 
+	res := &operations.LastBenchmarkAgentResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
@@ -566,7 +592,7 @@ func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64, opts ...opera
 				return nil, err
 			}
 
-			return &out, nil
+			res.AgentLastBenchmark = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -589,6 +615,8 @@ func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64, opts ...opera
 	default:
 		return nil, sdkerrors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}
+
+	return res, nil
 }
 
 // SubmitBenchmarkAgent - submit_benchmark agent
@@ -698,7 +726,11 @@ func (s *Agents) SubmitBenchmarkAgent(ctx context.Context, id int64, requestBody
 		}
 	}
 
-	res := &operations.SubmitBenchmarkAgentResponse{}
+	res := &operations.SubmitBenchmarkAgentResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
 
 	rawBody, err := io.ReadAll(httpRes.Body)
 	if err != nil {

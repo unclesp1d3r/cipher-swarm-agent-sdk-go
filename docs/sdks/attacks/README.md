@@ -38,7 +38,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res != nil {
+    if res.Attack != nil {
         // handle response
     }
 }
@@ -55,7 +55,7 @@ func main() {
 
 ### Response
 
-**[*components.Attack](../../models/components/attack.md), error**
+**[*operations.ShowAttackResponse](../../models/operations/showattackresponse.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401,404               | application/json      |
@@ -89,7 +89,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res != nil {
+    if res.Stream != nil {
         // handle response
     }
 }
@@ -106,7 +106,7 @@ func main() {
 
 ### Response
 
-**[io.ReadCloser](../../.md), error**
+**[*operations.HashListAttackResponse](../../models/operations/hashlistattackresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |

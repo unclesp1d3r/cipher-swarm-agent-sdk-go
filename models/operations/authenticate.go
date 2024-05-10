@@ -3,47 +3,45 @@
 package operations
 
 import (
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"net/http"
 )
 
-type HeartbeatAgentRequest struct {
-	// id
-	ID int64 `pathParam:"style=simple,explode=false,name=id"`
-}
-
-func (o *HeartbeatAgentRequest) GetID() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.ID
-}
-
-type HeartbeatAgentResponse struct {
+type AuthenticateResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// successful
+	AuthenticationResult *components.AuthenticationResult
 }
 
-func (o *HeartbeatAgentResponse) GetContentType() string {
+func (o *AuthenticateResponse) GetContentType() string {
 	if o == nil {
 		return ""
 	}
 	return o.ContentType
 }
 
-func (o *HeartbeatAgentResponse) GetStatusCode() int {
+func (o *AuthenticateResponse) GetStatusCode() int {
 	if o == nil {
 		return 0
 	}
 	return o.StatusCode
 }
 
-func (o *HeartbeatAgentResponse) GetRawResponse() *http.Response {
+func (o *AuthenticateResponse) GetRawResponse() *http.Response {
 	if o == nil {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *AuthenticateResponse) GetAuthenticationResult() *components.AuthenticationResult {
+	if o == nil {
+		return nil
+	}
+	return o.AuthenticationResult
 }
