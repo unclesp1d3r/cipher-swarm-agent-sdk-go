@@ -5,7 +5,7 @@ package components
 type HashcatBenchmark struct {
 	HashType  int64   `json:"hash_type"`
 	Runtime   int64   `json:"runtime"`
-	HashSpeed float32 `json:"hash_speed"`
+	HashSpeed float64 `json:"hash_speed"`
 	Device    int64   `json:"device"`
 }
 
@@ -23,7 +23,7 @@ func (o *HashcatBenchmark) GetRuntime() int64 {
 	return o.Runtime
 }
 
-func (o *HashcatBenchmark) GetHashSpeed() float32 {
+func (o *HashcatBenchmark) GetHashSpeed() float64 {
 	if o == nil {
 		return 0.0
 	}

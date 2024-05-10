@@ -194,9 +194,9 @@ func New(opts ...SDKOption) *CipherSwarmAgentSDK {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "v1",
-			SDKVersion:        "0.1.5",
+			SDKVersion:        "0.1.6",
 			GenVersion:        "2.326.3",
-			UserAgent:         "speakeasy-sdk/go 0.1.5 2.326.3 v1 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
+			UserAgent:         "speakeasy-sdk/go 0.1.6 2.326.3 v1 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
 			ServerDefaults: []map[string]string{
 				{
 					"defaultHost": "www.example.com",
