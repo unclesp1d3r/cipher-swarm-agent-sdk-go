@@ -3,12 +3,51 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/utils"
 )
 
+type HashcatAttackMode string
+
+const (
+	HashcatAttackModeDictionary       HashcatAttackMode = "dictionary"
+	HashcatAttackModeCombinator       HashcatAttackMode = "combinator"
+	HashcatAttackModeMask             HashcatAttackMode = "mask"
+	HashcatAttackModeHybridDictionary HashcatAttackMode = "hybrid-dictionary"
+	HashcatAttackModeHybridMask       HashcatAttackMode = "hybrid-mask"
+)
+
+func (e HashcatAttackMode) ToPointer() *HashcatAttackMode {
+	return &e
+}
+
+func (e *HashcatAttackMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "dictionary":
+		fallthrough
+	case "combinator":
+		fallthrough
+	case "mask":
+		fallthrough
+	case "hybrid-dictionary":
+		fallthrough
+	case "hybrid-mask":
+		*e = HashcatAttackMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for HashcatAttackMode: %v", v)
+	}
+}
+
 type Attack struct {
 	ID                      int64                `json:"id"`
-	AttackMode              *string              `default:"dictionary" json:"attack_mode"`
+	AttackMode              *HashcatAttackMode   `default:"dictionary" json:"attack_mode"`
+	AttackModeValue         *int64               `default:"0" json:"attack_mode_value"`
 	Mask                    *string              `default:"" json:"mask"`
 	IncrementMode           *bool                `default:"false" json:"increment_mode"`
 	IncrementMinimum        *int64               `json:"increment_minimum,omitempty"`
@@ -29,8 +68,8 @@ type Attack struct {
 	WordLists               []AttackResourceFile `json:"word_lists,omitempty"`
 	RuleLists               []AttackResourceFile `json:"rule_lists,omitempty"`
 	HashMode                *int64               `default:"0" json:"hash_mode"`
-	HashListURL             *string              `json:"hash_list_url,omitempty"`
-	HashListChecksum        *string              `json:"hash_list_checksum,omitempty"`
+	HashListURL             string               `json:"hash_list_url"`
+	HashListChecksum        string               `json:"hash_list_checksum"`
 	URL                     string               `json:"url"`
 }
 
@@ -52,11 +91,18 @@ func (o *Attack) GetID() int64 {
 	return o.ID
 }
 
-func (o *Attack) GetAttackMode() *string {
+func (o *Attack) GetAttackMode() *HashcatAttackMode {
 	if o == nil {
 		return nil
 	}
 	return o.AttackMode
+}
+
+func (o *Attack) GetAttackModeValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AttackModeValue
 }
 
 func (o *Attack) GetMask() *string {
@@ -199,16 +245,16 @@ func (o *Attack) GetHashMode() *int64 {
 	return o.HashMode
 }
 
-func (o *Attack) GetHashListURL() *string {
+func (o *Attack) GetHashListURL() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.HashListURL
 }
 
-func (o *Attack) GetHashListChecksum() *string {
+func (o *Attack) GetHashListChecksum() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.HashListChecksum
 }
