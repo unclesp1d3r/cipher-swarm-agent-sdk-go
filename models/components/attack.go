@@ -8,21 +8,21 @@ import (
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/utils"
 )
 
-type HashcatAttackMode string
+type AttackModeName string
 
 const (
-	HashcatAttackModeDictionary       HashcatAttackMode = "dictionary"
-	HashcatAttackModeCombinator       HashcatAttackMode = "combinator"
-	HashcatAttackModeMask             HashcatAttackMode = "mask"
-	HashcatAttackModeHybridDictionary HashcatAttackMode = "hybrid-dictionary"
-	HashcatAttackModeHybridMask       HashcatAttackMode = "hybrid-mask"
+	AttackModeNameDictionary       AttackModeName = "dictionary"
+	AttackModeNameCombinator       AttackModeName = "combinator"
+	AttackModeNameMask             AttackModeName = "mask"
+	AttackModeNameHybridDictionary AttackModeName = "hybrid-dictionary"
+	AttackModeNameHybridMask       AttackModeName = "hybrid-mask"
 )
 
-func (e HashcatAttackMode) ToPointer() *HashcatAttackMode {
+func (e AttackModeName) ToPointer() *AttackModeName {
 	return &e
 }
 
-func (e *HashcatAttackMode) UnmarshalJSON(data []byte) error {
+func (e *AttackModeName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -37,21 +37,21 @@ func (e *HashcatAttackMode) UnmarshalJSON(data []byte) error {
 	case "hybrid-dictionary":
 		fallthrough
 	case "hybrid-mask":
-		*e = HashcatAttackMode(v)
+		*e = AttackModeName(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for HashcatAttackMode: %v", v)
+		return fmt.Errorf("invalid value for AttackModeName: %v", v)
 	}
 }
 
 type Attack struct {
 	ID                      int64                `json:"id"`
-	AttackMode              *HashcatAttackMode   `default:"dictionary" json:"attack_mode"`
-	AttackModeValue         *int64               `default:"0" json:"attack_mode_value"`
+	AttackMode              *AttackModeName      `default:"dictionary" json:"attack_mode"`
+	AttackModeHashcat       *int64               `default:"0" json:"attack_mode_hashcat"`
 	Mask                    *string              `default:"" json:"mask"`
 	IncrementMode           *bool                `default:"false" json:"increment_mode"`
-	IncrementMinimum        *int64               `json:"increment_minimum,omitempty"`
-	IncrementMaximum        *int64               `json:"increment_maximum,omitempty"`
+	IncrementMinimum        int64                `json:"increment_minimum"`
+	IncrementMaximum        int64                `json:"increment_maximum"`
 	Optimized               *bool                `default:"false" json:"optimized"`
 	SlowCandidateGenerators *bool                `default:"false" json:"slow_candidate_generators"`
 	WorkloadProfile         *int64               `default:"3" json:"workload_profile"`
@@ -91,18 +91,18 @@ func (o *Attack) GetID() int64 {
 	return o.ID
 }
 
-func (o *Attack) GetAttackMode() *HashcatAttackMode {
+func (o *Attack) GetAttackMode() *AttackModeName {
 	if o == nil {
 		return nil
 	}
 	return o.AttackMode
 }
 
-func (o *Attack) GetAttackModeValue() *int64 {
+func (o *Attack) GetAttackModeHashcat() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.AttackModeValue
+	return o.AttackModeHashcat
 }
 
 func (o *Attack) GetMask() *string {
@@ -119,16 +119,16 @@ func (o *Attack) GetIncrementMode() *bool {
 	return o.IncrementMode
 }
 
-func (o *Attack) GetIncrementMinimum() *int64 {
+func (o *Attack) GetIncrementMinimum() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
 	return o.IncrementMinimum
 }
 
-func (o *Attack) GetIncrementMaximum() *int64 {
+func (o *Attack) GetIncrementMaximum() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
 	return o.IncrementMaximum
 }

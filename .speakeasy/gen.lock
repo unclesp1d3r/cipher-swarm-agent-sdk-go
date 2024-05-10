@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 11fa8266-8454-49fd-ba7b-d5f8744980cc
 management:
-  docChecksum: ba578cc8e6808851f371120e6cb34e05
+  docChecksum: 117f6f7d0fceb406a8a3d400a775fa80
   docVersion: v1
   speakeasyVersion: 1.285.3
   generationVersion: 2.326.3
-  releaseVersion: 0.1.4
-  configChecksum: af1fccedea569535e9fd9a83eb519d77
+  releaseVersion: 0.1.5
+  configChecksum: 1c3232531e4533db777433e6a2a4ec7d
 features:
   go:
     additionalDependencies: 0.1.0
@@ -118,7 +118,7 @@ generatedFiles:
   - docs/models/components/agentupdate.md
   - docs/models/components/agentlastbenchmark.md
   - docs/models/components/hashcatbenchmark.md
-  - docs/models/components/hashcatattackmode.md
+  - docs/models/components/attackmodename.md
   - docs/models/components/attack.md
   - docs/models/components/attackresourcefile.md
   - docs/models/components/crackerupdate.md
