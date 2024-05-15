@@ -25,7 +25,6 @@ Request a new task from the server, if available.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -74,7 +73,6 @@ Request the task information from the server.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -124,8 +122,8 @@ Submit a cracked hash result for a task.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
 	"context"
 	"log"
@@ -182,9 +180,9 @@ Submit a status update for a task. This includes the status of the current guess
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"context"
 	"log"
 )
@@ -276,7 +274,6 @@ Accept an offered task from the server.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -327,7 +324,6 @@ Notify the server that the task is exhausted. This will mark the task as complet
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -377,7 +373,6 @@ Abandon a task. This will mark the task as abandoned. Usually used when the clie
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"

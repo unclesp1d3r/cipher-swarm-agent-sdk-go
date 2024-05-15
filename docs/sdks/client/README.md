@@ -20,7 +20,6 @@ Returns the configuration for the agent.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -69,7 +68,6 @@ Authenticates the client. This is used to verify that the client is able to conn
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"

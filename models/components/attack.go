@@ -21,7 +21,6 @@ const (
 func (e AttackModeName) ToPointer() *AttackModeName {
 	return &e
 }
-
 func (e *AttackModeName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

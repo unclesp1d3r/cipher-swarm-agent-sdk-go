@@ -19,7 +19,6 @@ Check for a cracker update, based on the operating system and version.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"

@@ -20,7 +20,6 @@ Returns an attack by id. This is used to get the details of an attack.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -71,7 +70,6 @@ Returns the hash list for an attack.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"

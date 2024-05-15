@@ -5,7 +5,6 @@ package main
 import (
 	"context"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"log"
 )
 

@@ -23,7 +23,6 @@ Returns an agent
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -74,8 +73,8 @@ Updates an agent
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"context"
 	"log"
 )
@@ -136,7 +135,6 @@ Send a heartbeat for an agent to keep it alive.
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -187,7 +185,6 @@ Returns the last benchmark date for an agent
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -238,8 +235,8 @@ Submit a benchmark for an agent
 package main
 
 import(
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"context"
 	"log"
 )
