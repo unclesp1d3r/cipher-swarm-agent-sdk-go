@@ -5,8 +5,8 @@ management:
   docVersion: v1
   speakeasyVersion: 1.291.0
   generationVersion: 2.332.4
-  releaseVersion: 0.1.8
-  configChecksum: b92240d5d33d8f3e2a0e585e568d8bb7
+  releaseVersion: 0.1.9
+  configChecksum: a80cbd8db86b362a52b9fb28aae6c728
   repoURL: https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go.git
   installationURL: https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go
 features:
