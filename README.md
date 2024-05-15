@@ -1,30 +1,37 @@
-# github.com/unclesp1d3r/cipherswarm-agent-sdk
+# CipherSwarm Agent SDK for Go
 
-<div align="left">
-    <a href="https://speakeasyapi.dev/"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20Speakeasy-212015?style=for-the-badge&logoColor=FBE331&logo=speakeasy&labelColor=545454" /></a>
-    <a href="https://opensource.org/licenses/MIT">
-        <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="width: 100px; height: 28px;" />
-    </a>
-</div>
+![Made With SpeakEasy](https://custom-icon-badges.demolab.com/badge/-Built%20By%20Speakeasy-212015?style=for-the-badge&logoColor=FBE331&logo=speakeasy&labelColor=545454)
+![GitHub License](https://img.shields.io/github/license/unclesp1d3r/cipherswarm-agent-sdk-go)
+[![Go Reference](https://pkg.go.dev/badge/github.com/unclesp1d3r/cipherswarm-agent-sdk-go.svg)](https://pkg.go.dev/github.com/unclesp1d3r/cipherswarm-agent-sdk-go)
 
-## 🏗 **Welcome to your new SDK!** 🏗
+Welcome to the CipherSwarm Agent SDK for Go! This SDK provides the tools you need to write agents for the CipherSwarm platform. CipherSwarm is a powerful, distributed system for secure, scalable data processing and analysis.
 
-It has been generated successfully based on your OpenAPI spec. However, it is not yet ready for production use. Here are some next steps:
+## Features
 
-- [ ] 🛠 Make your SDK feel handcrafted by [customizing it](https://www.speakeasyapi.dev/docs/customize-sdks)
-- [ ] ♻️ Refine your SDK quickly by iterating locally with the [Speakeasy CLI](https://github.com/speakeasy-api/speakeasy)
-- [ ] 🎁 Publish your SDK to package managers by [configuring automatic publishing](https://www.speakeasyapi.dev/docs/advanced-setup/publish-sdks)
-- [ ] ✨ When ready to productionize, delete this section from the README
+- Agent Creation: Easily create and manage agents for the CipherSwarm platform.
+- Secure Communication: Utilize built-in encryption and authentication mechanisms to ensure secure communication between agents and the CipherSwarm network.
+- Scalability: Designed to handle high-throughput data processing tasks with ease.
+- Extensibility: Flexible architecture allows for customization and extension of agent functionality.
+
+## Getting Started
+
+Prerequisites
+
+- Go 1.16 or later
+- A working installation of the CipherSwarm platform. Refer to the [CipherSwarm documentation](https://github.com/unclesp1d3r/CipherSwarm) for setup instructions.
 
 <!-- Start SDK Installation [installation] -->
+
 ## SDK Installation
 
 ```bash
 go get github.com/unclesp1d3r/cipherswarm-agent-sdk-go
 ```
+
 <!-- End SDK Installation [installation] -->
 
 <!-- Start SDK Example Usage [usage] -->
+
 ## SDK Example Usage
 
 ### Example
@@ -57,53 +64,56 @@ func main() {
 }
 
 ```
+
 <!-- End SDK Example Usage [usage] -->
 
 <!-- Start Available Resources and Operations [operations] -->
+
 ## Available Resources and Operations
 
 ### [Agents](docs/sdks/agents/README.md)
 
-* [ShowAgent](docs/sdks/agents/README.md#showagent) - Gets an instance of an agent
-* [UpdateAgent](docs/sdks/agents/README.md#updateagent) - Updates the agent
-* [HeartbeatAgent](docs/sdks/agents/README.md#heartbeatagent) - Send a heartbeat for an agent
-* [LastBenchmarkAgent](docs/sdks/agents/README.md#lastbenchmarkagent) - last_benchmark agent
-* [SubmitBenchmarkAgent](docs/sdks/agents/README.md#submitbenchmarkagent) - submit_benchmark agent
+- [ShowAgent](docs/sdks/agents/README.md#showagent) - Gets an instance of an agent
+- [UpdateAgent](docs/sdks/agents/README.md#updateagent) - Updates the agent
+- [HeartbeatAgent](docs/sdks/agents/README.md#heartbeatagent) - Send a heartbeat for an agent
+- [LastBenchmarkAgent](docs/sdks/agents/README.md#lastbenchmarkagent) - last_benchmark agent
+- [SubmitBenchmarkAgent](docs/sdks/agents/README.md#submitbenchmarkagent) - submit_benchmark agent
 
 ### [Attacks](docs/sdks/attacks/README.md)
 
-* [ShowAttack](docs/sdks/attacks/README.md#showattack) - show attack
-* [HashListAttack](docs/sdks/attacks/README.md#hashlistattack) - Get the hash list
+- [ShowAttack](docs/sdks/attacks/README.md#showattack) - show attack
+- [HashListAttack](docs/sdks/attacks/README.md#hashlistattack) - Get the hash list
 
 ### [Crackers](docs/sdks/crackers/README.md)
 
-* [CheckForCrackerUpdate](docs/sdks/crackers/README.md#checkforcrackerupdate) - Check for Cracker Update
+- [CheckForCrackerUpdate](docs/sdks/crackers/README.md#checkforcrackerupdate) - Check for Cracker Update
 
 ### [Tasks](docs/sdks/tasks/README.md)
 
-* [NewTask](docs/sdks/tasks/README.md#newtask) - Request a new task from server
-* [ShowTask](docs/sdks/tasks/README.md#showtask) - Request the task information
-* [SubmitCrack](docs/sdks/tasks/README.md#submitcrack) - Submit a cracked hash result for a task
-* [SubmitStatus](docs/sdks/tasks/README.md#submitstatus) - Submit a status update for a task
-* [AcceptTask](docs/sdks/tasks/README.md#accepttask) - Accept Task
-* [ExhaustedTask](docs/sdks/tasks/README.md#exhaustedtask) - Notify of Exhausted Task
-* [AbandonTask](docs/sdks/tasks/README.md#abandontask) - Abandon Task
+- [NewTask](docs/sdks/tasks/README.md#newtask) - Request a new task from server
+- [ShowTask](docs/sdks/tasks/README.md#showtask) - Request the task information
+- [SubmitCrack](docs/sdks/tasks/README.md#submitcrack) - Submit a cracked hash result for a task
+- [SubmitStatus](docs/sdks/tasks/README.md#submitstatus) - Submit a status update for a task
+- [AcceptTask](docs/sdks/tasks/README.md#accepttask) - Accept Task
+- [ExhaustedTask](docs/sdks/tasks/README.md#exhaustedtask) - Notify of Exhausted Task
+- [AbandonTask](docs/sdks/tasks/README.md#abandontask) - Abandon Task
 
 ### [Client](docs/sdks/client/README.md)
 
-* [Configuration](docs/sdks/client/README.md#configuration) - Get Agent Configuration
-* [Authenticate](docs/sdks/client/README.md#authenticate) - Authenticate Client
+- [Configuration](docs/sdks/client/README.md#configuration) - Get Agent Configuration
+- [Authenticate](docs/sdks/client/README.md#authenticate) - Authenticate Client
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Error Handling [errors] -->
+
 ## Error Handling
 
-Handling errors in this SDK should largely match your expectations.  All operations return a response object or an error, they will never return both.  When specified by the OpenAPI spec document, the SDK will return the appropriate subclass.
+Handling errors in this SDK should largely match your expectations. All operations return a response object or an error, they will never return both. When specified by the OpenAPI spec document, the SDK will return the appropriate subclass.
 
-| Error Object          | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| sdkerrors.ErrorObject | 401                   | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+| Error Object          | Status Code | Content Type     |
+| --------------------- | ----------- | ---------------- |
+| sdkerrors.ErrorObject | 401         | application/json |
+| sdkerrors.SDKError    | 4xx-5xx     | _/_              |
 
 ### Example
 
@@ -145,19 +155,21 @@ func main() {
 }
 
 ```
+
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
+
 ## Server Selection
 
 ### Select Server by Index
 
 You can override the default server globally using the `WithServerIndex` option when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
 
-| # | Server | Variables |
-| - | ------ | --------- |
-| 0 | `https://{defaultHost}` | `defaultHost` (default is `www.example.com`) |
-| 1 | `http://{hostAddress}:{hostPort}` | `hostAddress` (default is `localhost`), `hostPort` (default is `8080`) |
+| #   | Server                            | Variables                                                              |
+| --- | --------------------------------- | ---------------------------------------------------------------------- |
+| 0   | `https://{defaultHost}`           | `defaultHost` (default is `www.example.com`)                           |
+| 1   | `http://{hostAddress}:{hostPort}` | `hostAddress` (default is `localhost`), `hostPort` (default is `8080`) |
 
 #### Example
 
@@ -194,13 +206,15 @@ func main() {
 #### Variables
 
 Some of the server options above contain variables. If you want to set the values of those variables, the following options are provided for doing so:
- * `WithDefaultHost string`
- * `WithHostAddress string`
- * `WithHostPort string`
+
+- `WithDefaultHost string`
+- `WithHostAddress string`
+- `WithHostPort string`
 
 ### Override Server URL Per-Client
 
 The default server can also be overridden globally using the `WithServerURL` option when initializing the SDK client instance. For example:
+
 ```go
 package main
 
@@ -230,9 +244,11 @@ func main() {
 }
 
 ```
+
 <!-- End Server Selection [server] -->
 
 <!-- Start Custom HTTP Client [http-client] -->
+
 ## Custom HTTP Client
 
 The Go SDK makes API calls that wrap an internal HTTP client. The requirements for the HTTP client are very simple. It must match this interface:
@@ -259,20 +275,23 @@ var (
 ```
 
 This can be a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration.
+
 <!-- End Custom HTTP Client [http-client] -->
 
 <!-- Start Authentication [security] -->
+
 ## Authentication
 
 ### Per-Client Security Schemes
 
 This SDK supports the following security scheme globally:
 
-| Name         | Type         | Scheme       |
-| ------------ | ------------ | ------------ |
-| `BearerAuth` | http         | HTTP Bearer  |
+| Name         | Type | Scheme      |
+| ------------ | ---- | ----------- |
+| `BearerAuth` | http | HTTP Bearer |
 
 You can configure it using the `WithSecurity` option when initializing the SDK client instance. For example:
+
 ```go
 package main
 
@@ -300,20 +319,23 @@ func main() {
 }
 
 ```
+
 <!-- End Authentication [security] -->
 
 <!-- Start Special Types [types] -->
-## Special Types
 
+## Special Types
 
 <!-- End Special Types [types] -->
 
 <!-- Start Retries [retries] -->
+
 ## Retries
 
 Some of the endpoints in this SDK support retries. If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API. However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
 
 To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call by using the `WithRetries` option:
+
 ```go
 package main
 
@@ -356,6 +378,7 @@ func main() {
 ```
 
 If you'd like to override the default retry strategy for all operations that support retries, you can use the `WithRetryConfig` option at SDK initialization:
+
 ```go
 package main
 
@@ -396,6 +419,7 @@ func main() {
 }
 
 ```
+
 <!-- End Retries [retries] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
@@ -404,13 +428,13 @@ func main() {
 
 ## Maturity
 
-This SDK is in beta, and there may be breaking changes between versions without a major version update. Therefore, we recommend pinning usage
-to a specific package version. This way, you can install the same version each time without breaking changes unless you are intentionally
-looking for the latest version.
+This SDK is in beta, and there may be breaking changes between versions without a major version update.
+
+Therefore, we recommend pinning usage
+to a specific package version. This way, you can install the same version each time without breaking changes unless you are intentionally looking for the latest version.
 
 ## Contributions
 
-While we value open-source contributions to this SDK, this library is generated programmatically.
-Feel free to open a PR or a Github issue as a proof of concept and we'll do our best to include it in a future release!
+While we value open-source contributions to this SDK, this library is generated programmatically from the CipherSwarm API specification. As a result, we are unable to accept pull requests for changes to the SDK itself. However, we are always looking for ways to improve the SDK and make it more useful for developers. If you have an idea for a new feature or improvement, please open an issue on the GitHub repository.
 
 ### SDK Created by [Speakeasy](https://docs.speakeasyapi.dev/docs/using-speakeasy/client-sdks)
