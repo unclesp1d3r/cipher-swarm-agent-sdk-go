@@ -1,6 +1,19 @@
-speakeasyVersion: 1.291.0
-sources: {}
-targets: {}
+speakeasyVersion: 1.293.1
+sources:
+    CipherSwarm_agent_api:
+        sourceNamespace: cipher-swarm-agent-api
+        sourceRevisionDigest: sha256:708433a43836ee3c721d268d15b42515ea7e69b5a76a7fcbde33e82c00f89b9a
+        sourceBlobDigest: sha256:8f4e0e2c81ed70e6385a417dc33c33b933c68eb89bdfa54998b3ef03d0c51b83
+        tags:
+            - latest
+            - main
+targets:
+    golang-sdk:
+        source: CipherSwarm_agent_api
+        sourceNamespace: cipher-swarm-agent-api
+        sourceRevisionDigest: sha256:708433a43836ee3c721d268d15b42515ea7e69b5a76a7fcbde33e82c00f89b9a
+        sourceBlobDigest: sha256:8f4e0e2c81ed70e6385a417dc33c33b933c68eb89bdfa54998b3ef03d0c51b83
+        outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -8,6 +21,8 @@ workflow:
         CipherSwarm_agent_api:
             inputs:
                 - location: https://raw.githubusercontent.com/unclesp1d3r/CipherSwarm/main/swagger/v1/swagger.json
+            registry:
+                location: registry.speakeasyapi.dev/evilbitlabs/evilbitlabs/cipher-swarm-agent-api
     targets:
         golang-sdk:
             target: go

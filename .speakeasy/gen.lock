@@ -3,10 +3,10 @@ id: 11fa8266-8454-49fd-ba7b-d5f8744980cc
 management:
   docChecksum: 8966a7f476f47d33b309614a10574717
   docVersion: v1
-  speakeasyVersion: 1.291.0
-  generationVersion: 2.332.4
-  releaseVersion: 0.1.9
-  configChecksum: a80cbd8db86b362a52b9fb28aae6c728
+  speakeasyVersion: 1.293.1
+  generationVersion: 2.333.3
+  releaseVersion: 0.1.10
+  configChecksum: e62f0abc7fe5775fd55930cdf007ee50
   repoURL: https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go.git
   installationURL: https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go
 features:
