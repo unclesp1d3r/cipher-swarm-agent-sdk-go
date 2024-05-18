@@ -12,8 +12,9 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
 go:
-  version: 0.1.9
+  version: 0.1.10
   additionalDependencies: {}
+  allowUnknownFieldsInWeakUnions: false
   clientServerStatusCodesAsErrors: true
   flattenGlobalSecurity: true
   imports:

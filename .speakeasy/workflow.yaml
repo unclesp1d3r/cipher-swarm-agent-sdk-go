@@ -4,6 +4,8 @@ sources:
     CipherSwarm_agent_api:
         inputs:
             - location: https://raw.githubusercontent.com/unclesp1d3r/CipherSwarm/main/swagger/v1/swagger.json
+        registry:
+            location: registry.speakeasyapi.dev/evilbitlabs/evilbitlabs/cipher-swarm-agent-api
 targets:
     golang-sdk:
         target: go
