@@ -3,9 +3,13 @@
 package components
 
 type AgentUpdate struct {
-	ID              int64    `json:"id"`
-	Name            string   `json:"name"`
-	ClientSignature string   `json:"client_signature"`
+	// The id of the agent
+	ID int64 `json:"id"`
+	// The hostname of the agent
+	Name string `json:"name"`
+	// The signature of the client
+	ClientSignature string `json:"client_signature"`
+	// The operating system of the agent
 	OperatingSystem string   `json:"operating_system"`
 	Devices         []string `json:"devices"`
 }

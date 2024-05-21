@@ -8,6 +8,7 @@ import (
 )
 
 type AgentLastBenchmark struct {
+	// The date of the last benchmark
 	LastBenchmarkDate time.Time `json:"last_benchmark_date"`
 }
 

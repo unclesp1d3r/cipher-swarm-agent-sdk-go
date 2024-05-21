@@ -8,20 +8,21 @@ import (
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/utils"
 )
 
-type AttackModeName string
+// AttackMode - Attack mode name
+type AttackMode string
 
 const (
-	AttackModeNameDictionary       AttackModeName = "dictionary"
-	AttackModeNameCombinator       AttackModeName = "combinator"
-	AttackModeNameMask             AttackModeName = "mask"
-	AttackModeNameHybridDictionary AttackModeName = "hybrid-dictionary"
-	AttackModeNameHybridMask       AttackModeName = "hybrid-mask"
+	AttackModeDictionary       AttackMode = "dictionary"
+	AttackModeCombinator       AttackMode = "combinator"
+	AttackModeMask             AttackMode = "mask"
+	AttackModeHybridDictionary AttackMode = "hybrid-dictionary"
+	AttackModeHybridMask       AttackMode = "hybrid-mask"
 )
 
-func (e AttackModeName) ToPointer() *AttackModeName {
+func (e AttackMode) ToPointer() *AttackMode {
 	return &e
 }
-func (e *AttackModeName) UnmarshalJSON(data []byte) error {
+func (e *AttackMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -36,40 +37,66 @@ func (e *AttackModeName) UnmarshalJSON(data []byte) error {
 	case "hybrid-dictionary":
 		fallthrough
 	case "hybrid-mask":
-		*e = AttackModeName(v)
+		*e = AttackMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AttackModeName: %v", v)
+		return fmt.Errorf("invalid value for AttackMode: %v", v)
 	}
 }
 
 type Attack struct {
-	ID                      int64                `json:"id"`
-	AttackMode              *AttackModeName      `default:"dictionary" json:"attack_mode"`
-	AttackModeHashcat       *int64               `default:"0" json:"attack_mode_hashcat"`
-	Mask                    *string              `default:"" json:"mask"`
-	IncrementMode           *bool                `default:"false" json:"increment_mode"`
-	IncrementMinimum        int64                `json:"increment_minimum"`
-	IncrementMaximum        int64                `json:"increment_maximum"`
-	Optimized               *bool                `default:"false" json:"optimized"`
-	SlowCandidateGenerators *bool                `default:"false" json:"slow_candidate_generators"`
-	WorkloadProfile         *int64               `default:"3" json:"workload_profile"`
-	DisableMarkov           *bool                `default:"false" json:"disable_markov"`
-	ClassicMarkov           *bool                `default:"false" json:"classic_markov"`
-	MarkovThreshold         *int64               `default:"0" json:"markov_threshold"`
-	LeftRule                *string              `default:"" json:"left_rule"`
-	RightRule               *string              `default:"" json:"right_rule"`
-	CustomCharset1          *string              `default:"" json:"custom_charset_1"`
-	CustomCharset2          *string              `default:"" json:"custom_charset_2"`
-	CustomCharset3          *string              `default:"" json:"custom_charset_3"`
-	CustomCharset4          *string              `default:"" json:"custom_charset_4"`
-	HashListID              int64                `json:"hash_list_id"`
-	WordLists               []AttackResourceFile `json:"word_lists,omitempty"`
-	RuleLists               []AttackResourceFile `json:"rule_lists,omitempty"`
-	HashMode                *int64               `default:"0" json:"hash_mode"`
-	HashListURL             string               `json:"hash_list_url"`
-	HashListChecksum        string               `json:"hash_list_checksum"`
-	URL                     string               `json:"url"`
+	// The id of the attack
+	ID int64 `json:"id"`
+	// Attack mode name
+	AttackMode *AttackMode `default:"dictionary" json:"attack_mode"`
+	// hashcat attack mode
+	AttackModeHashcat *int64 `default:"0" json:"attack_mode_hashcat"`
+	// A hashcat mask string
+	Mask *string `default:"" json:"mask"`
+	// Enable hashcat increment mode
+	IncrementMode *bool `default:"false" json:"increment_mode"`
+	// The start of the increment range
+	IncrementMinimum int64 `json:"increment_minimum"`
+	// The end of the increment range
+	IncrementMaximum int64 `json:"increment_maximum"`
+	// Enable hashcat optimized mode
+	Optimized *bool `default:"false" json:"optimized"`
+	// Enable hashcat slow candidate generators
+	SlowCandidateGenerators *bool `default:"false" json:"slow_candidate_generators"`
+	// The hashcat workload profile
+	WorkloadProfile *int64 `default:"3" json:"workload_profile"`
+	// Disable hashcat markov mode
+	DisableMarkov *bool `default:"false" json:"disable_markov"`
+	// Enable hashcat classic markov mode
+	ClassicMarkov *bool `default:"false" json:"classic_markov"`
+	// The hashcat markov threshold
+	MarkovThreshold *int64 `default:"0" json:"markov_threshold"`
+	// The left-hand rule for combinator attacks
+	LeftRule *string `default:"" json:"left_rule"`
+	// The right-hand rule for combinator attacks
+	RightRule *string `default:"" json:"right_rule"`
+	// Custom charset 1 for hashcat mask attacks
+	CustomCharset1 *string `default:"" json:"custom_charset_1"`
+	// Custom charset 2 for hashcat mask attacks
+	CustomCharset2 *string `default:"" json:"custom_charset_2"`
+	// Custom charset 3 for hashcat mask attacks
+	CustomCharset3 *string `default:"" json:"custom_charset_3"`
+	// Custom charset 4 for hashcat mask attacks
+	CustomCharset4 *string `default:"" json:"custom_charset_4"`
+	// The id of the hash list
+	HashListID int64 `json:"hash_list_id"`
+	// The word lists to use in the attack
+	WordLists []AttackResourceFile `json:"word_lists,omitempty"`
+	// The rule lists to use in the attack
+	RuleLists []AttackResourceFile `json:"rule_lists,omitempty"`
+	// The hashcat hash mode
+	HashMode *int64 `default:"0" json:"hash_mode"`
+	// The download URL for the hash list
+	HashListURL string `json:"hash_list_url"`
+	// The MD5 checksum of the hash list
+	HashListChecksum string `json:"hash_list_checksum"`
+	// The URL to the attack
+	URL string `json:"url"`
 }
 
 func (a Attack) MarshalJSON() ([]byte, error) {
@@ -90,7 +117,7 @@ func (o *Attack) GetID() int64 {
 	return o.ID
 }
 
-func (o *Attack) GetAttackMode() *AttackModeName {
+func (o *Attack) GetAttackMode() *AttackMode {
 	if o == nil {
 		return nil
 	}

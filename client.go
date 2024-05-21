@@ -28,12 +28,12 @@ func newClient(sdkConfig sdkConfiguration) *Client {
 	}
 }
 
-// Configuration - Get Agent Configuration
+// GetConfiguration - Get Agent Configuration
 // Returns the configuration for the agent.
-func (s *Client) Configuration(ctx context.Context, opts ...operations.Option) (*operations.ConfigurationResponse, error) {
+func (s *Client) GetConfiguration(ctx context.Context, opts ...operations.Option) (*operations.GetConfigurationResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "configuration",
+		OperationID:    "getConfiguration",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -124,7 +124,7 @@ func (s *Client) Configuration(ctx context.Context, opts ...operations.Option) (
 		}
 	}
 
-	res := &operations.ConfigurationResponse{
+	res := &operations.GetConfigurationResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,

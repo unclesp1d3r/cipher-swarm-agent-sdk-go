@@ -13,10 +13,10 @@ func main() {
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
-	var id int64 = 969902
+	var id int64 = 135003
 
 	ctx := context.Background()
-	res, err := s.Agents.ShowAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {
 		log.Fatal(err)
 	}

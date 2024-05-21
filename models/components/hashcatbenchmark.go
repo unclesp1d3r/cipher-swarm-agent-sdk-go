@@ -3,10 +3,14 @@
 package components
 
 type HashcatBenchmark struct {
-	HashType  int64   `json:"hash_type"`
-	Runtime   int64   `json:"runtime"`
+	// The hashcat hash type
+	HashType int64 `json:"hash_type"`
+	// The runtime of the benchmark in milliseconds.
+	Runtime int64 `json:"runtime"`
+	// The speed of the benchmark in hashes per second.
 	HashSpeed float64 `json:"hash_speed"`
-	Device    int64   `json:"device"`
+	// The device used for the benchmark
+	Device int64 `json:"device"`
 }
 
 func (o *HashcatBenchmark) GetHashType() int64 {

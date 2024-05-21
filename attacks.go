@@ -27,16 +27,16 @@ func newAttacks(sdkConfig sdkConfiguration) *Attacks {
 	}
 }
 
-// ShowAttack - show attack
+// GetAttack - show attack
 // Returns an attack by id. This is used to get the details of an attack.
-func (s *Attacks) ShowAttack(ctx context.Context, id int64, opts ...operations.Option) (*operations.ShowAttackResponse, error) {
+func (s *Attacks) GetAttack(ctx context.Context, id int64, opts ...operations.Option) (*operations.GetAttackResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "showAttack",
+		OperationID:    "getAttack",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
-	request := operations.ShowAttackRequest{
+	request := operations.GetAttackRequest{
 		ID: id,
 	}
 
@@ -127,7 +127,7 @@ func (s *Attacks) ShowAttack(ctx context.Context, id int64, opts ...operations.O
 		}
 	}
 
-	res := &operations.ShowAttackResponse{
+	res := &operations.GetAttackResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -178,16 +178,16 @@ func (s *Attacks) ShowAttack(ctx context.Context, id int64, opts ...operations.O
 	return res, nil
 }
 
-// HashListAttack - Get the hash list
+// GetHashList - Get the hash list
 // Returns the hash list for an attack.
-func (s *Attacks) HashListAttack(ctx context.Context, id int64, opts ...operations.Option) (*operations.HashListAttackResponse, error) {
+func (s *Attacks) GetHashList(ctx context.Context, id int64, opts ...operations.Option) (*operations.GetHashListResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "hashListAttack",
+		OperationID:    "getHashList",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
-	request := operations.HashListAttackRequest{
+	request := operations.GetHashListRequest{
 		ID: id,
 	}
 
@@ -278,7 +278,7 @@ func (s *Attacks) HashListAttack(ctx context.Context, id int64, opts ...operatio
 		}
 	}
 
-	res := &operations.HashListAttackResponse{
+	res := &operations.GetHashListResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,

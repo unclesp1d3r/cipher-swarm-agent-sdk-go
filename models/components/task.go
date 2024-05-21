@@ -8,12 +8,18 @@ import (
 )
 
 type Task struct {
-	ID        int64     `json:"id"`
-	AttackID  int64     `json:"attack_id"`
+	// The id of the task
+	ID int64 `json:"id"`
+	// The id of the attack
+	AttackID int64 `json:"attack_id"`
+	// The time the task was started
 	StartDate time.Time `json:"start_date"`
-	Status    string    `json:"status"`
-	Skip      *int64    `json:"skip,omitempty"`
-	Limit     *int64    `json:"limit,omitempty"`
+	// The status of the task
+	Status string `json:"status"`
+	// The offset of the keyspace
+	Skip *int64 `json:"skip,omitempty"`
+	// The limit of the keyspace
+	Limit *int64 `json:"limit,omitempty"`
 }
 
 func (t Task) MarshalJSON() ([]byte, error) {

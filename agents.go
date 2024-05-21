@@ -27,16 +27,16 @@ func newAgents(sdkConfig sdkConfiguration) *Agents {
 	}
 }
 
-// ShowAgent - Gets an instance of an agent
+// GetAgent - Gets an instance of an agent
 // Returns an agent
-func (s *Agents) ShowAgent(ctx context.Context, id int64, opts ...operations.Option) (*operations.ShowAgentResponse, error) {
+func (s *Agents) GetAgent(ctx context.Context, id int64, opts ...operations.Option) (*operations.GetAgentResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "showAgent",
+		OperationID:    "getAgent",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
-	request := operations.ShowAgentRequest{
+	request := operations.GetAgentRequest{
 		ID: id,
 	}
 
@@ -127,7 +127,7 @@ func (s *Agents) ShowAgent(ctx context.Context, id int64, opts ...operations.Opt
 		}
 	}
 
-	res := &operations.ShowAgentResponse{
+	res := &operations.GetAgentResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -332,16 +332,16 @@ func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *compone
 	return res, nil
 }
 
-// HeartbeatAgent - Send a heartbeat for an agent
+// SendHeartbeat - Send a heartbeat for an agent
 // Send a heartbeat for an agent to keep it alive.
-func (s *Agents) HeartbeatAgent(ctx context.Context, id int64, opts ...operations.Option) (*operations.HeartbeatAgentResponse, error) {
+func (s *Agents) SendHeartbeat(ctx context.Context, id int64, opts ...operations.Option) (*operations.SendHeartbeatResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "heartbeatAgent",
+		OperationID:    "sendHeartbeat",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
-	request := operations.HeartbeatAgentRequest{
+	request := operations.SendHeartbeatRequest{
 		ID: id,
 	}
 
@@ -432,7 +432,7 @@ func (s *Agents) HeartbeatAgent(ctx context.Context, id int64, opts ...operation
 		}
 	}
 
-	res := &operations.HeartbeatAgentResponse{
+	res := &operations.SendHeartbeatResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -470,16 +470,16 @@ func (s *Agents) HeartbeatAgent(ctx context.Context, id int64, opts ...operation
 	return res, nil
 }
 
-// LastBenchmarkAgent - last_benchmark agent
+// GetAgentLastBenchmarkDate - last_benchmark agent
 // Returns the last benchmark date for an agent
-func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64, opts ...operations.Option) (*operations.LastBenchmarkAgentResponse, error) {
+func (s *Agents) GetAgentLastBenchmarkDate(ctx context.Context, id int64, opts ...operations.Option) (*operations.GetAgentLastBenchmarkDateResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "lastBenchmarkAgent",
+		OperationID:    "getAgentLastBenchmarkDate",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
-	request := operations.LastBenchmarkAgentRequest{
+	request := operations.GetAgentLastBenchmarkDateRequest{
 		ID: id,
 	}
 
@@ -570,7 +570,7 @@ func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64, opts ...opera
 		}
 	}
 
-	res := &operations.LastBenchmarkAgentResponse{
+	res := &operations.GetAgentLastBenchmarkDateResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -619,16 +619,16 @@ func (s *Agents) LastBenchmarkAgent(ctx context.Context, id int64, opts ...opera
 	return res, nil
 }
 
-// SubmitBenchmarkAgent - submit_benchmark agent
+// SubmitBenchmark - submit_benchmark agent
 // Submit a benchmark for an agent
-func (s *Agents) SubmitBenchmarkAgent(ctx context.Context, id int64, requestBody []components.HashcatBenchmark, opts ...operations.Option) (*operations.SubmitBenchmarkAgentResponse, error) {
+func (s *Agents) SubmitBenchmark(ctx context.Context, id int64, requestBody []components.HashcatBenchmark, opts ...operations.Option) (*operations.SubmitBenchmarkResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "submitBenchmarkAgent",
+		OperationID:    "submitBenchmark",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
-	request := operations.SubmitBenchmarkAgentRequest{
+	request := operations.SubmitBenchmarkRequest{
 		ID:          id,
 		RequestBody: requestBody,
 	}
@@ -726,7 +726,7 @@ func (s *Agents) SubmitBenchmarkAgent(ctx context.Context, id int64, requestBody
 		}
 	}
 
-	res := &operations.SubmitBenchmarkAgentResponse{
+	res := &operations.SubmitBenchmarkResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,

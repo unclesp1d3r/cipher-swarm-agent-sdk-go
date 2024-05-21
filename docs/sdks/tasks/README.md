@@ -7,15 +7,15 @@ Tasks API
 
 ### Available Operations
 
-* [NewTask](#newtask) - Request a new task from server
-* [ShowTask](#showtask) - Request the task information
-* [SubmitCrack](#submitcrack) - Submit a cracked hash result for a task
-* [SubmitStatus](#submitstatus) - Submit a status update for a task
-* [AcceptTask](#accepttask) - Accept Task
-* [ExhaustedTask](#exhaustedtask) - Notify of Exhausted Task
-* [AbandonTask](#abandontask) - Abandon Task
+* [GetNewTask](#getnewtask) - Request a new task from server
+* [GetTask](#gettask) - Request the task information
+* [SendCrack](#sendcrack) - Submit a cracked hash result for a task
+* [SendStatus](#sendstatus) - Submit a status update for a task
+* [SetTaskAccepted](#settaskaccepted) - Accept Task
+* [SetTaskExhausted](#settaskexhausted) - Notify of Exhausted Task
+* [SetTaskAbandoned](#settaskabandoned) - Abandon Task
 
-## NewTask
+## GetNewTask
 
 Request a new task from the server, if available.
 
@@ -38,7 +38,7 @@ func main() {
 
     
     ctx := context.Background()
-    res, err := s.Tasks.NewTask(ctx)
+    res, err := s.Tasks.GetNewTask(ctx)
     if err != nil {
         log.Fatal(err)
     }
@@ -58,12 +58,12 @@ func main() {
 
 ### Response
 
-**[*operations.NewTaskResponse](../../models/operations/newtaskresponse.md), error**
+**[*operations.GetNewTaskResponse](../../models/operations/getnewtaskresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |
 
-## ShowTask
+## GetTask
 
 Request the task information from the server.
 
@@ -83,10 +83,10 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var id int64 = 576214
+    var id int64 = 771489
     
     ctx := context.Background()
-    res, err := s.Tasks.ShowTask(ctx, id)
+    res, err := s.Tasks.GetTask(ctx, id)
     if err != nil {
         log.Fatal(err)
     }
@@ -107,12 +107,12 @@ func main() {
 
 ### Response
 
-**[*operations.ShowTaskResponse](../../models/operations/showtaskresponse.md), error**
+**[*operations.GetTaskResponse](../../models/operations/gettaskresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |
 
-## SubmitCrack
+## SendCrack
 
 Submit a cracked hash result for a task.
 
@@ -134,16 +134,16 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var id int64 = 150559
+    var id int64 = 302642
 
     var hashcatResult *components.HashcatResult = &components.HashcatResult{
-        Timestamp: types.MustTimeFromString("2022-06-14T17:51:53.220Z"),
+        Timestamp: types.MustTimeFromString("2022-10-06T02:03:58.007Z"),
         Hash: "<value>",
         PlainText: "<value>",
     }
     
     ctx := context.Background()
-    res, err := s.Tasks.SubmitCrack(ctx, id, hashcatResult)
+    res, err := s.Tasks.SendCrack(ctx, id, hashcatResult)
     if err != nil {
         log.Fatal(err)
     }
@@ -165,12 +165,12 @@ func main() {
 
 ### Response
 
-**[*operations.SubmitCrackResponse](../../models/operations/submitcrackresponse.md), error**
+**[*operations.SendCrackResponse](../../models/operations/sendcrackresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |
 
-## SubmitStatus
+## SendStatus
 
 Submit a status update for a task. This includes the status of the current guess and the devices.
 
@@ -192,52 +192,52 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var id int64 = 584703
+    var id int64 = 204258
 
     taskStatus := components.TaskStatus{
         OriginalLine: "<value>",
-        Time: types.MustTimeFromString("2023-12-03T10:27:22.986Z"),
+        Time: types.MustTimeFromString("2023-10-13T23:08:24.639Z"),
         Session: "<value>",
         HashcatGuess: components.HashcatGuess{
             GuessBase: "<value>",
-            GuessBaseCount: 602220,
-            GuessBaseOffset: 22120,
-            GuessBasePercentage: 9978.16,
+            GuessBaseCount: 380021,
+            GuessBaseOffset: 469354,
+            GuessBasePercentage: 2929.65,
             GuessMod: "<value>",
-            GuessModCount: 948688,
-            GuessModOffset: 68184,
-            GuessModPercentage: 5432.29,
-            GuessMode: 140481,
+            GuessModCount: 508837,
+            GuessModOffset: 239276,
+            GuessModPercentage: 1149.28,
+            GuessMode: 402894,
         },
-        Status: 477845,
+        Status: 889036,
         Target: "<value>",
         Progress: []int64{
-            448822,
+            319182,
         },
-        RestorePoint: 466580,
+        RestorePoint: 596493,
         RecoveredHashes: []int64{
-            213301,
+            642941,
         },
         RecoveredSalts: []int64{
-            527166,
+            336085,
         },
-        Rejected: 235279,
+        Rejected: 906004,
         DeviceStatuses: []components.DeviceStatus{
             components.DeviceStatus{
-                DeviceID: 722842,
+                DeviceID: 896201,
                 DeviceName: "<value>",
-                DeviceType: components.TheTypeOfTheDeviceCPU,
-                Speed: 939700,
-                Utilization: 725728,
-                Temperature: 757147,
+                DeviceType: components.DeviceTypeCPU,
+                Speed: 65865,
+                Utilization: 921724,
+                Temperature: 572686,
             },
         },
-        TimeStart: types.MustTimeFromString("2022-03-04T10:33:44.215Z"),
-        EstimatedStop: types.MustTimeFromString("2022-10-11T11:57:10.785Z"),
+        TimeStart: types.MustTimeFromString("2024-10-11T04:57:47.416Z"),
+        EstimatedStop: types.MustTimeFromString("2022-10-24T09:23:01.835Z"),
     }
     
     ctx := context.Background()
-    res, err := s.Tasks.SubmitStatus(ctx, id, taskStatus)
+    res, err := s.Tasks.SendStatus(ctx, id, taskStatus)
     if err != nil {
         log.Fatal(err)
     }
@@ -259,12 +259,12 @@ func main() {
 
 ### Response
 
-**[*operations.SubmitStatusResponse](../../models/operations/submitstatusresponse.md), error**
+**[*operations.SendStatusResponse](../../models/operations/sendstatusresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |
 
-## AcceptTask
+## SetTaskAccepted
 
 Accept an offered task from the server.
 
@@ -284,10 +284,10 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var id int64 = 262707
+    var id int64 = 893037
     
     ctx := context.Background()
-    res, err := s.Tasks.AcceptTask(ctx, id)
+    res, err := s.Tasks.SetTaskAccepted(ctx, id)
     if err != nil {
         log.Fatal(err)
     }
@@ -308,13 +308,13 @@ func main() {
 
 ### Response
 
-**[*operations.AcceptTaskResponse](../../models/operations/accepttaskresponse.md), error**
+**[*operations.SetTaskAcceptedResponse](../../models/operations/settaskacceptedresponse.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 404,422               | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
 
-## ExhaustedTask
+## SetTaskExhausted
 
 Notify the server that the task is exhausted. This will mark the task as completed.
 
@@ -334,10 +334,10 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var id int64 = 461909
+    var id int64 = 700537
     
     ctx := context.Background()
-    res, err := s.Tasks.ExhaustedTask(ctx, id)
+    res, err := s.Tasks.SetTaskExhausted(ctx, id)
     if err != nil {
         log.Fatal(err)
     }
@@ -358,12 +358,12 @@ func main() {
 
 ### Response
 
-**[*operations.ExhaustedTaskResponse](../../models/operations/exhaustedtaskresponse.md), error**
+**[*operations.SetTaskExhaustedResponse](../../models/operations/settaskexhaustedresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |
 
-## AbandonTask
+## SetTaskAbandoned
 
 Abandon a task. This will mark the task as abandoned. Usually used when the client is unable to complete the task.
 
@@ -383,10 +383,10 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var id int64 = 446205
+    var id int64 = 885883
     
     ctx := context.Background()
-    res, err := s.Tasks.AbandonTask(ctx, id)
+    res, err := s.Tasks.SetTaskAbandoned(ctx, id)
     if err != nil {
         log.Fatal(err)
     }
@@ -407,7 +407,7 @@ func main() {
 
 ### Response
 
-**[*operations.AbandonTaskResponse](../../models/operations/abandontaskresponse.md), error**
+**[*operations.SetTaskAbandonedResponse](../../models/operations/settaskabandonedresponse.md), error**
 | Error Object         | Status Code          | Content Type         |
 | -------------------- | -------------------- | -------------------- |
 | sdkerrors.StateError | 422                  | application/json     |

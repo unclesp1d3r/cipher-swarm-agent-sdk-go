@@ -3,11 +3,16 @@
 package components
 
 type CrackerUpdate struct {
-	Available     bool    `json:"available"`
+	// A new version of the cracker binary is available
+	Available bool `json:"available"`
+	// The latest version of the cracker binary
 	LatestVersion *string `json:"latest_version,omitempty"`
-	DownloadURL   *string `json:"download_url,omitempty"`
-	ExecName      *string `json:"exec_name,omitempty"`
-	Message       *string `json:"message,omitempty"`
+	// The download URL of the new version
+	DownloadURL *string `json:"download_url,omitempty"`
+	// The name of the executable
+	ExecName *string `json:"exec_name,omitempty"`
+	// A message about the update
+	Message *string `json:"message,omitempty"`
 }
 
 func (o *CrackerUpdate) GetAvailable() bool {
