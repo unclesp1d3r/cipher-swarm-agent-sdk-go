@@ -3,9 +3,12 @@
 package components
 
 type AdvancedAgentConfiguration struct {
-	AgentUpdateInterval *int64  `json:"agent_update_interval"`
-	UseNativeHashcat    *bool   `json:"use_native_hashcat"`
-	BackendDevice       *string `json:"backend_device"`
+	// The interval in seconds to check for agent updates
+	AgentUpdateInterval *int64 `json:"agent_update_interval"`
+	// Use the hashcat binary already installed on the client system
+	UseNativeHashcat *bool `json:"use_native_hashcat"`
+	// The device to use for hashcat
+	BackendDevice *string `json:"backend_device"`
 }
 
 func (o *AdvancedAgentConfiguration) GetAgentUpdateInterval() *int64 {

@@ -3,10 +3,14 @@
 package components
 
 type AttackResourceFile struct {
-	ID          int64  `json:"id"`
+	// The id of the resource file
+	ID int64 `json:"id"`
+	// The download URL of the resource file
 	DownloadURL string `json:"download_url"`
-	Checksum    string `json:"checksum"`
-	FileName    string `json:"file_name"`
+	// The MD5 checksum of the resource file
+	Checksum string `json:"checksum"`
+	// The name of the resource file
+	FileName string `json:"file_name"`
 }
 
 func (o *AttackResourceFile) GetID() int64 {

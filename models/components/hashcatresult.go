@@ -8,9 +8,12 @@ import (
 )
 
 type HashcatResult struct {
+	// The time the hash was cracked
 	Timestamp time.Time `json:"timestamp"`
-	Hash      string    `json:"hash"`
-	PlainText string    `json:"plain_text"`
+	// The hash value
+	Hash string `json:"hash"`
+	// The plain text value
+	PlainText string `json:"plain_text"`
 }
 
 func (h HashcatResult) MarshalJSON() ([]byte, error) {

@@ -3,8 +3,8 @@
 
 ## Fields
 
-| Field                 | Type                  | Required              | Description           |
-| --------------------- | --------------------- | --------------------- | --------------------- |
-| `AgentUpdateInterval` | *int64*               | :heavy_check_mark:    | N/A                   |
-| `UseNativeHashcat`    | *bool*                | :heavy_check_mark:    | N/A                   |
-| `BackendDevice`       | *string*              | :heavy_check_mark:    | N/A                   |
+| Field                                                         | Type                                                          | Required                                                      | Description                                                   |
+| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
+| `AgentUpdateInterval`                                         | *int64*                                                       | :heavy_check_mark:                                            | The interval in seconds to check for agent updates            |
+| `UseNativeHashcat`                                            | *bool*                                                        | :heavy_check_mark:                                            | Use the hashcat binary already installed on the client system |
+| `BackendDevice`                                               | *string*                                                      | :heavy_check_mark:                                            | The device to use for hashcat                                 |

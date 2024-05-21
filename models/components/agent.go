@@ -3,13 +3,21 @@
 package components
 
 type Agent struct {
-	ID                    int64                      `json:"id"`
-	Name                  string                     `json:"name"`
-	ClientSignature       string                     `json:"client_signature"`
-	CommandParameters     *string                    `json:"command_parameters"`
-	CPUOnly               bool                       `json:"cpu_only"`
-	Trusted               bool                       `json:"trusted"`
-	IgnoreErrors          bool                       `json:"ignore_errors"`
+	// The id of the agent
+	ID int64 `json:"id"`
+	// The hostname of the agent
+	Name string `json:"name"`
+	// The signature of the client
+	ClientSignature string `json:"client_signature"`
+	// Additional command line parameters to use for hashcat
+	CommandParameters *string `json:"command_parameters"`
+	// Use only the CPU for hashcat
+	CPUOnly bool `json:"cpu_only"`
+	// The agent is trusted with sensitive hash lists
+	Trusted bool `json:"trusted"`
+	// Ignore errors from the agent
+	IgnoreErrors bool `json:"ignore_errors"`
+	// The operating system of the agent
 	OperatingSystem       string                     `json:"operating_system"`
 	Devices               []string                   `json:"devices"`
 	AdvancedConfiguration AdvancedAgentConfiguration `json:"advanced_configuration"`

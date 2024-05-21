@@ -7,10 +7,10 @@ Attacks API
 
 ### Available Operations
 
-* [ShowAttack](#showattack) - show attack
-* [HashListAttack](#hashlistattack) - Get the hash list
+* [GetAttack](#getattack) - show attack
+* [GetHashList](#gethashlist) - Get the hash list
 
-## ShowAttack
+## GetAttack
 
 Returns an attack by id. This is used to get the details of an attack.
 
@@ -30,10 +30,10 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var id int64 = 69912
+    var id int64 = 535539
     
     ctx := context.Background()
-    res, err := s.Attacks.ShowAttack(ctx, id)
+    res, err := s.Attacks.GetAttack(ctx, id)
     if err != nil {
         log.Fatal(err)
     }
@@ -54,13 +54,13 @@ func main() {
 
 ### Response
 
-**[*operations.ShowAttackResponse](../../models/operations/showattackresponse.md), error**
+**[*operations.GetAttackResponse](../../models/operations/getattackresponse.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401,404               | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
 
-## HashListAttack
+## GetHashList
 
 Returns the hash list for an attack.
 
@@ -80,10 +80,10 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var id int64 = 295812
+    var id int64 = 904122
     
     ctx := context.Background()
-    res, err := s.Attacks.HashListAttack(ctx, id)
+    res, err := s.Attacks.GetHashList(ctx, id)
     if err != nil {
         log.Fatal(err)
     }
@@ -104,7 +104,7 @@ func main() {
 
 ### Response
 
-**[*operations.HashListAttackResponse](../../models/operations/hashlistattackresponse.md), error**
+**[*operations.GetHashListResponse](../../models/operations/gethashlistresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |

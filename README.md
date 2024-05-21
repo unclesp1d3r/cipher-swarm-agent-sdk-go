@@ -47,10 +47,10 @@ func main() {
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
-	var id int64 = 969902
+	var id int64 = 135003
 
 	ctx := context.Background()
-	res, err := s.Agents.ShowAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -67,16 +67,16 @@ func main() {
 
 ### [Agents](docs/sdks/agents/README.md)
 
-* [ShowAgent](docs/sdks/agents/README.md#showagent) - Gets an instance of an agent
+* [GetAgent](docs/sdks/agents/README.md#getagent) - Gets an instance of an agent
 * [UpdateAgent](docs/sdks/agents/README.md#updateagent) - Updates the agent
-* [HeartbeatAgent](docs/sdks/agents/README.md#heartbeatagent) - Send a heartbeat for an agent
-* [LastBenchmarkAgent](docs/sdks/agents/README.md#lastbenchmarkagent) - last_benchmark agent
-* [SubmitBenchmarkAgent](docs/sdks/agents/README.md#submitbenchmarkagent) - submit_benchmark agent
+* [SendHeartbeat](docs/sdks/agents/README.md#sendheartbeat) - Send a heartbeat for an agent
+* [GetAgentLastBenchmarkDate](docs/sdks/agents/README.md#getagentlastbenchmarkdate) - last_benchmark agent
+* [SubmitBenchmark](docs/sdks/agents/README.md#submitbenchmark) - submit_benchmark agent
 
 ### [Attacks](docs/sdks/attacks/README.md)
 
-* [ShowAttack](docs/sdks/attacks/README.md#showattack) - show attack
-* [HashListAttack](docs/sdks/attacks/README.md#hashlistattack) - Get the hash list
+* [GetAttack](docs/sdks/attacks/README.md#getattack) - show attack
+* [GetHashList](docs/sdks/attacks/README.md#gethashlist) - Get the hash list
 
 ### [Crackers](docs/sdks/crackers/README.md)
 
@@ -84,17 +84,17 @@ func main() {
 
 ### [Tasks](docs/sdks/tasks/README.md)
 
-* [NewTask](docs/sdks/tasks/README.md#newtask) - Request a new task from server
-* [ShowTask](docs/sdks/tasks/README.md#showtask) - Request the task information
-* [SubmitCrack](docs/sdks/tasks/README.md#submitcrack) - Submit a cracked hash result for a task
-* [SubmitStatus](docs/sdks/tasks/README.md#submitstatus) - Submit a status update for a task
-* [AcceptTask](docs/sdks/tasks/README.md#accepttask) - Accept Task
-* [ExhaustedTask](docs/sdks/tasks/README.md#exhaustedtask) - Notify of Exhausted Task
-* [AbandonTask](docs/sdks/tasks/README.md#abandontask) - Abandon Task
+* [GetNewTask](docs/sdks/tasks/README.md#getnewtask) - Request a new task from server
+* [GetTask](docs/sdks/tasks/README.md#gettask) - Request the task information
+* [SendCrack](docs/sdks/tasks/README.md#sendcrack) - Submit a cracked hash result for a task
+* [SendStatus](docs/sdks/tasks/README.md#sendstatus) - Submit a status update for a task
+* [SetTaskAccepted](docs/sdks/tasks/README.md#settaskaccepted) - Accept Task
+* [SetTaskExhausted](docs/sdks/tasks/README.md#settaskexhausted) - Notify of Exhausted Task
+* [SetTaskAbandoned](docs/sdks/tasks/README.md#settaskabandoned) - Abandon Task
 
 ### [Client](docs/sdks/client/README.md)
 
-* [Configuration](docs/sdks/client/README.md#configuration) - Get Agent Configuration
+* [GetConfiguration](docs/sdks/client/README.md#getconfiguration) - Get Agent Configuration
 * [Authenticate](docs/sdks/client/README.md#authenticate) - Authenticate Client
 <!-- End Available Resources and Operations [operations] -->
 
@@ -126,10 +126,10 @@ func main() {
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
-	var id int64 = 969902
+	var id int64 = 135003
 
 	ctx := context.Background()
-	res, err := s.Agents.ShowAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {
 
 		var e *sdkerrors.ErrorObject
@@ -178,10 +178,10 @@ func main() {
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
-	var id int64 = 969902
+	var id int64 = 135003
 
 	ctx := context.Background()
-	res, err := s.Agents.ShowAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -217,10 +217,10 @@ func main() {
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
-	var id int64 = 969902
+	var id int64 = 135003
 
 	ctx := context.Background()
-	res, err := s.Agents.ShowAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -287,10 +287,10 @@ func main() {
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
-	var id int64 = 969902
+	var id int64 = 135003
 
 	ctx := context.Background()
-	res, err := s.Agents.ShowAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -330,10 +330,10 @@ func main() {
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
-	var id int64 = 969902
+	var id int64 = 135003
 
 	ctx := context.Background()
-	res, err := s.Agents.ShowAgent(ctx, id, operations.WithRetries(
+	res, err := s.Agents.GetAgent(ctx, id, operations.WithRetries(
 		utils.RetryConfig{
 			Strategy: "backoff",
 			Backoff: &utils.BackoffStrategy{
@@ -381,10 +381,10 @@ func main() {
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 
-	var id int64 = 969902
+	var id int64 = 135003
 
 	ctx := context.Background()
-	res, err := s.Agents.ShowAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {
 		log.Fatal(err)
 	}

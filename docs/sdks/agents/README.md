@@ -7,13 +7,13 @@ Agents API
 
 ### Available Operations
 
-* [ShowAgent](#showagent) - Gets an instance of an agent
+* [GetAgent](#getagent) - Gets an instance of an agent
 * [UpdateAgent](#updateagent) - Updates the agent
-* [HeartbeatAgent](#heartbeatagent) - Send a heartbeat for an agent
-* [LastBenchmarkAgent](#lastbenchmarkagent) - last_benchmark agent
-* [SubmitBenchmarkAgent](#submitbenchmarkagent) - submit_benchmark agent
+* [SendHeartbeat](#sendheartbeat) - Send a heartbeat for an agent
+* [GetAgentLastBenchmarkDate](#getagentlastbenchmarkdate) - last_benchmark agent
+* [SubmitBenchmark](#submitbenchmark) - submit_benchmark agent
 
-## ShowAgent
+## GetAgent
 
 Returns an agent
 
@@ -33,10 +33,10 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var id int64 = 969902
+    var id int64 = 135003
     
     ctx := context.Background()
-    res, err := s.Agents.ShowAgent(ctx, id)
+    res, err := s.Agents.GetAgent(ctx, id)
     if err != nil {
         log.Fatal(err)
     }
@@ -57,7 +57,7 @@ func main() {
 
 ### Response
 
-**[*operations.ShowAgentResponse](../../models/operations/showagentresponse.md), error**
+**[*operations.GetAgentResponse](../../models/operations/getagentresponse.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
@@ -125,7 +125,7 @@ func main() {
 | sdkerrors.ErrorObject | 401                   | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
 
-## HeartbeatAgent
+## SendHeartbeat
 
 Send a heartbeat for an agent to keep it alive.
 
@@ -145,10 +145,10 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var id int64 = 397037
+    var id int64 = 992386
     
     ctx := context.Background()
-    res, err := s.Agents.HeartbeatAgent(ctx, id)
+    res, err := s.Agents.SendHeartbeat(ctx, id)
     if err != nil {
         log.Fatal(err)
     }
@@ -169,13 +169,13 @@ func main() {
 
 ### Response
 
-**[*operations.HeartbeatAgentResponse](../../models/operations/heartbeatagentresponse.md), error**
+**[*operations.SendHeartbeatResponse](../../models/operations/sendheartbeatresponse.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
 
-## LastBenchmarkAgent
+## GetAgentLastBenchmarkDate
 
 Returns the last benchmark date for an agent
 
@@ -195,10 +195,10 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var id int64 = 714635
+    var id int64 = 998564
     
     ctx := context.Background()
-    res, err := s.Agents.LastBenchmarkAgent(ctx, id)
+    res, err := s.Agents.GetAgentLastBenchmarkDate(ctx, id)
     if err != nil {
         log.Fatal(err)
     }
@@ -219,13 +219,13 @@ func main() {
 
 ### Response
 
-**[*operations.LastBenchmarkAgentResponse](../../models/operations/lastbenchmarkagentresponse.md), error**
+**[*operations.GetAgentLastBenchmarkDateResponse](../../models/operations/getagentlastbenchmarkdateresponse.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
 
-## SubmitBenchmarkAgent
+## SubmitBenchmark
 
 Submit a benchmark for an agent
 
@@ -246,19 +246,19 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-    var id int64 = 946448
+    var id int64 = 303399
 
     var requestBody []components.HashcatBenchmark = []components.HashcatBenchmark{
         components.HashcatBenchmark{
-            HashType: 268990,
-            Runtime: 493062,
-            HashSpeed: 1512.35,
-            Device: 572344,
+            HashType: 442220,
+            Runtime: 8499,
+            HashSpeed: 156.49,
+            Device: 322052,
         },
     }
     
     ctx := context.Background()
-    res, err := s.Agents.SubmitBenchmarkAgent(ctx, id, requestBody)
+    res, err := s.Agents.SubmitBenchmark(ctx, id, requestBody)
     if err != nil {
         log.Fatal(err)
     }
@@ -280,7 +280,7 @@ func main() {
 
 ### Response
 
-**[*operations.SubmitBenchmarkAgentResponse](../../models/operations/submitbenchmarkagentresponse.md), error**
+**[*operations.SubmitBenchmarkResponse](../../models/operations/submitbenchmarkresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |

@@ -3,8 +3,9 @@
 package components
 
 type AgentConfiguration struct {
-	Config     AdvancedAgentConfiguration `json:"config"`
-	APIVersion int64                      `json:"api_version"`
+	Config AdvancedAgentConfiguration `json:"config"`
+	// The minimum accepted version of the API
+	APIVersion int64 `json:"api_version"`
 }
 
 func (o *AgentConfiguration) GetConfig() AdvancedAgentConfiguration {

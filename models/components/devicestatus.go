@@ -7,17 +7,18 @@ import (
 	"fmt"
 )
 
-type TheTypeOfTheDevice string
+// DeviceType - The type of the device
+type DeviceType string
 
 const (
-	TheTypeOfTheDeviceCPU TheTypeOfTheDevice = "CPU"
-	TheTypeOfTheDeviceGpu TheTypeOfTheDevice = "GPU"
+	DeviceTypeCPU DeviceType = "CPU"
+	DeviceTypeGpu DeviceType = "GPU"
 )
 
-func (e TheTypeOfTheDevice) ToPointer() *TheTypeOfTheDevice {
+func (e DeviceType) ToPointer() *DeviceType {
 	return &e
 }
-func (e *TheTypeOfTheDevice) UnmarshalJSON(data []byte) error {
+func (e *DeviceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -26,20 +27,26 @@ func (e *TheTypeOfTheDevice) UnmarshalJSON(data []byte) error {
 	case "CPU":
 		fallthrough
 	case "GPU":
-		*e = TheTypeOfTheDevice(v)
+		*e = DeviceType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for TheTypeOfTheDevice: %v", v)
+		return fmt.Errorf("invalid value for DeviceType: %v", v)
 	}
 }
 
 type DeviceStatus struct {
-	DeviceID    int64              `json:"device_id"`
-	DeviceName  string             `json:"device_name"`
-	DeviceType  TheTypeOfTheDevice `json:"device_type"`
-	Speed       int64              `json:"speed"`
-	Utilization int64              `json:"utilization"`
-	Temperature int64              `json:"temperature"`
+	// The id of the device
+	DeviceID int64 `json:"device_id"`
+	// The name of the device
+	DeviceName string `json:"device_name"`
+	// The type of the device
+	DeviceType DeviceType `json:"device_type"`
+	// The speed of the device
+	Speed int64 `json:"speed"`
+	// The utilization of the device
+	Utilization int64 `json:"utilization"`
+	// The temperature of the device, or -1 if unmonitored.
+	Temperature int64 `json:"temperature"`
 }
 
 func (o *DeviceStatus) GetDeviceID() int64 {
@@ -56,9 +63,9 @@ func (o *DeviceStatus) GetDeviceName() string {
 	return o.DeviceName
 }
 
-func (o *DeviceStatus) GetDeviceType() TheTypeOfTheDevice {
+func (o *DeviceStatus) GetDeviceType() DeviceType {
 	if o == nil {
-		return TheTypeOfTheDevice("")
+		return DeviceType("")
 	}
 	return o.DeviceType
 }

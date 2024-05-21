@@ -8,20 +8,33 @@ import (
 )
 
 type TaskStatus struct {
-	OriginalLine    string         `json:"original_line"`
-	Time            time.Time      `json:"time"`
-	Session         string         `json:"session"`
-	HashcatGuess    HashcatGuess   `json:"hashcat_guess"`
-	Status          int64          `json:"status"`
-	Target          string         `json:"target"`
-	Progress        []int64        `json:"progress"`
-	RestorePoint    int64          `json:"restore_point"`
-	RecoveredHashes []int64        `json:"recovered_hashes"`
-	RecoveredSalts  []int64        `json:"recovered_salts"`
-	Rejected        int64          `json:"rejected"`
-	DeviceStatuses  []DeviceStatus `json:"device_statuses"`
-	TimeStart       time.Time      `json:"time_start"`
-	EstimatedStop   time.Time      `json:"estimated_stop"`
+	// The original line from hashcat
+	OriginalLine string `json:"original_line"`
+	// The time the status was received
+	Time time.Time `json:"time"`
+	// The session name
+	Session      string       `json:"session"`
+	HashcatGuess HashcatGuess `json:"hashcat_guess"`
+	// The status of the task
+	Status int64 `json:"status"`
+	// The target of the task
+	Target string `json:"target"`
+	// The progress of the task
+	Progress []int64 `json:"progress"`
+	// The restore point of the task
+	RestorePoint int64 `json:"restore_point"`
+	// The number of recovered hashes
+	RecoveredHashes []int64 `json:"recovered_hashes"`
+	// The number of recovered salts
+	RecoveredSalts []int64 `json:"recovered_salts"`
+	// The number of rejected guesses
+	Rejected int64 `json:"rejected"`
+	// The status of the devices used for the task
+	DeviceStatuses []DeviceStatus `json:"device_statuses"`
+	// The time the task started.
+	TimeStart time.Time `json:"time_start"`
+	// The estimated time of completion.
+	EstimatedStop time.Time `json:"estimated_stop"`
 }
 
 func (t TaskStatus) MarshalJSON() ([]byte, error) {

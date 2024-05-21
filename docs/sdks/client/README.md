@@ -7,10 +7,10 @@ Client API
 
 ### Available Operations
 
-* [Configuration](#configuration) - Get Agent Configuration
+* [GetConfiguration](#getconfiguration) - Get Agent Configuration
 * [Authenticate](#authenticate) - Authenticate Client
 
-## Configuration
+## GetConfiguration
 
 Returns the configuration for the agent.
 
@@ -33,7 +33,7 @@ func main() {
 
     
     ctx := context.Background()
-    res, err := s.Client.Configuration(ctx)
+    res, err := s.Client.GetConfiguration(ctx)
     if err != nil {
         log.Fatal(err)
     }
@@ -53,7 +53,7 @@ func main() {
 
 ### Response
 
-**[*operations.ConfigurationResponse](../../models/operations/configurationresponse.md), error**
+**[*operations.GetConfigurationResponse](../../models/operations/getconfigurationresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |

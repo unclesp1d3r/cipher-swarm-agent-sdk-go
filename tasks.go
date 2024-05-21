@@ -28,12 +28,12 @@ func newTasks(sdkConfig sdkConfiguration) *Tasks {
 	}
 }
 
-// NewTask - Request a new task from server
+// GetNewTask - Request a new task from server
 // Request a new task from the server, if available.
-func (s *Tasks) NewTask(ctx context.Context, opts ...operations.Option) (*operations.NewTaskResponse, error) {
+func (s *Tasks) GetNewTask(ctx context.Context, opts ...operations.Option) (*operations.GetNewTaskResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "newTask",
+		OperationID:    "getNewTask",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -124,7 +124,7 @@ func (s *Tasks) NewTask(ctx context.Context, opts ...operations.Option) (*operat
 		}
 	}
 
-	res := &operations.NewTaskResponse{
+	res := &operations.GetNewTaskResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -164,16 +164,16 @@ func (s *Tasks) NewTask(ctx context.Context, opts ...operations.Option) (*operat
 	return res, nil
 }
 
-// ShowTask - Request the task information
+// GetTask - Request the task information
 // Request the task information from the server.
-func (s *Tasks) ShowTask(ctx context.Context, id int64, opts ...operations.Option) (*operations.ShowTaskResponse, error) {
+func (s *Tasks) GetTask(ctx context.Context, id int64, opts ...operations.Option) (*operations.GetTaskResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "showTask",
+		OperationID:    "getTask",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
-	request := operations.ShowTaskRequest{
+	request := operations.GetTaskRequest{
 		ID: id,
 	}
 
@@ -264,7 +264,7 @@ func (s *Tasks) ShowTask(ctx context.Context, id int64, opts ...operations.Optio
 		}
 	}
 
-	res := &operations.ShowTaskResponse{
+	res := &operations.GetTaskResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -305,16 +305,16 @@ func (s *Tasks) ShowTask(ctx context.Context, id int64, opts ...operations.Optio
 	return res, nil
 }
 
-// SubmitCrack - Submit a cracked hash result for a task
+// SendCrack - Submit a cracked hash result for a task
 // Submit a cracked hash result for a task.
-func (s *Tasks) SubmitCrack(ctx context.Context, id int64, hashcatResult *components.HashcatResult, opts ...operations.Option) (*operations.SubmitCrackResponse, error) {
+func (s *Tasks) SendCrack(ctx context.Context, id int64, hashcatResult *components.HashcatResult, opts ...operations.Option) (*operations.SendCrackResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "submitCrack",
+		OperationID:    "sendCrack",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
-	request := operations.SubmitCrackRequest{
+	request := operations.SendCrackRequest{
 		ID:            id,
 		HashcatResult: hashcatResult,
 	}
@@ -412,7 +412,7 @@ func (s *Tasks) SubmitCrack(ctx context.Context, id int64, hashcatResult *compon
 		}
 	}
 
-	res := &operations.SubmitCrackResponse{
+	res := &operations.SendCrackResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -444,16 +444,16 @@ func (s *Tasks) SubmitCrack(ctx context.Context, id int64, hashcatResult *compon
 	return res, nil
 }
 
-// SubmitStatus - Submit a status update for a task
+// SendStatus - Submit a status update for a task
 // Submit a status update for a task. This includes the status of the current guess and the devices.
-func (s *Tasks) SubmitStatus(ctx context.Context, id int64, taskStatus components.TaskStatus, opts ...operations.Option) (*operations.SubmitStatusResponse, error) {
+func (s *Tasks) SendStatus(ctx context.Context, id int64, taskStatus components.TaskStatus, opts ...operations.Option) (*operations.SendStatusResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "submitStatus",
+		OperationID:    "sendStatus",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
-	request := operations.SubmitStatusRequest{
+	request := operations.SendStatusRequest{
 		ID:         id,
 		TaskStatus: taskStatus,
 	}
@@ -551,7 +551,7 @@ func (s *Tasks) SubmitStatus(ctx context.Context, id int64, taskStatus component
 		}
 	}
 
-	res := &operations.SubmitStatusResponse{
+	res := &operations.SendStatusResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -583,16 +583,16 @@ func (s *Tasks) SubmitStatus(ctx context.Context, id int64, taskStatus component
 	return res, nil
 }
 
-// AcceptTask - Accept Task
+// SetTaskAccepted - Accept Task
 // Accept an offered task from the server.
-func (s *Tasks) AcceptTask(ctx context.Context, id int64, opts ...operations.Option) (*operations.AcceptTaskResponse, error) {
+func (s *Tasks) SetTaskAccepted(ctx context.Context, id int64, opts ...operations.Option) (*operations.SetTaskAcceptedResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "acceptTask",
+		OperationID:    "setTaskAccepted",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
-	request := operations.AcceptTaskRequest{
+	request := operations.SetTaskAcceptedRequest{
 		ID: id,
 	}
 
@@ -683,7 +683,7 @@ func (s *Tasks) AcceptTask(ctx context.Context, id int64, opts ...operations.Opt
 		}
 	}
 
-	res := &operations.AcceptTaskResponse{
+	res := &operations.SetTaskAcceptedResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -723,16 +723,16 @@ func (s *Tasks) AcceptTask(ctx context.Context, id int64, opts ...operations.Opt
 	return res, nil
 }
 
-// ExhaustedTask - Notify of Exhausted Task
+// SetTaskExhausted - Notify of Exhausted Task
 // Notify the server that the task is exhausted. This will mark the task as completed.
-func (s *Tasks) ExhaustedTask(ctx context.Context, id int64, opts ...operations.Option) (*operations.ExhaustedTaskResponse, error) {
+func (s *Tasks) SetTaskExhausted(ctx context.Context, id int64, opts ...operations.Option) (*operations.SetTaskExhaustedResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "exhaustedTask",
+		OperationID:    "setTaskExhausted",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
-	request := operations.ExhaustedTaskRequest{
+	request := operations.SetTaskExhaustedRequest{
 		ID: id,
 	}
 
@@ -823,7 +823,7 @@ func (s *Tasks) ExhaustedTask(ctx context.Context, id int64, opts ...operations.
 		}
 	}
 
-	res := &operations.ExhaustedTaskResponse{
+	res := &operations.SetTaskExhaustedResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -853,16 +853,16 @@ func (s *Tasks) ExhaustedTask(ctx context.Context, id int64, opts ...operations.
 	return res, nil
 }
 
-// AbandonTask - Abandon Task
+// SetTaskAbandoned - Abandon Task
 // Abandon a task. This will mark the task as abandoned. Usually used when the client is unable to complete the task.
-func (s *Tasks) AbandonTask(ctx context.Context, id int64, opts ...operations.Option) (*operations.AbandonTaskResponse, error) {
+func (s *Tasks) SetTaskAbandoned(ctx context.Context, id int64, opts ...operations.Option) (*operations.SetTaskAbandonedResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "abandonTask",
+		OperationID:    "setTaskAbandoned",
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
-	request := operations.AbandonTaskRequest{
+	request := operations.SetTaskAbandonedRequest{
 		ID: id,
 	}
 
@@ -953,7 +953,7 @@ func (s *Tasks) AbandonTask(ctx context.Context, id int64, opts ...operations.Op
 		}
 	}
 
-	res := &operations.AbandonTaskResponse{
+	res := &operations.SetTaskAbandonedResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,

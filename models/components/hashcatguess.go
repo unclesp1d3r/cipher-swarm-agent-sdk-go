@@ -3,15 +3,24 @@
 package components
 
 type HashcatGuess struct {
-	GuessBase           string  `json:"guess_base"`
-	GuessBaseCount      int64   `json:"guess_base_count"`
-	GuessBaseOffset     int64   `json:"guess_base_offset"`
+	// The base value used for the guess (for example, the mask)
+	GuessBase string `json:"guess_base"`
+	// The number of times the base value was used
+	GuessBaseCount int64 `json:"guess_base_count"`
+	// The offset of the base value
+	GuessBaseOffset int64 `json:"guess_base_offset"`
+	// The percentage completion of the base value
 	GuessBasePercentage float64 `json:"guess_base_percentage"`
-	GuessMod            string  `json:"guess_mod"`
-	GuessModCount       int64   `json:"guess_mod_count"`
-	GuessModOffset      int64   `json:"guess_mod_offset"`
-	GuessModPercentage  float64 `json:"guess_mod_percentage"`
-	GuessMode           int64   `json:"guess_mode"`
+	// The modifier used for the guess (for example, the wordlist)
+	GuessMod string `json:"guess_mod"`
+	// The number of times the modifier was used
+	GuessModCount int64 `json:"guess_mod_count"`
+	// The offset of the modifier
+	GuessModOffset int64 `json:"guess_mod_offset"`
+	// The percentage completion of the modifier
+	GuessModPercentage float64 `json:"guess_mod_percentage"`
+	// The mode used for the guess
+	GuessMode int64 `json:"guess_mode"`
 }
 
 func (o *HashcatGuess) GetGuessBase() string {
