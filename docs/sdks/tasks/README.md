@@ -35,8 +35,6 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-
-    
     ctx := context.Background()
     res, err := s.Tasks.GetNewTask(ctx)
     if err != nil {
@@ -82,9 +80,7 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-
     var id int64 = 771489
-    
     ctx := context.Background()
     res, err := s.Tasks.GetTask(ctx, id)
     if err != nil {
@@ -133,7 +129,6 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-
     var id int64 = 302642
 
     var hashcatResult *components.HashcatResult = &components.HashcatResult{
@@ -141,7 +136,6 @@ func main() {
         Hash: "<value>",
         PlainText: "<value>",
     }
-    
     ctx := context.Background()
     res, err := s.Tasks.SendCrack(ctx, id, hashcatResult)
     if err != nil {
@@ -191,7 +185,6 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-
     var id int64 = 204258
 
     taskStatus := components.TaskStatus{
@@ -235,7 +228,6 @@ func main() {
         TimeStart: types.MustTimeFromString("2024-10-11T04:57:47.416Z"),
         EstimatedStop: types.MustTimeFromString("2022-10-24T09:23:01.835Z"),
     }
-    
     ctx := context.Background()
     res, err := s.Tasks.SendStatus(ctx, id, taskStatus)
     if err != nil {
@@ -283,9 +275,7 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-
     var id int64 = 893037
-    
     ctx := context.Background()
     res, err := s.Tasks.SetTaskAccepted(ctx, id)
     if err != nil {
@@ -333,9 +323,7 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-
     var id int64 = 700537
-    
     ctx := context.Background()
     res, err := s.Tasks.SetTaskExhausted(ctx, id)
     if err != nil {
@@ -382,9 +370,7 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-
     var id int64 = 885883
-    
     ctx := context.Background()
     res, err := s.Tasks.SetTaskAbandoned(ctx, id)
     if err != nil {

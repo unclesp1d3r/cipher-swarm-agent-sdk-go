@@ -159,17 +159,11 @@ func WithClient(client HTTPClient) SDKOption {
 	}
 }
 
-func withSecurity(security interface{}) func(context.Context) (interface{}, error) {
-	return func(context.Context) (interface{}, error) {
-		return security, nil
-	}
-}
-
 // WithSecurity configures the SDK to use the provided security details
 func WithSecurity(bearerAuth string) SDKOption {
 	return func(sdk *CipherSwarmAgentSDK) {
 		security := components.Security{BearerAuth: bearerAuth}
-		sdk.sdkConfiguration.Security = withSecurity(&security)
+		sdk.sdkConfiguration.Security = utils.AsSecuritySource(&security)
 	}
 }
 
@@ -194,9 +188,9 @@ func New(opts ...SDKOption) *CipherSwarmAgentSDK {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.1",
-			SDKVersion:        "0.2.0",
-			GenVersion:        "2.333.3",
-			UserAgent:         "speakeasy-sdk/go 0.2.0 2.333.3 1.1 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
+			SDKVersion:        "0.2.1",
+			GenVersion:        "2.335.5",
+			UserAgent:         "speakeasy-sdk/go 0.2.1 2.335.5 1.1 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
 			ServerDefaults: []map[string]string{
 				{
 					"defaultHost": "www.example.com",

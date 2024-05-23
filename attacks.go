@@ -176,6 +176,7 @@ func (s *Attacks) GetAttack(ctx context.Context, id int64, opts ...operations.Op
 	}
 
 	return res, nil
+
 }
 
 // GetHashList - Get the hash list
@@ -314,4 +315,5 @@ func (s *Attacks) GetHashList(ctx context.Context, id int64, opts ...operations.
 	}
 
 	return res, nil
+
 }

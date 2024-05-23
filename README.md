@@ -46,9 +46,7 @@ func main() {
 	s := cipherswarmagentsdkgo.New(
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-
 	var id int64 = 135003
-
 	ctx := context.Background()
 	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {
@@ -125,9 +123,7 @@ func main() {
 	s := cipherswarmagentsdkgo.New(
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-
 	var id int64 = 135003
-
 	ctx := context.Background()
 	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {
@@ -177,9 +173,7 @@ func main() {
 		cipherswarmagentsdkgo.WithServerIndex(1),
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-
 	var id int64 = 135003
-
 	ctx := context.Background()
 	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {
@@ -216,9 +210,7 @@ func main() {
 		cipherswarmagentsdkgo.WithServerURL("https://{defaultHost}"),
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-
 	var id int64 = 135003
-
 	ctx := context.Background()
 	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {
@@ -286,9 +278,7 @@ func main() {
 	s := cipherswarmagentsdkgo.New(
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-
 	var id int64 = 135003
-
 	ctx := context.Background()
 	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {
@@ -329,9 +319,7 @@ func main() {
 	s := cipherswarmagentsdkgo.New(
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-
 	var id int64 = 135003
-
 	ctx := context.Background()
 	res, err := s.Agents.GetAgent(ctx, id, operations.WithRetries(
 		utils.RetryConfig{
@@ -380,9 +368,7 @@ func main() {
 			}),
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-
 	var id int64 = 135003
-
 	ctx := context.Background()
 	res, err := s.Agents.GetAgent(ctx, id)
 	if err != nil {

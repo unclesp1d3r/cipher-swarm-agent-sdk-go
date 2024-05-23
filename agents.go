@@ -174,6 +174,7 @@ func (s *Agents) GetAgent(ctx context.Context, id int64, opts ...operations.Opti
 	}
 
 	return res, nil
+
 }
 
 // UpdateAgent - Updates the agent
@@ -330,6 +331,7 @@ func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *compone
 	}
 
 	return res, nil
+
 }
 
 // SendHeartbeat - Send a heartbeat for an agent
@@ -468,6 +470,7 @@ func (s *Agents) SendHeartbeat(ctx context.Context, id int64, opts ...operations
 	}
 
 	return res, nil
+
 }
 
 // GetAgentLastBenchmarkDate - last_benchmark agent
@@ -617,6 +620,7 @@ func (s *Agents) GetAgentLastBenchmarkDate(ctx context.Context, id int64, opts .
 	}
 
 	return res, nil
+
 }
 
 // SubmitBenchmark - submit_benchmark agent
@@ -754,4 +758,5 @@ func (s *Agents) SubmitBenchmark(ctx context.Context, id int64, requestBody []co
 	}
 
 	return res, nil
+
 }
