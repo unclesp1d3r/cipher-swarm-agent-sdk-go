@@ -162,6 +162,7 @@ func (s *Tasks) GetNewTask(ctx context.Context, opts ...operations.Option) (*ope
 	}
 
 	return res, nil
+
 }
 
 // GetTask - Request the task information
@@ -303,6 +304,7 @@ func (s *Tasks) GetTask(ctx context.Context, id int64, opts ...operations.Option
 	}
 
 	return res, nil
+
 }
 
 // SendCrack - Submit a cracked hash result for a task
@@ -442,6 +444,7 @@ func (s *Tasks) SendCrack(ctx context.Context, id int64, hashcatResult *componen
 	}
 
 	return res, nil
+
 }
 
 // SendStatus - Submit a status update for a task
@@ -581,6 +584,7 @@ func (s *Tasks) SendStatus(ctx context.Context, id int64, taskStatus components.
 	}
 
 	return res, nil
+
 }
 
 // SetTaskAccepted - Accept Task
@@ -721,6 +725,7 @@ func (s *Tasks) SetTaskAccepted(ctx context.Context, id int64, opts ...operation
 	}
 
 	return res, nil
+
 }
 
 // SetTaskExhausted - Notify of Exhausted Task
@@ -851,6 +856,7 @@ func (s *Tasks) SetTaskExhausted(ctx context.Context, id int64, opts ...operatio
 	}
 
 	return res, nil
+
 }
 
 // SetTaskAbandoned - Abandon Task
@@ -993,4 +999,5 @@ func (s *Tasks) SetTaskAbandoned(ctx context.Context, id int64, opts ...operatio
 	}
 
 	return res, nil
+
 }

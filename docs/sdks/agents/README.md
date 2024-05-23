@@ -32,9 +32,7 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-
     var id int64 = 135003
-    
     ctx := context.Background()
     res, err := s.Agents.GetAgent(ctx, id)
     if err != nil {
@@ -83,7 +81,6 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-
     var id int64 = 828119
 
     var agentUpdate *components.AgentUpdate = &components.AgentUpdate{
@@ -95,7 +92,6 @@ func main() {
             "<value>",
         },
     }
-    
     ctx := context.Background()
     res, err := s.Agents.UpdateAgent(ctx, id, agentUpdate)
     if err != nil {
@@ -144,9 +140,7 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-
     var id int64 = 992386
-    
     ctx := context.Background()
     res, err := s.Agents.SendHeartbeat(ctx, id)
     if err != nil {
@@ -194,9 +188,7 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-
     var id int64 = 998564
-    
     ctx := context.Background()
     res, err := s.Agents.GetAgentLastBenchmarkDate(ctx, id)
     if err != nil {
@@ -245,7 +237,6 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-
     var id int64 = 303399
 
     var requestBody []components.HashcatBenchmark = []components.HashcatBenchmark{
@@ -256,7 +247,6 @@ func main() {
             Device: 322052,
         },
     }
-    
     ctx := context.Background()
     res, err := s.Agents.SubmitBenchmark(ctx, id, requestBody)
     if err != nil {

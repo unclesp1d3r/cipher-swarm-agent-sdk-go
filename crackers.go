@@ -180,4 +180,5 @@ func (s *Crackers) CheckForCrackerUpdate(ctx context.Context, operatingSystem *s
 	}
 
 	return res, nil
+
 }

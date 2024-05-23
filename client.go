@@ -161,6 +161,7 @@ func (s *Client) GetConfiguration(ctx context.Context, opts ...operations.Option
 	}
 
 	return res, nil
+
 }
 
 // Authenticate Client
@@ -296,4 +297,5 @@ func (s *Client) Authenticate(ctx context.Context, opts ...operations.Option) (*
 	}
 
 	return res, nil
+
 }

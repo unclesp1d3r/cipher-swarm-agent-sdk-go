@@ -30,8 +30,6 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-
-    
     ctx := context.Background()
     res, err := s.Client.GetConfiguration(ctx)
     if err != nil {
@@ -78,8 +76,6 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
-
-    
     ctx := context.Background()
     res, err := s.Client.Authenticate(ctx)
     if err != nil {
