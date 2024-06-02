@@ -5,10 +5,41 @@ package components
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/utils"
+	"time"
 )
 
 // Metadata - Additional metadata about the error
 type Metadata struct {
+	// The date of the error
+	ErrorDate time.Time `json:"error_date"`
+	// Other metadata
+	Other map[string]any `json:"other,omitempty"`
+}
+
+func (m Metadata) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(m, "", false)
+}
+
+func (m *Metadata) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &m, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Metadata) GetErrorDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.ErrorDate
+}
+
+func (o *Metadata) GetOther() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.Other
 }
 
 // Severity - The severity of the error
