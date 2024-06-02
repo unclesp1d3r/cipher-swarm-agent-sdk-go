@@ -15,11 +15,11 @@ type Metadata struct {
 type Severity string
 
 const (
-	SeverityLow      Severity = "low,"
-	SeverityWarning  Severity = "warning,"
-	SeverityMinor    Severity = "minor,"
-	SeverityMajor    Severity = "major,"
-	SeverityCritical Severity = "critical,"
+	SeverityLow      Severity = "low"
+	SeverityWarning  Severity = "warning"
+	SeverityMinor    Severity = "minor"
+	SeverityMajor    Severity = "major"
+	SeverityCritical Severity = "critical"
 	SeverityFatal    Severity = "fatal"
 )
 
@@ -32,15 +32,15 @@ func (e *Severity) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	switch v {
-	case "low,":
+	case "low":
 		fallthrough
-	case "warning,":
+	case "warning":
 		fallthrough
-	case "minor,":
+	case "minor":
 		fallthrough
-	case "major,":
+	case "major":
 		fallthrough
-	case "critical,":
+	case "critical":
 		fallthrough
 	case "fatal":
 		*e = Severity(v)

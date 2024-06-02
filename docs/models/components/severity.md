@@ -7,9 +7,9 @@ The severity of the error
 
 | Name               | Value              |
 | ------------------ | ------------------ |
-| `SeverityLow`      | low,               |
-| `SeverityWarning`  | warning,           |
-| `SeverityMinor`    | minor,             |
-| `SeverityMajor`    | major,             |
-| `SeverityCritical` | critical,          |
+| `SeverityLow`      | low                |
+| `SeverityWarning`  | warning            |
+| `SeverityMinor`    | minor              |
+| `SeverityMajor`    | major              |
+| `SeverityCritical` | critical           |
 | `SeverityFatal`    | fatal              |
