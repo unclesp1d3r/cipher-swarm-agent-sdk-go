@@ -3,10 +3,10 @@ id: 11fa8266-8454-49fd-ba7b-d5f8744980cc
 management:
   docChecksum: 5296c69b0081aace4198afc54e23f3c6
   docVersion: "1.2"
-  speakeasyVersion: 1.299.6
-  generationVersion: 2.338.12
-  releaseVersion: 0.3.2
-  configChecksum: 7060b97d34ce44bbe4532194226b4b4f
+  speakeasyVersion: 1.300.1
+  generationVersion: 2.339.1
+  releaseVersion: 0.3.3
+  configChecksum: 917c595a30e5478e5e2069b02c0293d5
   repoURL: https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go.git
   installationURL: https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go
 features:
@@ -23,7 +23,7 @@ features:
     intellisenseMarkdownSupport: 0.1.0
     nullables: 0.1.0
     responseFormat: 0.1.2
-    retries: 2.82.2
+    retries: 2.82.3
     sdkHooks: 0.1.0
 generatedFiles:
   - agents.go
