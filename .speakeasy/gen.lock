@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 11fa8266-8454-49fd-ba7b-d5f8744980cc
 management:
-  docChecksum: 5296c69b0081aace4198afc54e23f3c6
-  docVersion: "1.2"
+  docChecksum: 04b730dfefaeb1b346b57d51d5c9fe69
+  docVersion: "1.3"
   speakeasyVersion: 1.300.1
   generationVersion: 2.339.1
-  releaseVersion: 0.3.3
-  configChecksum: 917c595a30e5478e5e2069b02c0293d5
+  releaseVersion: 0.4.0
+  configChecksum: 9cad17c771e32a54d6c7ddfe2f248da6
   repoURL: https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go.git
   installationURL: https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go
 features:
@@ -52,9 +52,9 @@ generatedFiles:
   - /models/operations/getagent.go
   - /models/operations/updateagent.go
   - /models/operations/sendheartbeat.go
-  - /models/operations/getagentlastbenchmarkdate.go
   - /models/operations/submitbenchmark.go
   - /models/operations/submiterroragent.go
+  - /models/operations/setagentshutdown.go
   - /models/operations/getattack.go
   - /models/operations/gethashlist.go
   - /models/operations/checkforcrackerupdate.go
@@ -70,7 +70,7 @@ generatedFiles:
   - /models/components/agent.go
   - /models/components/advancedagentconfiguration.go
   - /models/components/agentupdate.go
-  - /models/components/agentlastbenchmark.go
+  - /models/components/agentheartbeatresponse.go
   - /models/components/hashcatbenchmark.go
   - /models/components/agenterror.go
   - /models/components/attack.go
@@ -92,12 +92,12 @@ generatedFiles:
   - docs/models/operations/updateagentresponse.md
   - docs/models/operations/sendheartbeatrequest.md
   - docs/models/operations/sendheartbeatresponse.md
-  - docs/models/operations/getagentlastbenchmarkdaterequest.md
-  - docs/models/operations/getagentlastbenchmarkdateresponse.md
   - docs/models/operations/submitbenchmarkrequest.md
   - docs/models/operations/submitbenchmarkresponse.md
   - docs/models/operations/submiterroragentrequest.md
   - docs/models/operations/submiterroragentresponse.md
+  - docs/models/operations/setagentshutdownrequest.md
+  - docs/models/operations/setagentshutdownresponse.md
   - docs/models/operations/getattackrequest.md
   - docs/models/operations/getattackresponse.md
   - docs/models/operations/gethashlistrequest.md
@@ -119,10 +119,12 @@ generatedFiles:
   - docs/models/operations/settaskabandonedresponse.md
   - docs/models/operations/getconfigurationresponse.md
   - docs/models/operations/authenticateresponse.md
+  - docs/models/components/state.md
   - docs/models/components/agent.md
   - docs/models/components/advancedagentconfiguration.md
   - docs/models/components/agentupdate.md
-  - docs/models/components/agentlastbenchmark.md
+  - docs/models/components/agentheartbeatresponsestate.md
+  - docs/models/components/agentheartbeatresponse.md
   - docs/models/components/hashcatbenchmark.md
   - docs/models/components/metadata.md
   - docs/models/components/severity.md

@@ -68,9 +68,9 @@ func main() {
 * [GetAgent](docs/sdks/agents/README.md#getagent) - Gets an instance of an agent
 * [UpdateAgent](docs/sdks/agents/README.md#updateagent) - Updates the agent
 * [SendHeartbeat](docs/sdks/agents/README.md#sendheartbeat) - Send a heartbeat for an agent
-* [GetAgentLastBenchmarkDate](docs/sdks/agents/README.md#getagentlastbenchmarkdate) - last_benchmark agent
 * [SubmitBenchmark](docs/sdks/agents/README.md#submitbenchmark) - submit_benchmark agent
 * [SubmitErrorAgent](docs/sdks/agents/README.md#submiterroragent) - Submit an error for an agent
+* [SetAgentShutdown](docs/sdks/agents/README.md#setagentshutdown) - shutdown agent
 
 ### [Attacks](docs/sdks/attacks/README.md)
 

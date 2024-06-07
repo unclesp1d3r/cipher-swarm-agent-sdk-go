@@ -10,9 +10,9 @@ Agents API
 * [GetAgent](#getagent) - Gets an instance of an agent
 * [UpdateAgent](#updateagent) - Updates the agent
 * [SendHeartbeat](#sendheartbeat) - Send a heartbeat for an agent
-* [GetAgentLastBenchmarkDate](#getagentlastbenchmarkdate) - last_benchmark agent
 * [SubmitBenchmark](#submitbenchmark) - submit_benchmark agent
 * [SubmitErrorAgent](#submiterroragent) - Submit an error for an agent
+* [SetAgentShutdown](#setagentshutdown) - shutdown agent
 
 ## GetAgent
 
@@ -147,7 +147,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res != nil {
+    if res.AgentHeartbeatResponse != nil {
         // handle response
     }
 }
@@ -165,54 +165,6 @@ func main() {
 ### Response
 
 **[*operations.SendHeartbeatResponse](../../models/operations/sendheartbeatresponse.md), error**
-| Error Object          | Status Code           | Content Type          |
-| --------------------- | --------------------- | --------------------- |
-| sdkerrors.ErrorObject | 401                   | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
-
-## GetAgentLastBenchmarkDate
-
-Returns the last benchmark date for an agent
-
-### Example Usage
-
-```go
-package main
-
-import(
-	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
-	"context"
-	"log"
-)
-
-func main() {
-    s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
-    )
-    var id int64 = 998564
-    ctx := context.Background()
-    res, err := s.Agents.GetAgentLastBenchmarkDate(ctx, id)
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.AgentLastBenchmark != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
-
-
-### Response
-
-**[*operations.GetAgentLastBenchmarkDateResponse](../../models/operations/getagentlastbenchmarkdateresponse.md), error**
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
@@ -327,6 +279,53 @@ func main() {
 ### Response
 
 **[*operations.SubmitErrorAgentResponse](../../models/operations/submiterroragentresponse.md), error**
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| sdkerrors.SDKError | 4xx-5xx            | */*                |
+
+## SetAgentShutdown
+
+Marks the agent as shutdown and offline, freeing any assigned tasks.
+
+### Example Usage
+
+```go
+package main
+
+import(
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"context"
+	"log"
+)
+
+func main() {
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    )
+    var id int64 = 811605
+    ctx := context.Background()
+    res, err := s.Agents.SetAgentShutdown(ctx, id)
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+
+### Response
+
+**[*operations.SetAgentShutdownResponse](../../models/operations/setagentshutdownresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |

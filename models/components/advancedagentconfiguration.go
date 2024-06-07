@@ -9,6 +9,8 @@ type AdvancedAgentConfiguration struct {
 	UseNativeHashcat *bool `json:"use_native_hashcat"`
 	// The device to use for hashcat
 	BackendDevice *string `json:"backend_device"`
+	// Causes hashcat to perform benchmark-all, rather than just benchmark
+	EnableAdditionalHashTypes bool `json:"enable_additional_hash_types"`
 }
 
 func (o *AdvancedAgentConfiguration) GetAgentUpdateInterval() *int64 {
@@ -30,4 +32,11 @@ func (o *AdvancedAgentConfiguration) GetBackendDevice() *string {
 		return nil
 	}
 	return o.BackendDevice
+}
+
+func (o *AdvancedAgentConfiguration) GetEnableAdditionalHashTypes() bool {
+	if o == nil {
+		return false
+	}
+	return o.EnableAdditionalHashTypes
 }
