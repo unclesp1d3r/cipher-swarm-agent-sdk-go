@@ -1,4 +1,4 @@
-# GetAgentLastBenchmarkDateRequest
+# SetAgentShutdownRequest
 
 
 ## Fields

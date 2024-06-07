@@ -2,6 +2,44 @@
 
 package components
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
+// State - The state of the agent
+type State string
+
+const (
+	StatePending State = "pending"
+	StateActive  State = "active"
+	StateStopped State = "stopped"
+	StateError   State = "error"
+)
+
+func (e State) ToPointer() *State {
+	return &e
+}
+func (e *State) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "pending":
+		fallthrough
+	case "active":
+		fallthrough
+	case "stopped":
+		fallthrough
+	case "error":
+		*e = State(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for State: %v", v)
+	}
+}
+
 type Agent struct {
 	// The id of the agent
 	ID int64 `json:"id"`
@@ -11,12 +49,8 @@ type Agent struct {
 	ClientSignature string `json:"client_signature"`
 	// Additional command line parameters to use for hashcat
 	CommandParameters *string `json:"command_parameters"`
-	// Use only the CPU for hashcat
-	CPUOnly bool `json:"cpu_only"`
-	// The agent is trusted with sensitive hash lists
-	Trusted bool `json:"trusted"`
-	// Ignore errors from the agent
-	IgnoreErrors bool `json:"ignore_errors"`
+	// The state of the agent
+	State State `json:"state"`
 	// The operating system of the agent
 	OperatingSystem       string                     `json:"operating_system"`
 	Devices               []string                   `json:"devices"`
@@ -51,25 +85,11 @@ func (o *Agent) GetCommandParameters() *string {
 	return o.CommandParameters
 }
 
-func (o *Agent) GetCPUOnly() bool {
+func (o *Agent) GetState() State {
 	if o == nil {
-		return false
+		return State("")
 	}
-	return o.CPUOnly
-}
-
-func (o *Agent) GetTrusted() bool {
-	if o == nil {
-		return false
-	}
-	return o.Trusted
-}
-
-func (o *Agent) GetIgnoreErrors() bool {
-	if o == nil {
-		return false
-	}
-	return o.IgnoreErrors
+	return o.State
 }
 
 func (o *Agent) GetOperatingSystem() string {

@@ -3,6 +3,7 @@
 package operations
 
 import (
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"net/http"
 )
 
@@ -25,6 +26,8 @@ type SendHeartbeatResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// successful, but with server feedback
+	AgentHeartbeatResponse *components.AgentHeartbeatResponse
 }
 
 func (o *SendHeartbeatResponse) GetContentType() string {
@@ -46,4 +49,11 @@ func (o *SendHeartbeatResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *SendHeartbeatResponse) GetAgentHeartbeatResponse() *components.AgentHeartbeatResponse {
+	if o == nil {
+		return nil
+	}
+	return o.AgentHeartbeatResponse
 }
