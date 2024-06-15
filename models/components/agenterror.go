@@ -42,11 +42,17 @@ func (o *Metadata) GetOther() map[string]any {
 	return o.Other
 }
 
-// Severity - The severity of the error
+// Severity - The severity of the error:
+//   - `info` - Informational message, no action required.
+//   - `warning` - Non-critical error, no action required. Anticipated, but not necessarily problematic.
+//   - `minor` - Minor error, no action required. Should be investigated, but the task can continue.
+//   - `major` - Major error, action required. The task should be investigated and possibly restarted.
+//   - `critical` - Critical error, action required. The task should be stopped and investigated.
+//   - `fatal` - Fatal error, action required. The agent cannot continue with the task and should not be reattempted.
 type Severity string
 
 const (
-	SeverityLow      Severity = "low"
+	SeverityInfo     Severity = "info"
 	SeverityWarning  Severity = "warning"
 	SeverityMinor    Severity = "minor"
 	SeverityMajor    Severity = "major"
@@ -63,7 +69,7 @@ func (e *Severity) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	switch v {
-	case "low":
+	case "info":
 		fallthrough
 	case "warning":
 		fallthrough
@@ -86,7 +92,13 @@ type AgentError struct {
 	Message string `json:"message"`
 	// Additional metadata about the error
 	Metadata *Metadata `json:"metadata,omitempty"`
-	// The severity of the error
+	// The severity of the error:
+	//                        * `info` - Informational message, no action required.
+	//                        * `warning` - Non-critical error, no action required. Anticipated, but not necessarily problematic.
+	//                        * `minor` - Minor error, no action required. Should be investigated, but the task can continue.
+	//                        * `major` - Major error, action required. The task should be investigated and possibly restarted.
+	//                        * `critical` - Critical error, action required. The task should be stopped and investigated.
+	//                         * `fatal` - Fatal error, action required. The agent cannot continue with the task and should not be reattempted.
 	Severity Severity `json:"severity"`
 	// The agent that caused the error
 	AgentID int64 `json:"agent_id"`
