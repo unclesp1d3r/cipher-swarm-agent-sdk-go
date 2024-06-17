@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 11fa8266-8454-49fd-ba7b-d5f8744980cc
 management:
-  docChecksum: 6d43892a6cdfbfdcc04d47bb3af34e60
+  docChecksum: 13941b7eb004b6631866b44c72c33af1
   docVersion: "1.3"
   speakeasyVersion: 1.308.1
   generationVersion: 2.342.6
-  releaseVersion: 0.4.1
-  configChecksum: 1aa14dcabce06d8d4169565b4324a65c
+  releaseVersion: 0.4.2
+  configChecksum: e8ad5ec4974e965607d28dcb48fc78d6
   repoURL: https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go.git
   installationURL: https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go
 features:

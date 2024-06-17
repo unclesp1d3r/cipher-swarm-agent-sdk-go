@@ -15,8 +15,8 @@ const (
 	AttackModeDictionary       AttackMode = "dictionary"
 	AttackModeCombinator       AttackMode = "combinator"
 	AttackModeMask             AttackMode = "mask"
-	AttackModeHybridDictionary AttackMode = "hybrid-dictionary"
-	AttackModeHybridMask       AttackMode = "hybrid-mask"
+	AttackModeHybridDictionary AttackMode = "hybrid_dictionary"
+	AttackModeHybridMask       AttackMode = "hybrid_mask"
 )
 
 func (e AttackMode) ToPointer() *AttackMode {
@@ -34,9 +34,9 @@ func (e *AttackMode) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "mask":
 		fallthrough
-	case "hybrid-dictionary":
+	case "hybrid_dictionary":
 		fallthrough
-	case "hybrid-mask":
+	case "hybrid_mask":
 		*e = AttackMode(v)
 		return nil
 	default:
