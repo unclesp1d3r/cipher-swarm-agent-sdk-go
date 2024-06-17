@@ -10,5 +10,5 @@ Attack mode name
 | `AttackModeDictionary`       | dictionary                   |
 | `AttackModeCombinator`       | combinator                   |
 | `AttackModeMask`             | mask                         |
-| `AttackModeHybridDictionary` | hybrid-dictionary            |
-| `AttackModeHybridMask`       | hybrid-mask                  |
+| `AttackModeHybridDictionary` | hybrid_dictionary            |
+| `AttackModeHybridMask`       | hybrid_mask                  |
