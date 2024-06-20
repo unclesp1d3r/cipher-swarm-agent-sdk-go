@@ -286,7 +286,7 @@ func (s *Attacks) GetHashList(ctx context.Context, id int64, opts ...operations.
 	}
 
 	if (httpRes.StatusCode == 200) && utils.MatchContentType(httpRes.Header.Get("Content-Type"), `text/plain`) {
-		res.Stream = httpRes.Body
+		res.ResponseStream = httpRes.Body
 
 		return res, nil
 	}

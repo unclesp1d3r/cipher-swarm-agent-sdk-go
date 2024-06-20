@@ -28,7 +28,7 @@ type GetHashListResponse struct {
 	RawResponse *http.Response
 	// successful
 	// The Close method must be called on this field, even if it is not used, to prevent resource leaks.
-	Stream io.ReadCloser
+	ResponseStream io.ReadCloser
 }
 
 func (o *GetHashListResponse) GetContentType() string {
@@ -52,9 +52,9 @@ func (o *GetHashListResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetHashListResponse) GetStream() io.ReadCloser {
+func (o *GetHashListResponse) GetResponseStream() io.ReadCloser {
 	if o == nil {
 		return nil
 	}
-	return o.Stream
+	return o.ResponseStream
 }

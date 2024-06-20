@@ -83,7 +83,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.Stream != nil {
+    if res.ResponseStream != nil {
         // handle response
     }
 }
