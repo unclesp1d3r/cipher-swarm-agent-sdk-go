@@ -8,6 +8,7 @@ import (
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/hooks"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/internal/utils"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/retry"
 	"net/http"
 	"time"
 )
@@ -54,7 +55,7 @@ type sdkConfiguration struct {
 	SDKVersion        string
 	GenVersion        string
 	UserAgent         string
-	RetryConfig       *utils.RetryConfig
+	RetryConfig       *retry.Config
 	Hooks             *hooks.Hooks
 }
 
@@ -176,7 +177,7 @@ func WithSecuritySource(security func(context.Context) (components.Security, err
 	}
 }
 
-func WithRetryConfig(retryConfig utils.RetryConfig) SDKOption {
+func WithRetryConfig(retryConfig retry.Config) SDKOption {
 	return func(sdk *CipherSwarmAgentSDK) {
 		sdk.sdkConfiguration.RetryConfig = &retryConfig
 	}
@@ -188,9 +189,9 @@ func New(opts ...SDKOption) *CipherSwarmAgentSDK {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.3",
-			SDKVersion:        "0.4.6",
-			GenVersion:        "2.349.6",
-			UserAgent:         "speakeasy-sdk/go 0.4.6 2.349.6 1.3 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
+			SDKVersion:        "0.5.0",
+			GenVersion:        "2.359.0",
+			UserAgent:         "speakeasy-sdk/go 0.5.0 2.359.0 1.3 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
 			ServerDefaults: []map[string]string{
 				{
 					"defaultHost": "www.example.com",
