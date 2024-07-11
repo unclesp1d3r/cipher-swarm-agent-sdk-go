@@ -57,6 +57,7 @@ type sdkConfiguration struct {
 	UserAgent         string
 	RetryConfig       *retry.Config
 	Hooks             *hooks.Hooks
+	Timeout           *time.Duration
 }
 
 func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
@@ -183,15 +184,22 @@ func WithRetryConfig(retryConfig retry.Config) SDKOption {
 	}
 }
 
+// WithTimeout Optional request timeout applied to each operation
+func WithTimeout(timeout time.Duration) SDKOption {
+	return func(sdk *CipherSwarmAgentSDK) {
+		sdk.sdkConfiguration.Timeout = &timeout
+	}
+}
+
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *CipherSwarmAgentSDK {
 	sdk := &CipherSwarmAgentSDK{
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.3",
-			SDKVersion:        "0.5.0",
-			GenVersion:        "2.359.0",
-			UserAgent:         "speakeasy-sdk/go 0.5.0 2.359.0 1.3 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
+			SDKVersion:        "0.6.0",
+			GenVersion:        "2.365.0",
+			UserAgent:         "speakeasy-sdk/go 0.6.0 2.365.0 1.3 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
 			ServerDefaults: []map[string]string{
 				{
 					"defaultHost": "www.example.com",
