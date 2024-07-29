@@ -20,6 +20,7 @@ Returns the configuration for the agent.
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -27,7 +28,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
 
     ctx := context.Background()
@@ -66,6 +67,7 @@ Authenticates the client. This is used to verify that the client is able to conn
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -73,7 +75,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
 
     ctx := context.Background()
