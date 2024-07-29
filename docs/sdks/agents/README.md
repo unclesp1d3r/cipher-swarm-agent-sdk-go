@@ -24,6 +24,7 @@ Returns an agent
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -31,7 +32,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 135003
     ctx := context.Background()
@@ -72,6 +73,7 @@ Updates an agent
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"context"
@@ -80,7 +82,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 828119
 
@@ -132,6 +134,7 @@ Send a heartbeat for an agent to keep it alive.
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -139,7 +142,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 992386
     ctx := context.Background()
@@ -180,6 +183,7 @@ Submit a benchmark for an agent
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"context"
@@ -188,7 +192,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 303399
 
@@ -238,6 +242,7 @@ Submit an error for an agent
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"context"
@@ -246,7 +251,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 607526
 
@@ -293,6 +298,7 @@ Marks the agent as shutdown and offline, freeing any assigned tasks.
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -300,7 +306,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 811605
     ctx := context.Background()

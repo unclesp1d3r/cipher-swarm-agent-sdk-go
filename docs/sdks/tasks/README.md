@@ -14,6 +14,7 @@ Tasks API
 * [SetTaskAccepted](#settaskaccepted) - Accept Task
 * [SetTaskExhausted](#settaskexhausted) - Notify of Exhausted Task
 * [SetTaskAbandoned](#settaskabandoned) - Abandon Task
+* [GetTaskZaps](#gettaskzaps) - Get Completed Hashes
 
 ## GetNewTask
 
@@ -25,6 +26,7 @@ Request a new task from the server, if available.
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -32,7 +34,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
 
     ctx := context.Background()
@@ -71,6 +73,7 @@ Request the task information from the server.
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -78,7 +81,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 771489
     ctx := context.Background()
@@ -118,6 +121,7 @@ Submit a cracked hash result for a task.
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
@@ -127,7 +131,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 302642
 
@@ -174,6 +178,7 @@ Submit a status update for a task. This includes the status of the current guess
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
@@ -183,7 +188,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 204258
 
@@ -266,6 +271,7 @@ Accept an offered task from the server.
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -273,7 +279,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 893037
     ctx := context.Background()
@@ -314,6 +320,7 @@ Notify the server that the task is exhausted. This will mark the task as complet
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -321,7 +328,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 700537
     ctx := context.Background()
@@ -361,6 +368,7 @@ Abandon a task. This will mark the task as abandoned. Usually used when the clie
 package main
 
 import(
+	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -368,7 +376,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 885883
     ctx := context.Background()
@@ -398,3 +406,51 @@ func main() {
 | -------------------- | -------------------- | -------------------- |
 | sdkerrors.StateError | 422                  | application/json     |
 | sdkerrors.SDKError   | 4xx-5xx              | */*                  |
+
+## GetTaskZaps
+
+Gets the completed hashes for a task. This is a text file that should be added to the monitored directory to remove the hashes from the list during runtime.
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"os"
+	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
+	"context"
+	"log"
+)
+
+func main() {
+    s := cipherswarmagentsdkgo.New(
+        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+    )
+    var id int64 = 174947
+    ctx := context.Background()
+    res, err := s.Tasks.GetTaskZaps(ctx, id)
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.ResponseStream != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+
+### Response
+
+**[*operations.GetTaskZapsResponse](../../models/operations/gettaskzapsresponse.md), error**
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| sdkerrors.SDKError | 4xx-5xx            | */*                |

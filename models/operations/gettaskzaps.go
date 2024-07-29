@@ -3,47 +3,58 @@
 package operations
 
 import (
+	"io"
 	"net/http"
 )
 
-type SetTaskAbandonedRequest struct {
+type GetTaskZapsRequest struct {
 	// id
 	ID int64 `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *SetTaskAbandonedRequest) GetID() int64 {
+func (o *GetTaskZapsRequest) GetID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ID
 }
 
-type SetTaskAbandonedResponse struct {
+type GetTaskZapsResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// successful
+	// The Close method must be called on this field, even if it is not used, to prevent resource leaks.
+	ResponseStream io.ReadCloser
 }
 
-func (o *SetTaskAbandonedResponse) GetContentType() string {
+func (o *GetTaskZapsResponse) GetContentType() string {
 	if o == nil {
 		return ""
 	}
 	return o.ContentType
 }
 
-func (o *SetTaskAbandonedResponse) GetStatusCode() int {
+func (o *GetTaskZapsResponse) GetStatusCode() int {
 	if o == nil {
 		return 0
 	}
 	return o.StatusCode
 }
 
-func (o *SetTaskAbandonedResponse) GetRawResponse() *http.Response {
+func (o *GetTaskZapsResponse) GetRawResponse() *http.Response {
 	if o == nil {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *GetTaskZapsResponse) GetResponseStream() io.ReadCloser {
+	if o == nil {
+		return nil
+	}
+	return o.ResponseStream
 }
