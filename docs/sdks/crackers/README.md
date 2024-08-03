@@ -29,11 +29,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
-    var operatingSystem *string = cipherswarmagentsdkgo.String("<value>")
 
-    var version *string = cipherswarmagentsdkgo.String("<value>")
     ctx := context.Background()
-    res, err := s.Crackers.CheckForCrackerUpdate(ctx, operatingSystem, version)
+    res, err := s.Crackers.CheckForCrackerUpdate(ctx, nil, nil)
     if err != nil {
         log.Fatal(err)
     }

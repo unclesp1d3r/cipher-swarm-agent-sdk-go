@@ -124,7 +124,6 @@ import(
 	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
 	"context"
 	"log"
 )
@@ -134,14 +133,8 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 302642
-
-    var hashcatResult *components.HashcatResult = &components.HashcatResult{
-        Timestamp: types.MustTimeFromString("2022-10-06T02:03:58.007Z"),
-        Hash: "<value>",
-        PlainText: "<value>",
-    }
     ctx := context.Background()
-    res, err := s.Tasks.SendCrack(ctx, id, hashcatResult)
+    res, err := s.Tasks.SendCrack(ctx, id, nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -180,8 +173,8 @@ package main
 import(
 	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
 	"context"
 	"log"
 )

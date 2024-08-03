@@ -47,8 +47,6 @@ type Agent struct {
 	Name string `json:"name"`
 	// The signature of the client
 	ClientSignature string `json:"client_signature"`
-	// Additional command line parameters to use for hashcat
-	CommandParameters *string `json:"command_parameters"`
 	// The state of the agent
 	State State `json:"state"`
 	// The operating system of the agent
@@ -76,13 +74,6 @@ func (o *Agent) GetClientSignature() string {
 		return ""
 	}
 	return o.ClientSignature
-}
-
-func (o *Agent) GetCommandParameters() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CommandParameters
 }
 
 func (o *Agent) GetState() State {

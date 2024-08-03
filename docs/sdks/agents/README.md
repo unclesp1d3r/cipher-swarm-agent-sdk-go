@@ -85,18 +85,8 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 828119
-
-    var agentUpdate *components.AgentUpdate = &components.AgentUpdate{
-        ID: 182255,
-        Name: "<value>",
-        ClientSignature: "<value>",
-        OperatingSystem: "<value>",
-        Devices: []string{
-            "<value>",
-        },
-    }
     ctx := context.Background()
-    res, err := s.Agents.UpdateAgent(ctx, id, agentUpdate)
+    res, err := s.Agents.UpdateAgent(ctx, id, nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -195,17 +185,8 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 303399
-
-    var requestBody []components.HashcatBenchmark = []components.HashcatBenchmark{
-        components.HashcatBenchmark{
-            HashType: 442220,
-            Runtime: 8499,
-            HashSpeed: 156.49,
-            Device: 322052,
-        },
-    }
     ctx := context.Background()
-    res, err := s.Agents.SubmitBenchmark(ctx, id, requestBody)
+    res, err := s.Agents.SubmitBenchmark(ctx, id, nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -254,14 +235,8 @@ func main() {
         cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
     )
     var id int64 = 607526
-
-    var agentError *components.AgentError = &components.AgentError{
-        Message: "<value>",
-        Severity: components.SeverityMajor,
-        AgentID: 837317,
-    }
     ctx := context.Background()
-    res, err := s.Agents.SubmitErrorAgent(ctx, id, agentError)
+    res, err := s.Agents.SubmitErrorAgent(ctx, id, nil)
     if err != nil {
         log.Fatal(err)
     }
