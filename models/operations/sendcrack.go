@@ -4,6 +4,7 @@ package operations
 
 import (
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/sdkerrors"
 	"net/http"
 )
 
@@ -34,6 +35,8 @@ type SendCrackResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// Hash already cracked
+	ErrorObject *sdkerrors.ErrorObject
 }
 
 func (o *SendCrackResponse) GetContentType() string {
@@ -55,4 +58,11 @@ func (o *SendCrackResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *SendCrackResponse) GetErrorObject() *sdkerrors.ErrorObject {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorObject
 }

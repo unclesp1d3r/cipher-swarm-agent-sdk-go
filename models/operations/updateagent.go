@@ -7,10 +7,57 @@ import (
 	"net/http"
 )
 
+type UpdateAgentRequestBody struct {
+	// The id of the agent
+	ID int64 `json:"id"`
+	// The hostname of the agent
+	Name string `json:"name"`
+	// The signature of the client
+	ClientSignature string `json:"client_signature"`
+	// The operating system of the agent
+	OperatingSystem string   `json:"operating_system"`
+	Devices         []string `json:"devices"`
+}
+
+func (o *UpdateAgentRequestBody) GetID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ID
+}
+
+func (o *UpdateAgentRequestBody) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *UpdateAgentRequestBody) GetClientSignature() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSignature
+}
+
+func (o *UpdateAgentRequestBody) GetOperatingSystem() string {
+	if o == nil {
+		return ""
+	}
+	return o.OperatingSystem
+}
+
+func (o *UpdateAgentRequestBody) GetDevices() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Devices
+}
+
 type UpdateAgentRequest struct {
 	// id
 	ID          int64                   `pathParam:"style=simple,explode=false,name=id"`
-	AgentUpdate *components.AgentUpdate `request:"mediaType=application/json"`
+	RequestBody *UpdateAgentRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *UpdateAgentRequest) GetID() int64 {
@@ -20,11 +67,11 @@ func (o *UpdateAgentRequest) GetID() int64 {
 	return o.ID
 }
 
-func (o *UpdateAgentRequest) GetAgentUpdate() *components.AgentUpdate {
+func (o *UpdateAgentRequest) GetRequestBody() *UpdateAgentRequestBody {
 	if o == nil {
 		return nil
 	}
-	return o.AgentUpdate
+	return o.RequestBody
 }
 
 type UpdateAgentResponse struct {

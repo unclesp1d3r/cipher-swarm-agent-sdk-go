@@ -225,7 +225,7 @@ func (s *Agents) GetAgent(ctx context.Context, id int64, opts ...operations.Opti
 
 // UpdateAgent - Updates the agent
 // Updates an agent
-func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *components.AgentUpdate, opts ...operations.Option) (*operations.UpdateAgentResponse, error) {
+func (s *Agents) UpdateAgent(ctx context.Context, id int64, requestBody *operations.UpdateAgentRequestBody, opts ...operations.Option) (*operations.UpdateAgentResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "updateAgent",
@@ -234,7 +234,7 @@ func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *compone
 
 	request := operations.UpdateAgentRequest{
 		ID:          id,
-		AgentUpdate: agentUpdate,
+		RequestBody: requestBody,
 	}
 
 	o := operations.Options{}
@@ -255,7 +255,7 @@ func (s *Agents) UpdateAgent(ctx context.Context, id int64, agentUpdate *compone
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "AgentUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "RequestBody", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
 	}
@@ -587,12 +587,12 @@ func (s *Agents) SendHeartbeat(ctx context.Context, id int64, opts ...operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			var out components.AgentHeartbeatResponse
+			var out operations.SendHeartbeatResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.AgentHeartbeatResponse = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -621,9 +621,9 @@ func (s *Agents) SendHeartbeat(ctx context.Context, id int64, opts ...operations
 
 }
 
-// SubmitBenchmark - submit_benchmark agent
+// SubmitBenchmark - submit agent benchmarks
 // Submit a benchmark for an agent
-func (s *Agents) SubmitBenchmark(ctx context.Context, id int64, requestBody []components.HashcatBenchmark, opts ...operations.Option) (*operations.SubmitBenchmarkResponse, error) {
+func (s *Agents) SubmitBenchmark(ctx context.Context, id int64, requestBody operations.SubmitBenchmarkRequestBody, opts ...operations.Option) (*operations.SubmitBenchmarkResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "submitBenchmark",
@@ -653,7 +653,7 @@ func (s *Agents) SubmitBenchmark(ctx context.Context, id int64, requestBody []co
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "RequestBody", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "RequestBody", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
 	}
@@ -673,7 +673,7 @@ func (s *Agents) SubmitBenchmark(ctx context.Context, id int64, requestBody []co
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
-	req.Header.Set("Accept", "*/*")
+	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -791,7 +791,17 @@ func (s *Agents) SubmitBenchmark(ctx context.Context, id int64, requestBody []co
 	case httpRes.StatusCode == 400:
 		fallthrough
 	case httpRes.StatusCode == 401:
-		fallthrough
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			var out sdkerrors.ErrorObject
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			return nil, &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
 	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
 		fallthrough
 	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
@@ -806,7 +816,7 @@ func (s *Agents) SubmitBenchmark(ctx context.Context, id int64, requestBody []co
 
 // SubmitErrorAgent - Submit an error for an agent
 // Submit an error for an agent
-func (s *Agents) SubmitErrorAgent(ctx context.Context, id int64, agentError *components.AgentError, opts ...operations.Option) (*operations.SubmitErrorAgentResponse, error) {
+func (s *Agents) SubmitErrorAgent(ctx context.Context, id int64, requestBody *operations.SubmitErrorAgentRequestBody, opts ...operations.Option) (*operations.SubmitErrorAgentResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "submitErrorAgent",
@@ -814,8 +824,8 @@ func (s *Agents) SubmitErrorAgent(ctx context.Context, id int64, agentError *com
 	}
 
 	request := operations.SubmitErrorAgentRequest{
-		ID:         id,
-		AgentError: agentError,
+		ID:          id,
+		RequestBody: requestBody,
 	}
 
 	o := operations.Options{}
@@ -836,7 +846,7 @@ func (s *Agents) SubmitErrorAgent(ctx context.Context, id int64, agentError *com
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "AgentError", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "RequestBody", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
 	}
@@ -856,7 +866,7 @@ func (s *Agents) SubmitErrorAgent(ctx context.Context, id int64, agentError *com
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
-	req.Header.Set("Accept", "*/*")
+	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -974,7 +984,17 @@ func (s *Agents) SubmitErrorAgent(ctx context.Context, id int64, agentError *com
 	case httpRes.StatusCode == 401:
 		fallthrough
 	case httpRes.StatusCode == 404:
-		fallthrough
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			var out sdkerrors.ErrorObject
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			return nil, &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
 	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
 		fallthrough
 	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
@@ -1033,7 +1053,7 @@ func (s *Agents) SetAgentShutdown(ctx context.Context, id int64, opts ...operati
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
-	req.Header.Set("Accept", "*/*")
+	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
@@ -1148,7 +1168,17 @@ func (s *Agents) SetAgentShutdown(ctx context.Context, id int64, opts ...operati
 	switch {
 	case httpRes.StatusCode == 204:
 	case httpRes.StatusCode == 401:
-		fallthrough
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			var out sdkerrors.ErrorObject
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			return nil, &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
 	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
 		fallthrough
 	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
