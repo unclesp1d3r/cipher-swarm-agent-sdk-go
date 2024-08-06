@@ -20,7 +20,6 @@ Returns an attack by id. This is used to get the details of an attack.
 package main
 
 import(
-	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -28,7 +27,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
     var id int64 = 535539
     ctx := context.Background()
@@ -69,7 +68,6 @@ Returns the hash list for an attack.
 package main
 
 import(
-	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -77,7 +75,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
     var id int64 = 904122
     ctx := context.Background()

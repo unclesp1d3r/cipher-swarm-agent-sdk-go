@@ -7,6 +7,27 @@ import (
 	"net/http"
 )
 
+// GetConfigurationResponseBody - successful
+type GetConfigurationResponseBody struct {
+	Config components.AdvancedAgentConfiguration `json:"config"`
+	// The minimum accepted version of the API
+	APIVersion int64 `json:"api_version"`
+}
+
+func (o *GetConfigurationResponseBody) GetConfig() components.AdvancedAgentConfiguration {
+	if o == nil {
+		return components.AdvancedAgentConfiguration{}
+	}
+	return o.Config
+}
+
+func (o *GetConfigurationResponseBody) GetAPIVersion() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.APIVersion
+}
+
 type GetConfigurationResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -15,7 +36,7 @@ type GetConfigurationResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// successful
-	AgentConfiguration *components.AgentConfiguration
+	Object *GetConfigurationResponseBody
 }
 
 func (o *GetConfigurationResponse) GetContentType() string {
@@ -39,9 +60,9 @@ func (o *GetConfigurationResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetConfigurationResponse) GetAgentConfiguration() *components.AgentConfiguration {
+func (o *GetConfigurationResponse) GetObject() *GetConfigurationResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.AgentConfiguration
+	return o.Object
 }

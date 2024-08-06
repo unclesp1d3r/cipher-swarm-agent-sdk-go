@@ -68,7 +68,7 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 	return ServerList[c.ServerIndex], c.ServerDefaults[c.ServerIndex]
 }
 
-// CipherSwarmAgentSDK - CypherSwarm Agent API: The CypherSwarm Agent API is used to allow agents to connect to the CypherSwarm server.
+// CipherSwarmAgentSDK - CipherSwarm Agent API: The CipherSwarm Agent API is used to allow agents to connect to the CipherSwarm server.
 type CipherSwarmAgentSDK struct {
 	// Agents API
 	Agents *Agents
@@ -197,9 +197,9 @@ func New(opts ...SDKOption) *CipherSwarmAgentSDK {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.3",
-			SDKVersion:        "0.7.1",
-			GenVersion:        "2.384.4",
-			UserAgent:         "speakeasy-sdk/go 0.7.1 2.384.4 1.3 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
+			SDKVersion:        "0.7.2",
+			GenVersion:        "2.385.2",
+			UserAgent:         "speakeasy-sdk/go 0.7.2 2.385.2 1.3 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
 			ServerDefaults: []map[string]string{
 				{
 					"defaultHost": "www.example.com",

@@ -3,7 +3,7 @@
 
 ## Overview
 
-CypherSwarm Agent API: The CypherSwarm Agent API is used to allow agents to connect to the CypherSwarm server.
+CipherSwarm Agent API: The CipherSwarm Agent API is used to allow agents to connect to the CipherSwarm server.
 
 ### Available Operations
 

@@ -20,7 +20,6 @@ Returns the configuration for the agent.
 package main
 
 import(
-	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -28,7 +27,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     ctx := context.Background()
@@ -36,7 +35,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.AgentConfiguration != nil {
+    if res.Object != nil {
         // handle response
     }
 }
@@ -53,9 +52,10 @@ func main() {
 ### Response
 
 **[*operations.GetConfigurationResponse](../../models/operations/getconfigurationresponse.md), error**
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
+| Error Object          | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| sdkerrors.ErrorObject | 401                   | application/json      |
+| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
 
 ## Authenticate
 
@@ -67,7 +67,6 @@ Authenticates the client. This is used to verify that the client is able to conn
 package main
 
 import(
-	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -75,7 +74,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     ctx := context.Background()
@@ -83,7 +82,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.AuthenticationResult != nil {
+    if res.Object != nil {
         // handle response
     }
 }
@@ -100,6 +99,7 @@ func main() {
 ### Response
 
 **[*operations.AuthenticateResponse](../../models/operations/authenticateresponse.md), error**
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
+| Error Object          | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| sdkerrors.ErrorObject | 401                   | application/json      |
+| sdkerrors.SDKError    | 4xx-5xx               | */*                   |

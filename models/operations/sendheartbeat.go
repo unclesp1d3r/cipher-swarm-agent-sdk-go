@@ -3,7 +3,8 @@
 package operations
 
 import (
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -19,6 +20,57 @@ func (o *SendHeartbeatRequest) GetID() int64 {
 	return o.ID
 }
 
+// State - The state of the agent:
+//   - `pending` - The agent needs to perform the setup process again.
+//   - `active` - The agent is ready to accept tasks, all is good.
+//   - `error` - The agent has encountered an error and needs to be checked.
+//   - `stopped` - The agent has been stopped by the user.
+type State string
+
+const (
+	StatePending State = "pending"
+	StateStopped State = "stopped"
+	StateError   State = "error"
+)
+
+func (e State) ToPointer() *State {
+	return &e
+}
+func (e *State) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "pending":
+		fallthrough
+	case "stopped":
+		fallthrough
+	case "error":
+		*e = State(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for State: %v", v)
+	}
+}
+
+// SendHeartbeatResponseBody - The response to an agent heartbeat
+type SendHeartbeatResponseBody struct {
+	// The state of the agent:
+	//                        * `pending` - The agent needs to perform the setup process again.
+	//                        * `active` - The agent is ready to accept tasks, all is good.
+	//                        * `error` - The agent has encountered an error and needs to be checked.
+	//                        * `stopped` - The agent has been stopped by the user.
+	State State `json:"state"`
+}
+
+func (o *SendHeartbeatResponseBody) GetState() State {
+	if o == nil {
+		return State("")
+	}
+	return o.State
+}
+
 type SendHeartbeatResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -27,7 +79,7 @@ type SendHeartbeatResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// successful, but with server feedback
-	AgentHeartbeatResponse *components.AgentHeartbeatResponse
+	Object *SendHeartbeatResponseBody
 }
 
 func (o *SendHeartbeatResponse) GetContentType() string {
@@ -51,9 +103,9 @@ func (o *SendHeartbeatResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *SendHeartbeatResponse) GetAgentHeartbeatResponse() *components.AgentHeartbeatResponse {
+func (o *SendHeartbeatResponse) GetObject() *SendHeartbeatResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.AgentHeartbeatResponse
+	return o.Object
 }

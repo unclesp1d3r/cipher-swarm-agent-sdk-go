@@ -40,12 +40,11 @@ import (
 	"context"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"log"
-	"os"
 )
 
 func main() {
 	s := cipherswarmagentsdkgo.New(
-		cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 	var id int64 = 135003
 	ctx := context.Background()
@@ -69,7 +68,7 @@ func main() {
 * [GetAgent](docs/sdks/agents/README.md#getagent) - Gets an instance of an agent
 * [UpdateAgent](docs/sdks/agents/README.md#updateagent) - Updates the agent
 * [SendHeartbeat](docs/sdks/agents/README.md#sendheartbeat) - Send a heartbeat for an agent
-* [SubmitBenchmark](docs/sdks/agents/README.md#submitbenchmark) - submit_benchmark agent
+* [SubmitBenchmark](docs/sdks/agents/README.md#submitbenchmark) - submit agent benchmarks
 * [SubmitErrorAgent](docs/sdks/agents/README.md#submiterroragent) - Submit an error for an agent
 * [SetAgentShutdown](docs/sdks/agents/README.md#setagentshutdown) - shutdown agent
 
@@ -120,12 +119,11 @@ import (
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/sdkerrors"
 	"log"
-	"os"
 )
 
 func main() {
 	s := cipherswarmagentsdkgo.New(
-		cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 	var id int64 = 135003
 	ctx := context.Background()
@@ -170,13 +168,12 @@ import (
 	"context"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"log"
-	"os"
 )
 
 func main() {
 	s := cipherswarmagentsdkgo.New(
 		cipherswarmagentsdkgo.WithServerIndex(1),
-		cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 	var id int64 = 135003
 	ctx := context.Background()
@@ -208,13 +205,12 @@ import (
 	"context"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"log"
-	"os"
 )
 
 func main() {
 	s := cipherswarmagentsdkgo.New(
 		cipherswarmagentsdkgo.WithServerURL("https://{defaultHost}"),
-		cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 	var id int64 = 135003
 	ctx := context.Background()
@@ -278,12 +274,11 @@ import (
 	"context"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"log"
-	"os"
 )
 
 func main() {
 	s := cipherswarmagentsdkgo.New(
-		cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 	var id int64 = 135003
 	ctx := context.Background()
@@ -320,12 +315,11 @@ import (
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/retry"
 	"log"
 	"models/operations"
-	"os"
 )
 
 func main() {
 	s := cipherswarmagentsdkgo.New(
-		cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 	var id int64 = 135003
 	ctx := context.Background()
@@ -359,7 +353,6 @@ import (
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/retry"
 	"log"
-	"os"
 )
 
 func main() {
@@ -375,7 +368,7 @@ func main() {
 				},
 				RetryConnectionErrors: false,
 			}),
-		cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
 	var id int64 = 135003
 	ctx := context.Background()

@@ -1,4 +1,6 @@
-# AgentConfiguration
+# GetConfigurationResponseBody
+
+successful
 
 
 ## Fields

@@ -1,4 +1,4 @@
-# AgentUpdate
+# UpdateAgentRequestBody
 
 
 ## Fields

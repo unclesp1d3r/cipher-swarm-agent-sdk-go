@@ -1,4 +1,6 @@
-# AuthenticationResult
+# AuthenticateResponseBody
+
+successful
 
 
 ## Fields

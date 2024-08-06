@@ -26,7 +26,6 @@ Request a new task from the server, if available.
 package main
 
 import(
-	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -34,7 +33,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
 
     ctx := context.Background()
@@ -59,9 +58,10 @@ func main() {
 ### Response
 
 **[*operations.GetNewTaskResponse](../../models/operations/getnewtaskresponse.md), error**
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
+| Error Object          | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| sdkerrors.ErrorObject | 401                   | application/json      |
+| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
 
 ## GetTask
 
@@ -73,7 +73,6 @@ Request the task information from the server.
 package main
 
 import(
-	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -81,7 +80,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
     var id int64 = 771489
     ctx := context.Background()
@@ -107,9 +106,10 @@ func main() {
 ### Response
 
 **[*operations.GetTaskResponse](../../models/operations/gettaskresponse.md), error**
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
+| Error Object          | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| sdkerrors.ErrorObject | 401,404               | application/json      |
+| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
 
 ## SendCrack
 
@@ -121,24 +121,30 @@ Submit a cracked hash result for a task.
 package main
 
 import(
-	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
 	"context"
 	"log"
 )
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
     var id int64 = 302642
+
+    var hashcatResult *components.HashcatResult = &components.HashcatResult{
+        Timestamp: types.MustTimeFromString("2024-08-05T20:08:12.038-04:00"),
+        Hash: "dummy_hash",
+        PlainText: "dummy_plain",
+    }
     ctx := context.Background()
-    res, err := s.Tasks.SendCrack(ctx, id, nil)
+    res, err := s.Tasks.SendCrack(ctx, id, hashcatResult)
     if err != nil {
         log.Fatal(err)
     }
-    if res != nil {
+    if res.ErrorObject != nil {
         // handle response
     }
 }
@@ -157,9 +163,10 @@ func main() {
 ### Response
 
 **[*operations.SendCrackResponse](../../models/operations/sendcrackresponse.md), error**
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
+| Error Object          | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| sdkerrors.ErrorObject | 404                   | application/json      |
+| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
 
 ## SendStatus
 
@@ -171,7 +178,6 @@ Submit a status update for a task. This includes the status of the current guess
 package main
 
 import(
-	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
@@ -181,7 +187,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
     var id int64 = 204258
 
@@ -250,9 +256,10 @@ func main() {
 ### Response
 
 **[*operations.SendStatusResponse](../../models/operations/sendstatusresponse.md), error**
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
+| Error Object          | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| sdkerrors.ErrorObject | 401,404,422           | application/json      |
+| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
 
 ## SetTaskAccepted
 
@@ -264,7 +271,6 @@ Accept an offered task from the server.
 package main
 
 import(
-	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -272,7 +278,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
     var id int64 = 893037
     ctx := context.Background()
@@ -313,7 +319,6 @@ Notify the server that the task is exhausted. This will mark the task as complet
 package main
 
 import(
-	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -321,7 +326,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
     var id int64 = 700537
     ctx := context.Background()
@@ -347,9 +352,10 @@ func main() {
 ### Response
 
 **[*operations.SetTaskExhaustedResponse](../../models/operations/settaskexhaustedresponse.md), error**
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
+| Error Object          | Status Code           | Content Type          |
+| --------------------- | --------------------- | --------------------- |
+| sdkerrors.ErrorObject | 401,404               | application/json      |
+| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
 
 ## SetTaskAbandoned
 
@@ -361,7 +367,6 @@ Abandon a task. This will mark the task as abandoned. Usually used when the clie
 package main
 
 import(
-	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -369,7 +374,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
     var id int64 = 885883
     ctx := context.Background()
@@ -395,10 +400,11 @@ func main() {
 ### Response
 
 **[*operations.SetTaskAbandonedResponse](../../models/operations/settaskabandonedresponse.md), error**
-| Error Object         | Status Code          | Content Type         |
-| -------------------- | -------------------- | -------------------- |
-| sdkerrors.StateError | 422                  | application/json     |
-| sdkerrors.SDKError   | 4xx-5xx              | */*                  |
+| Error Object                           | Status Code                            | Content Type                           |
+| -------------------------------------- | -------------------------------------- | -------------------------------------- |
+| sdkerrors.ErrorObject                  | 401,404                                | application/json                       |
+| sdkerrors.SetTaskAbandonedResponseBody | 422                                    | application/json                       |
+| sdkerrors.SDKError                     | 4xx-5xx                                | */*                                    |
 
 ## GetTaskZaps
 
@@ -410,7 +416,6 @@ Gets the completed hashes for a task. This is a text file that should be added t
 package main
 
 import(
-	"os"
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
 	"context"
 	"log"
@@ -418,7 +423,7 @@ import(
 
 func main() {
     s := cipherswarmagentsdkgo.New(
-        cipherswarmagentsdkgo.WithSecurity(os.Getenv("BEARER_AUTH")),
+        cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
     var id int64 = 174947
     ctx := context.Background()

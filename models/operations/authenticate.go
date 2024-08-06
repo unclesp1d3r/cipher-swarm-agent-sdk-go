@@ -3,9 +3,28 @@
 package operations
 
 import (
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"net/http"
 )
+
+// AuthenticateResponseBody - successful
+type AuthenticateResponseBody struct {
+	Authenticated bool  `json:"authenticated"`
+	AgentID       int64 `json:"agent_id"`
+}
+
+func (o *AuthenticateResponseBody) GetAuthenticated() bool {
+	if o == nil {
+		return false
+	}
+	return o.Authenticated
+}
+
+func (o *AuthenticateResponseBody) GetAgentID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.AgentID
+}
 
 type AuthenticateResponse struct {
 	// HTTP response content type for this operation
@@ -15,7 +34,7 @@ type AuthenticateResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// successful
-	AuthenticationResult *components.AuthenticationResult
+	Object *AuthenticateResponseBody
 }
 
 func (o *AuthenticateResponse) GetContentType() string {
@@ -39,9 +58,9 @@ func (o *AuthenticateResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *AuthenticateResponse) GetAuthenticationResult() *components.AuthenticationResult {
+func (o *AuthenticateResponse) GetObject() *AuthenticateResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.AuthenticationResult
+	return o.Object
 }
