@@ -47,6 +47,8 @@ func main() {
 }
 ```
 
+
+
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -94,6 +96,8 @@ func main() {
 }
 ```
 
+
+
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -135,7 +139,7 @@ func main() {
     var id int64 = 302642
 
     var hashcatResult *components.HashcatResult = &components.HashcatResult{
-        Timestamp: types.MustTimeFromString("2024-08-05T20:08:12.038-04:00"),
+        Timestamp: types.MustTimeFromString("2024-08-16T21:45:02.288-04:00"),
         Hash: "dummy_hash",
         PlainText: "dummy_plain",
     }
@@ -149,6 +153,8 @@ func main() {
     }
 }
 ```
+
+
 
 ### Parameters
 
@@ -243,6 +249,8 @@ func main() {
 }
 ```
 
+
+
 ### Parameters
 
 | Parameter                                                      | Type                                                           | Required                                                       | Description                                                    |
@@ -292,6 +300,8 @@ func main() {
 }
 ```
 
+
+
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -339,6 +349,8 @@ func main() {
     }
 }
 ```
+
+
 
 ### Parameters
 
@@ -388,6 +400,8 @@ func main() {
 }
 ```
 
+
+
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -436,6 +450,8 @@ func main() {
     }
 }
 ```
+
+
 
 ### Parameters
 

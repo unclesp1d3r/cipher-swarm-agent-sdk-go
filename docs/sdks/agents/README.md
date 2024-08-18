@@ -45,6 +45,8 @@ func main() {
 }
 ```
 
+
+
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -85,9 +87,9 @@ func main() {
     var id int64 = 828119
 
     var requestBody *operations.UpdateAgentRequestBody = &operations.UpdateAgentRequestBody{
-        ID: 22168,
-        Name: "gleichner",
-        ClientSignature: "TempleOS, TempleOS 5.03",
+        ID: 2140,
+        Name: "lebsack",
+        ClientSignature: "Windows, Windows Server 2016",
         OperatingSystem: "linux",
         Devices: []string{
             "cpu",
@@ -104,6 +106,8 @@ func main() {
     }
 }
 ```
+
+
 
 ### Parameters
 
@@ -153,6 +157,8 @@ func main() {
     }
 }
 ```
+
+
 
 ### Parameters
 
@@ -215,6 +221,8 @@ func main() {
 }
 ```
 
+
+
 ### Parameters
 
 | Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
@@ -265,6 +273,8 @@ func main() {
 }
 ```
 
+
+
 ### Parameters
 
 | Parameter                                                                                         | Type                                                                                              | Required                                                                                          | Description                                                                                       |
@@ -313,6 +323,8 @@ func main() {
     }
 }
 ```
+
+
 
 ### Parameters
 

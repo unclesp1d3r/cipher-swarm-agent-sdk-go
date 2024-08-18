@@ -89,6 +89,8 @@ type Attack struct {
 	WordLists []AttackResourceFile `json:"word_lists,omitempty"`
 	// The rule lists to use in the attack
 	RuleLists []AttackResourceFile `json:"rule_lists,omitempty"`
+	// The mask lists to use in the attack
+	MaskLists []AttackResourceFile `json:"mask_lists,omitempty"`
 	// The hashcat hash mode
 	HashMode *int64 `default:"0" json:"hash_mode"`
 	// The download URL for the hash list
@@ -262,6 +264,13 @@ func (o *Attack) GetRuleLists() []AttackResourceFile {
 		return nil
 	}
 	return o.RuleLists
+}
+
+func (o *Attack) GetMaskLists() []AttackResourceFile {
+	if o == nil {
+		return nil
+	}
+	return o.MaskLists
 }
 
 func (o *Attack) GetHashMode() *int64 {
