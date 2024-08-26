@@ -8,7 +8,6 @@ Attack mode name
 | Name                         | Value                        |
 | ---------------------------- | ---------------------------- |
 | `AttackModeDictionary`       | dictionary                   |
-| `AttackModeCombinator`       | combinator                   |
 | `AttackModeMask`             | mask                         |
 | `AttackModeHybridDictionary` | hybrid_dictionary            |
 | `AttackModeHybridMask`       | hybrid_mask                  |

@@ -47,8 +47,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -56,14 +54,17 @@ func main() {
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
-
 ### Response
 
 **[*operations.GetNewTaskResponse](../../models/operations/getnewtaskresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+
 
 ## GetTask
 
@@ -96,8 +97,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -106,14 +105,17 @@ func main() {
 | `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
-
 ### Response
 
 **[*operations.GetTaskResponse](../../models/operations/gettaskresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401,404               | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+
 
 ## SendCrack
 
@@ -139,8 +141,8 @@ func main() {
     var id int64 = 302642
 
     var hashcatResult *components.HashcatResult = &components.HashcatResult{
-        Timestamp: types.MustTimeFromString("2024-08-16T21:45:02.288-04:00"),
-        Hash: "dummy_hash",
+        Timestamp: types.MustTimeFromString("2024-08-25T21:36:04.134-04:00"),
+        Hash: "dummy_hash_2",
         PlainText: "dummy_plain",
     }
     ctx := context.Background()
@@ -148,13 +150,11 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ErrorObject != nil {
+    if res != nil {
         // handle response
     }
 }
 ```
-
-
 
 ### Parameters
 
@@ -165,14 +165,17 @@ func main() {
 | `hashcatResult`                                                       | [*components.HashcatResult](../../models/components/hashcatresult.md) | :heavy_minus_sign:                                                    | N/A                                                                   |
 | `opts`                                                                | [][operations.Option](../../models/operations/option.md)              | :heavy_minus_sign:                                                    | The options for this request.                                         |
 
-
 ### Response
 
 **[*operations.SendCrackResponse](../../models/operations/sendcrackresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 404                   | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+
 
 ## SendStatus
 
@@ -249,8 +252,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                      | Type                                                           | Required                                                       | Description                                                    |
@@ -260,14 +261,17 @@ func main() {
 | `taskStatus`                                                   | [components.TaskStatus](../../models/components/taskstatus.md) | :heavy_check_mark:                                             | status                                                         |
 | `opts`                                                         | [][operations.Option](../../models/operations/option.md)       | :heavy_minus_sign:                                             | The options for this request.                                  |
 
-
 ### Response
 
 **[*operations.SendStatusResponse](../../models/operations/sendstatusresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401,404,422           | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+
 
 ## SetTaskAccepted
 
@@ -300,8 +304,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -310,14 +312,17 @@ func main() {
 | `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
-
 ### Response
 
 **[*operations.SetTaskAcceptedResponse](../../models/operations/settaskacceptedresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 404,422               | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+
 
 ## SetTaskExhausted
 
@@ -350,8 +355,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -360,14 +363,17 @@ func main() {
 | `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
-
 ### Response
 
 **[*operations.SetTaskExhaustedResponse](../../models/operations/settaskexhaustedresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401,404               | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+
 
 ## SetTaskAbandoned
 
@@ -400,8 +406,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -410,15 +414,18 @@ func main() {
 | `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
-
 ### Response
 
 **[*operations.SetTaskAbandonedResponse](../../models/operations/settaskabandonedresponse.md), error**
+
+### Errors
+
 | Error Object                           | Status Code                            | Content Type                           |
 | -------------------------------------- | -------------------------------------- | -------------------------------------- |
 | sdkerrors.ErrorObject                  | 401,404                                | application/json                       |
 | sdkerrors.SetTaskAbandonedResponseBody | 422                                    | application/json                       |
 | sdkerrors.SDKError                     | 4xx-5xx                                | */*                                    |
+
 
 ## GetTaskZaps
 
@@ -451,8 +458,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -461,10 +466,12 @@ func main() {
 | `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
-
 ### Response
 
 **[*operations.GetTaskZapsResponse](../../models/operations/gettaskzapsresponse.md), error**
+
+### Errors
+
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |
