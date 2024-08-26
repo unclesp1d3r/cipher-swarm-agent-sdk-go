@@ -269,7 +269,7 @@ func main() {
 
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
-| sdkerrors.ErrorObject | 401,404,422           | application/json      |
+| sdkerrors.ErrorObject | 401,422               | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
 
 

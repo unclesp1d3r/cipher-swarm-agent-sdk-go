@@ -782,8 +782,6 @@ func (s *Tasks) SendStatus(ctx context.Context, id int64, taskStatus components.
 	case httpRes.StatusCode == 204:
 	case httpRes.StatusCode == 401:
 		fallthrough
-	case httpRes.StatusCode == 404:
-		fallthrough
 	case httpRes.StatusCode == 422:
 		switch {
 		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
@@ -796,6 +794,8 @@ func (s *Tasks) SendStatus(ctx context.Context, id int64, taskStatus components.
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode == 404:
+		fallthrough
 	case httpRes.StatusCode == 410:
 		fallthrough
 	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:

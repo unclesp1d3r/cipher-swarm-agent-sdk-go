@@ -249,3 +249,13 @@ Based on:
 - [go v0.8.1] .
 ### Releases
 - [Go v0.8.1] https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go/releases/tag/v0.8.1 - .
+
+## 2024-08-26 05:36:15
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.379.0 (2.404.3) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [go v0.8.2] .
+### Releases
+- [Go v0.8.2] https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go/releases/tag/v0.8.2 - .
