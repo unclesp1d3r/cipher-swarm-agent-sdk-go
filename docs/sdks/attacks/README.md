@@ -41,8 +41,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -51,14 +49,17 @@ func main() {
 | `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
-
 ### Response
 
 **[*operations.GetAttackResponse](../../models/operations/getattackresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401,404               | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+
 
 ## GetHashList
 
@@ -91,8 +92,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -101,10 +100,12 @@ func main() {
 | `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
-
 ### Response
 
 **[*operations.GetHashListResponse](../../models/operations/gethashlistresponse.md), error**
+
+### Errors
+
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.SDKError | 4xx-5xx            | */*                |

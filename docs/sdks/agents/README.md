@@ -45,8 +45,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -55,14 +53,17 @@ func main() {
 | `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
-
 ### Response
 
 **[*operations.GetAgentResponse](../../models/operations/getagentresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+
 
 ## UpdateAgent
 
@@ -87,9 +88,9 @@ func main() {
     var id int64 = 828119
 
     var requestBody *operations.UpdateAgentRequestBody = &operations.UpdateAgentRequestBody{
-        ID: 2140,
-        Name: "lebsack",
-        ClientSignature: "Windows, Windows Server 2016",
+        ID: 96,
+        Name: "effertz-frami",
+        ClientSignature: "Plan 9, Plan 9 Fourth Edition",
         OperatingSystem: "linux",
         Devices: []string{
             "cpu",
@@ -107,8 +108,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
@@ -118,14 +117,17 @@ func main() {
 | `requestBody`                                                                           | [*operations.UpdateAgentRequestBody](../../models/operations/updateagentrequestbody.md) | :heavy_minus_sign:                                                                      | N/A                                                                                     |
 | `opts`                                                                                  | [][operations.Option](../../models/operations/option.md)                                | :heavy_minus_sign:                                                                      | The options for this request.                                                           |
 
-
 ### Response
 
 **[*operations.UpdateAgentResponse](../../models/operations/updateagentresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+
 
 ## SendHeartbeat
 
@@ -158,8 +160,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -168,14 +168,17 @@ func main() {
 | `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
-
 ### Response
 
 **[*operations.SendHeartbeatResponse](../../models/operations/sendheartbeatresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+
 
 ## SubmitBenchmark
 
@@ -221,8 +224,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
@@ -232,14 +233,17 @@ func main() {
 | `requestBody`                                                                                  | [operations.SubmitBenchmarkRequestBody](../../models/operations/submitbenchmarkrequestbody.md) | :heavy_check_mark:                                                                             | N/A                                                                                            |
 | `opts`                                                                                         | [][operations.Option](../../models/operations/option.md)                                       | :heavy_minus_sign:                                                                             | The options for this request.                                                                  |
 
-
 ### Response
 
 **[*operations.SubmitBenchmarkResponse](../../models/operations/submitbenchmarkresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 400,401               | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+
 
 ## SubmitErrorAgent
 
@@ -273,8 +277,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                                                         | Type                                                                                              | Required                                                                                          | Description                                                                                       |
@@ -284,14 +286,17 @@ func main() {
 | `requestBody`                                                                                     | [*operations.SubmitErrorAgentRequestBody](../../models/operations/submiterroragentrequestbody.md) | :heavy_minus_sign:                                                                                | N/A                                                                                               |
 | `opts`                                                                                            | [][operations.Option](../../models/operations/option.md)                                          | :heavy_minus_sign:                                                                                | The options for this request.                                                                     |
 
-
 ### Response
 
 **[*operations.SubmitErrorAgentResponse](../../models/operations/submiterroragentresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401,404               | application/json      |
 | sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+
 
 ## SetAgentShutdown
 
@@ -324,8 +329,6 @@ func main() {
 }
 ```
 
-
-
 ### Parameters
 
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
@@ -334,10 +337,12 @@ func main() {
 | `id`                                                     | *int64*                                                  | :heavy_check_mark:                                       | id                                                       |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
-
 ### Response
 
 **[*operations.SetAgentShutdownResponse](../../models/operations/setagentshutdownresponse.md), error**
+
+### Errors
+
 | Error Object          | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |

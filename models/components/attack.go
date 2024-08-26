@@ -13,7 +13,6 @@ type AttackMode string
 
 const (
 	AttackModeDictionary       AttackMode = "dictionary"
-	AttackModeCombinator       AttackMode = "combinator"
 	AttackModeMask             AttackMode = "mask"
 	AttackModeHybridDictionary AttackMode = "hybrid_dictionary"
 	AttackModeHybridMask       AttackMode = "hybrid_mask"
@@ -29,8 +28,6 @@ func (e *AttackMode) UnmarshalJSON(data []byte) error {
 	}
 	switch v {
 	case "dictionary":
-		fallthrough
-	case "combinator":
 		fallthrough
 	case "mask":
 		fallthrough
@@ -84,21 +81,18 @@ type Attack struct {
 	// Custom charset 4 for hashcat mask attacks
 	CustomCharset4 *string `default:"" json:"custom_charset_4"`
 	// The id of the hash list
-	HashListID int64 `json:"hash_list_id"`
-	// The word lists to use in the attack
-	WordLists []AttackResourceFile `json:"word_lists,omitempty"`
-	// The rule lists to use in the attack
-	RuleLists []AttackResourceFile `json:"rule_lists,omitempty"`
-	// The mask lists to use in the attack
-	MaskLists []AttackResourceFile `json:"mask_lists,omitempty"`
+	HashListID int64               `json:"hash_list_id"`
+	WordList   *AttackResourceFile `json:"word_list,omitempty"`
+	RuleList   *AttackResourceFile `json:"rule_list,omitempty"`
+	MaskList   *AttackResourceFile `json:"mask_list,omitempty"`
 	// The hashcat hash mode
 	HashMode *int64 `default:"0" json:"hash_mode"`
 	// The download URL for the hash list
-	HashListURL string `json:"hash_list_url"`
+	HashListURL *string `json:"hash_list_url"`
 	// The MD5 checksum of the hash list
-	HashListChecksum string `json:"hash_list_checksum"`
+	HashListChecksum *string `json:"hash_list_checksum"`
 	// The URL to the attack
-	URL string `json:"url"`
+	URL *string `json:"url"`
 }
 
 func (a Attack) MarshalJSON() ([]byte, error) {
@@ -252,25 +246,25 @@ func (o *Attack) GetHashListID() int64 {
 	return o.HashListID
 }
 
-func (o *Attack) GetWordLists() []AttackResourceFile {
+func (o *Attack) GetWordList() *AttackResourceFile {
 	if o == nil {
 		return nil
 	}
-	return o.WordLists
+	return o.WordList
 }
 
-func (o *Attack) GetRuleLists() []AttackResourceFile {
+func (o *Attack) GetRuleList() *AttackResourceFile {
 	if o == nil {
 		return nil
 	}
-	return o.RuleLists
+	return o.RuleList
 }
 
-func (o *Attack) GetMaskLists() []AttackResourceFile {
+func (o *Attack) GetMaskList() *AttackResourceFile {
 	if o == nil {
 		return nil
 	}
-	return o.MaskLists
+	return o.MaskList
 }
 
 func (o *Attack) GetHashMode() *int64 {
@@ -280,23 +274,23 @@ func (o *Attack) GetHashMode() *int64 {
 	return o.HashMode
 }
 
-func (o *Attack) GetHashListURL() string {
+func (o *Attack) GetHashListURL() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.HashListURL
 }
 
-func (o *Attack) GetHashListChecksum() string {
+func (o *Attack) GetHashListChecksum() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.HashListChecksum
 }
 
-func (o *Attack) GetURL() string {
+func (o *Attack) GetURL() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.URL
 }
