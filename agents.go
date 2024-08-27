@@ -951,7 +951,7 @@ func (s *Agents) SubmitErrorAgent(ctx context.Context, id int64, requestBody *op
 
 			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"401", "404", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"401", "4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
@@ -982,8 +982,6 @@ func (s *Agents) SubmitErrorAgent(ctx context.Context, id int64, requestBody *op
 	switch {
 	case httpRes.StatusCode == 204:
 	case httpRes.StatusCode == 401:
-		fallthrough
-	case httpRes.StatusCode == 404:
 		switch {
 		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
 			var out sdkerrors.ErrorObject
