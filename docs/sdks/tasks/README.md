@@ -85,9 +85,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 771489
+
     ctx := context.Background()
-    res, err := s.Tasks.GetTask(ctx, id)
+    res, err := s.Tasks.GetTask(ctx, 771489)
     if err != nil {
         log.Fatal(err)
     }
@@ -128,9 +128,9 @@ package main
 
 import(
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
 	"context"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"log"
 )
 
@@ -138,15 +138,13 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 302642
 
-    var hashcatResult *components.HashcatResult = &components.HashcatResult{
+    ctx := context.Background()
+    res, err := s.Tasks.SendCrack(ctx, 302642, &components.HashcatResult{
         Timestamp: types.MustTimeFromString("2024-08-25T21:36:04.134-04:00"),
         Hash: "dummy_hash_2",
         PlainText: "dummy_plain",
-    }
-    ctx := context.Background()
-    res, err := s.Tasks.SendCrack(ctx, id, hashcatResult)
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -188,9 +186,9 @@ package main
 
 import(
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
 	"context"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/types"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"log"
 )
 
@@ -198,51 +196,71 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 204258
 
-    taskStatus := components.TaskStatus{
+    ctx := context.Background()
+    res, err := s.Tasks.SendStatus(ctx, 144718, components.TaskStatus{
         OriginalLine: "<value>",
-        Time: types.MustTimeFromString("2023-10-13T23:08:24.639Z"),
+        Time: types.MustTimeFromString("2022-08-12T20:48:19.251Z"),
         Session: "<value>",
         HashcatGuess: components.HashcatGuess{
             GuessBase: "<value>",
-            GuessBaseCount: 380021,
-            GuessBaseOffset: 469354,
-            GuessBasePercentage: 2929.65,
+            GuessBaseCount: 593946,
+            GuessBaseOffset: 380021,
+            GuessBasePercentage: 4693.54,
             GuessMod: "<value>",
-            GuessModCount: 508837,
-            GuessModOffset: 239276,
-            GuessModPercentage: 1149.28,
-            GuessMode: 402894,
+            GuessModCount: 292965,
+            GuessModOffset: 508837,
+            GuessModPercentage: 2392.76,
+            GuessMode: 114928,
         },
-        Status: 889036,
+        Status: 402894,
         Target: "<value>",
         Progress: []int64{
             319182,
-        },
-        RestorePoint: 596493,
-        RecoveredHashes: []int64{
+            596493,
             642941,
         },
-        RecoveredSalts: []int64{
-            336085,
+        RestorePoint: 336085,
+        RecoveredHashes: []int64{
+            896201,
+            370747,
+            65865,
         },
-        Rejected: 906004,
+        RecoveredSalts: []int64{
+            572686,
+            925372,
+            270430,
+        },
+        Rejected: 672868,
         DeviceStatuses: []components.DeviceStatus{
             components.DeviceStatus{
-                DeviceID: 896201,
+                DeviceID: 383051,
+                DeviceName: "<value>",
+                DeviceType: components.DeviceTypeGpu,
+                Speed: 182572,
+                Utilization: 740400,
+                Temperature: 334336,
+            },
+            components.DeviceStatus{
+                DeviceID: 330568,
                 DeviceName: "<value>",
                 DeviceType: components.DeviceTypeCPU,
-                Speed: 65865,
-                Utilization: 921724,
-                Temperature: 572686,
+                Speed: 364941,
+                Utilization: 953679,
+                Temperature: 240269,
+            },
+            components.DeviceStatus{
+                DeviceID: 556137,
+                DeviceName: "<value>",
+                DeviceType: components.DeviceTypeCPU,
+                Speed: 923394,
+                Utilization: 990009,
+                Temperature: 440098,
             },
         },
-        TimeStart: types.MustTimeFromString("2024-10-11T04:57:47.416Z"),
-        EstimatedStop: types.MustTimeFromString("2022-10-24T09:23:01.835Z"),
-    }
-    ctx := context.Background()
-    res, err := s.Tasks.SendStatus(ctx, id, taskStatus)
+        TimeStart: types.MustTimeFromString("2022-12-21T12:08:07.379Z"),
+        EstimatedStop: types.MustTimeFromString("2022-10-27T18:57:43.860Z"),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -292,9 +310,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 893037
+
     ctx := context.Background()
-    res, err := s.Tasks.SetTaskAccepted(ctx, id)
+    res, err := s.Tasks.SetTaskAccepted(ctx, 893037)
     if err != nil {
         log.Fatal(err)
     }
@@ -343,9 +361,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 700537
+
     ctx := context.Background()
-    res, err := s.Tasks.SetTaskExhausted(ctx, id)
+    res, err := s.Tasks.SetTaskExhausted(ctx, 700537)
     if err != nil {
         log.Fatal(err)
     }
@@ -394,9 +412,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 885883
+
     ctx := context.Background()
-    res, err := s.Tasks.SetTaskAbandoned(ctx, id)
+    res, err := s.Tasks.SetTaskAbandoned(ctx, 885883)
     if err != nil {
         log.Fatal(err)
     }
@@ -446,9 +464,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 174947
+
     ctx := context.Background()
-    res, err := s.Tasks.GetTaskZaps(ctx, id)
+    res, err := s.Tasks.GetTaskZaps(ctx, 174947)
     if err != nil {
         log.Fatal(err)
     }

@@ -29,9 +29,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 535539
+
     ctx := context.Background()
-    res, err := s.Attacks.GetAttack(ctx, id)
+    res, err := s.Attacks.GetAttack(ctx, 535539)
     if err != nil {
         log.Fatal(err)
     }
@@ -80,9 +80,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 904122
+
     ctx := context.Background()
-    res, err := s.Attacks.GetHashList(ctx, id)
+    res, err := s.Attacks.GetHashList(ctx, 904122)
     if err != nil {
         log.Fatal(err)
     }

@@ -1,22 +1,22 @@
 lockVersion: 2.0.0
 id: 11fa8266-8454-49fd-ba7b-d5f8744980cc
 management:
-  docChecksum: ff8b47df3bdada1182bef1415493ce5b
+  docChecksum: c77abf90c6133eb42b34c8f1cebf6a14
   docVersion: "1.3"
-  speakeasyVersion: 1.379.0
-  generationVersion: 2.404.3
-  releaseVersion: 0.8.3
-  configChecksum: 0fef6be0f8bdee7f32106e342d7dfe59
+  speakeasyVersion: 1.400.1
+  generationVersion: 2.420.2
+  releaseVersion: 0.8.4
+  configChecksum: cf0336461325480916f9ea69c9b17c8c
   repoURL: https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go.git
   installationURL: https://github.com/unclesp1d3r/cipherswarm-agent-sdk-go
 features:
   go:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.6
-    core: 3.5.5
+    core: 3.5.9
     defaultEnabledRetries: 0.2.0
-    downloadStreams: 0.1.1
-    envVarSecurityUsage: 0.3.0
+    downloadStreams: 0.1.2
+    envVarSecurityUsage: 0.3.1
     flattening: 2.81.1
     globalSecurity: 2.82.10
     globalSecurityCallbacks: 0.1.0
@@ -28,20 +28,117 @@ features:
     retries: 2.83.0
     sdkHooks: 0.1.0
 generatedFiles:
+  - .gitattributes
+  - /models/components/advancedagentconfiguration.go
+  - /models/components/agent.go
+  - /models/components/attack.go
+  - /models/components/attackresourcefile.go
+  - /models/components/crackerupdate.go
+  - /models/components/devicestatus.go
+  - /models/components/hashcatbenchmark.go
+  - /models/components/hashcatguess.go
+  - /models/components/hashcatresult.go
+  - /models/components/security.go
+  - /models/components/task.go
+  - /models/components/taskstatus.go
+  - /models/operations/authenticate.go
+  - /models/operations/checkforcrackerupdate.go
+  - /models/operations/getagent.go
+  - /models/operations/getattack.go
+  - /models/operations/getconfiguration.go
+  - /models/operations/gethashlist.go
+  - /models/operations/getnewtask.go
+  - /models/operations/gettask.go
+  - /models/operations/gettaskzaps.go
+  - /models/operations/sendcrack.go
+  - /models/operations/sendheartbeat.go
+  - /models/operations/sendstatus.go
+  - /models/operations/setagentshutdown.go
+  - /models/operations/settaskabandoned.go
+  - /models/operations/settaskaccepted.go
+  - /models/operations/settaskexhausted.go
+  - /models/operations/submitbenchmark.go
+  - /models/operations/submiterroragent.go
+  - /models/operations/updateagent.go
+  - /models/sdkerrors/errorobject.go
+  - /models/sdkerrors/settaskabandoned.go
+  - CONTRIBUTING.md
+  - USAGE.md
   - agents.go
   - attacks.go
-  - crackers.go
-  - tasks.go
-  - client.go
   - cipherswarmagentsdk.go
+  - client.go
+  - crackers.go
+  - docs/models/components/advancedagentconfiguration.md
+  - docs/models/components/agent.md
+  - docs/models/components/attack.md
+  - docs/models/components/attackmode.md
+  - docs/models/components/attackresourcefile.md
+  - docs/models/components/crackerupdate.md
+  - docs/models/components/devicestatus.md
+  - docs/models/components/devicetype.md
+  - docs/models/components/hashcatbenchmark.md
+  - docs/models/components/hashcatguess.md
+  - docs/models/components/hashcatresult.md
+  - docs/models/components/security.md
+  - docs/models/components/state.md
+  - docs/models/components/task.md
+  - docs/models/components/taskstatus.md
+  - docs/models/operations/authenticateresponse.md
+  - docs/models/operations/authenticateresponsebody.md
+  - docs/models/operations/checkforcrackerupdaterequest.md
+  - docs/models/operations/checkforcrackerupdateresponse.md
+  - docs/models/operations/getagentrequest.md
+  - docs/models/operations/getagentresponse.md
+  - docs/models/operations/getattackrequest.md
+  - docs/models/operations/getattackresponse.md
+  - docs/models/operations/getconfigurationresponse.md
+  - docs/models/operations/getconfigurationresponsebody.md
+  - docs/models/operations/gethashlistrequest.md
+  - docs/models/operations/gethashlistresponse.md
+  - docs/models/operations/getnewtaskresponse.md
+  - docs/models/operations/gettaskrequest.md
+  - docs/models/operations/gettaskresponse.md
+  - docs/models/operations/gettaskzapsrequest.md
+  - docs/models/operations/gettaskzapsresponse.md
+  - docs/models/operations/metadata.md
+  - docs/models/operations/option.md
+  - docs/models/operations/sendcrackrequest.md
+  - docs/models/operations/sendcrackresponse.md
+  - docs/models/operations/sendheartbeatrequest.md
+  - docs/models/operations/sendheartbeatresponse.md
+  - docs/models/operations/sendheartbeatresponsebody.md
+  - docs/models/operations/sendstatusrequest.md
+  - docs/models/operations/sendstatusresponse.md
+  - docs/models/operations/setagentshutdownrequest.md
+  - docs/models/operations/setagentshutdownresponse.md
+  - docs/models/operations/settaskabandonedrequest.md
+  - docs/models/operations/settaskabandonedresponse.md
+  - docs/models/operations/settaskacceptedrequest.md
+  - docs/models/operations/settaskacceptedresponse.md
+  - docs/models/operations/settaskexhaustedrequest.md
+  - docs/models/operations/settaskexhaustedresponse.md
+  - docs/models/operations/severity.md
+  - docs/models/operations/state.md
+  - docs/models/operations/submitbenchmarkrequest.md
+  - docs/models/operations/submitbenchmarkrequestbody.md
+  - docs/models/operations/submitbenchmarkresponse.md
+  - docs/models/operations/submiterroragentrequest.md
+  - docs/models/operations/submiterroragentrequestbody.md
+  - docs/models/operations/submiterroragentresponse.md
+  - docs/models/operations/updateagentrequest.md
+  - docs/models/operations/updateagentrequestbody.md
+  - docs/models/operations/updateagentresponse.md
+  - docs/models/sdkerrors/errorobject.md
+  - docs/models/sdkerrors/settaskabandonedresponsebody.md
+  - docs/sdks/agents/README.md
+  - docs/sdks/attacks/README.md
+  - docs/sdks/cipherswarmagentsdk/README.md
+  - docs/sdks/client/README.md
+  - docs/sdks/crackers/README.md
+  - docs/sdks/tasks/README.md
   - go.mod
-  - models/sdkerrors/sdkerror.go
-  - retry/config.go
-  - types/bigint.go
-  - types/date.go
-  - types/datetime.go
-  - types/decimal.go
-  - types/pointers.go
+  - internal/hooks/hooks.go
   - internal/utils/contenttype.go
   - internal/utils/form.go
   - internal/utils/headers.go
@@ -52,109 +149,193 @@ generatedFiles:
   - internal/utils/retries.go
   - internal/utils/security.go
   - internal/utils/utils.go
-  - /models/operations/getagent.go
-  - /models/operations/updateagent.go
-  - /models/operations/sendheartbeat.go
-  - /models/operations/submitbenchmark.go
-  - /models/operations/submiterroragent.go
-  - /models/operations/setagentshutdown.go
-  - /models/operations/getattack.go
-  - /models/operations/gethashlist.go
-  - /models/operations/checkforcrackerupdate.go
-  - /models/operations/getnewtask.go
-  - /models/operations/gettask.go
-  - /models/operations/sendcrack.go
-  - /models/operations/sendstatus.go
-  - /models/operations/settaskaccepted.go
-  - /models/operations/settaskexhausted.go
-  - /models/operations/settaskabandoned.go
-  - /models/operations/gettaskzaps.go
-  - /models/operations/getconfiguration.go
-  - /models/operations/authenticate.go
-  - /models/components/agent.go
-  - /models/components/advancedagentconfiguration.go
-  - /models/components/hashcatbenchmark.go
-  - /models/components/attack.go
-  - /models/components/attackresourcefile.go
-  - /models/components/crackerupdate.go
-  - /models/components/task.go
-  - /models/components/hashcatresult.go
-  - /models/components/taskstatus.go
-  - /models/components/devicestatus.go
-  - /models/components/hashcatguess.go
-  - /models/components/security.go
-  - /models/sdkerrors/errorobject.go
-  - /models/sdkerrors/settaskabandoned.go
-  - docs/models/operations/getagentrequest.md
-  - docs/models/operations/getagentresponse.md
-  - docs/models/operations/updateagentrequestbody.md
-  - docs/models/operations/updateagentrequest.md
-  - docs/models/operations/updateagentresponse.md
-  - docs/models/operations/sendheartbeatrequest.md
-  - docs/models/operations/state.md
-  - docs/models/operations/sendheartbeatresponsebody.md
-  - docs/models/operations/sendheartbeatresponse.md
-  - docs/models/operations/submitbenchmarkrequestbody.md
-  - docs/models/operations/submitbenchmarkrequest.md
-  - docs/models/operations/submitbenchmarkresponse.md
-  - docs/models/operations/metadata.md
-  - docs/models/operations/severity.md
-  - docs/models/operations/submiterroragentrequestbody.md
-  - docs/models/operations/submiterroragentrequest.md
-  - docs/models/operations/submiterroragentresponse.md
-  - docs/models/operations/setagentshutdownrequest.md
-  - docs/models/operations/setagentshutdownresponse.md
-  - docs/models/operations/getattackrequest.md
-  - docs/models/operations/getattackresponse.md
-  - docs/models/operations/gethashlistrequest.md
-  - docs/models/operations/gethashlistresponse.md
-  - docs/models/operations/checkforcrackerupdaterequest.md
-  - docs/models/operations/checkforcrackerupdateresponse.md
-  - docs/models/operations/getnewtaskresponse.md
-  - docs/models/operations/gettaskrequest.md
-  - docs/models/operations/gettaskresponse.md
-  - docs/models/operations/sendcrackrequest.md
-  - docs/models/operations/sendcrackresponse.md
-  - docs/models/operations/sendstatusrequest.md
-  - docs/models/operations/sendstatusresponse.md
-  - docs/models/operations/settaskacceptedrequest.md
-  - docs/models/operations/settaskacceptedresponse.md
-  - docs/models/operations/settaskexhaustedrequest.md
-  - docs/models/operations/settaskexhaustedresponse.md
-  - docs/models/operations/settaskabandonedrequest.md
-  - docs/models/operations/settaskabandonedresponse.md
-  - docs/models/operations/gettaskzapsrequest.md
-  - docs/models/operations/gettaskzapsresponse.md
-  - docs/models/operations/getconfigurationresponsebody.md
-  - docs/models/operations/getconfigurationresponse.md
-  - docs/models/operations/authenticateresponsebody.md
-  - docs/models/operations/authenticateresponse.md
-  - docs/models/components/state.md
-  - docs/models/components/agent.md
-  - docs/models/components/advancedagentconfiguration.md
-  - docs/models/components/hashcatbenchmark.md
-  - docs/models/components/attackmode.md
-  - docs/models/components/attack.md
-  - docs/models/components/attackresourcefile.md
-  - docs/models/components/crackerupdate.md
-  - docs/models/components/task.md
-  - docs/models/components/hashcatresult.md
-  - docs/models/components/taskstatus.md
-  - docs/models/components/devicetype.md
-  - docs/models/components/devicestatus.md
-  - docs/models/components/hashcatguess.md
-  - docs/models/components/security.md
-  - docs/models/sdkerrors/errorobject.md
-  - docs/models/sdkerrors/settaskabandonedresponsebody.md
-  - docs/sdks/cipherswarmagentsdk/README.md
-  - docs/models/operations/option.md
-  - docs/sdks/agents/README.md
-  - docs/sdks/attacks/README.md
-  - docs/sdks/crackers/README.md
-  - docs/sdks/tasks/README.md
-  - docs/sdks/client/README.md
-  - USAGE.md
   - models/operations/options.go
-  - .gitattributes
-  - internal/hooks/hooks.go
-  - CONTRIBUTING.md
+  - models/sdkerrors/sdkerror.go
+  - retry/config.go
+  - tasks.go
+  - types/bigint.go
+  - types/date.go
+  - types/datetime.go
+  - types/decimal.go
+  - types/pointers.go
+examples:
+  getAgent:
+    test_example:
+      parameters:
+        path:
+          id: 135003
+      responses:
+        "200":
+          application/json: {"id": 94, "name": "ratke-bode", "client_signature": "Linux, ArchLinux 2022.08.05", "state": "pending", "operating_system": "linux", "devices": ["cpu", "GPU"], "advanced_configuration": {"agent_update_interval": 46, "use_native_hashcat": false, "backend_device": null, "opencl_devices": null, "enable_additional_hash_types": false}}
+        "401":
+          application/json: {"error": "Bad credentials"}
+  updateAgent:
+    request_example_1:
+      parameters:
+        path:
+          id: 828119
+      requestBody:
+        application/json: {"id": 96, "name": "effertz-frami", "client_signature": "Plan 9, Plan 9 Fourth Edition", "operating_system": "linux", "devices": ["cpu", "GPU"]}
+      responses:
+        "200":
+          application/json: {"id": 912003, "name": "<value>", "client_signature": "<value>", "state": "error", "operating_system": "<value>", "devices": ["<value>", "<value>", "<value>"], "advanced_configuration": {"agent_update_interval": 666222, "use_native_hashcat": true, "backend_device": "<value>", "enable_additional_hash_types": false}}
+        "401": {}
+    test_example:
+      parameters:
+        path:
+          id: 182255
+      responses:
+        "200":
+          application/json: {"id": 96, "name": "effertz-frami", "client_signature": "Plan 9, Plan 9 Fourth Edition", "state": "pending", "operating_system": "linux", "devices": ["cpu", "GPU"], "advanced_configuration": {"agent_update_interval": 42, "use_native_hashcat": false, "backend_device": null, "opencl_devices": null, "enable_additional_hash_types": false}}
+        "401":
+          application/json: {"error": "Bad credentials"}
+  sendHeartbeat:
+    test_example:
+      parameters:
+        path:
+          id: 992386
+      responses:
+        "200":
+          application/json: {"state": "pending"}
+        "401":
+          application/json: {"error": "Bad credentials"}
+  submitBenchmark:
+    test_example:
+      parameters:
+        path:
+          id: 306461
+      requestBody:
+        application/json: {"hashcat_benchmarks": [{"hash_type": 442220, "runtime": 8499, "hash_speed": "156.49", "device": 322052}]}
+      responses:
+        "400":
+          application/json: {"error": "No benchmarks submitted"}
+  submitErrorAgent:
+    test_example:
+      parameters:
+        path:
+          id: 607526
+      responses:
+        "401":
+          application/json: {"error": "Bad credentials"}
+  setAgentShutdown:
+    test_example:
+      parameters:
+        path:
+          id: 811605
+      responses:
+        "401":
+          application/json: {"error": "Bad credentials"}
+  getAttack:
+    test_example:
+      parameters:
+        path:
+          id: 535539
+      responses:
+        "200":
+          application/json: {"id": 47, "attack_mode": "dictionary", "attack_mode_hashcat": 0, "mask": "", "increment_mode": false, "increment_minimum": 0, "increment_maximum": 0, "optimized": true, "slow_candidate_generators": false, "workload_profile": 3, "disable_markov": false, "classic_markov": false, "markov_threshold": 0, "left_rule": "", "right_rule": "", "custom_charset_1": "", "custom_charset_2": "", "custom_charset_3": "", "custom_charset_4": "", "hash_list_id": 64, "word_list": {"id": 54, "download_url": "http://www.example.com/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTQwLCJwdXIiOiJibG9iX2lkIn19--9b15f11a378659093028a10c5635001456dbec0e/top-passwords.txt", "checksum": "vL58BUq0+tAQjqHwejEh8A==", "file_name": "top-passwords.txt"}, "rule_list": null, "mask_list": null, "hash_mode": 0, "hash_list_url": "http://www.example.com/api/v1/client/attacks/47/hash_list", "hash_list_checksum": "1B2M2Y8AsgTpgAmY7PhCfg==", "url": "http://www.example.com/campaigns/47/attacks/47.json"}
+        "401":
+          application/json: {"error": "Attack not found."}
+  getHashList:
+    test_example:
+      parameters:
+        path:
+          id: 904122
+      responses:
+        "200":
+          text/plain: ""
+  checkForCrackerUpdate:
+    test_example:
+      responses:
+        "200":
+          application/json: {"available": false, "latest_version": null, "download_url": null, "exec_name": null, "message": "No updated crackers found for the specified operating system"}
+        "400":
+          application/json: {"error": "Operating System is required"}
+  getNewTask:
+    test_example:
+      responses:
+        "200":
+          application/json: {"id": 50, "attack_id": 50, "start_date": "2024-08-25T21:36:03.829-04:00", "status": "pending", "skip": 0, "limit": 0}
+        "401":
+          application/json: {"error": "Bad credentials"}
+  getTask:
+    test_example:
+      parameters:
+        path:
+          id: 771489
+      responses:
+        "200":
+          application/json: {"id": 51, "attack_id": 51, "start_date": "2024-08-24T23:09:45.984-04:00", "status": "pending", "skip": 0, "limit": 0}
+        "401":
+          application/json: {"error": "Record not found"}
+  sendCrack:
+    request_example_1:
+      parameters:
+        path:
+          id: 302642
+      requestBody:
+        application/json: {"timestamp": "2024-08-25T21:36:04.134-04:00", "hash": "dummy_hash_2", "plain_text": "dummy_plain"}
+    test_example:
+      parameters:
+        path:
+          id: 253728
+      responses:
+        "404":
+          application/json: {"error": "Hash not found"}
+  sendStatus:
+    test_example:
+      parameters:
+        path:
+          id: 144718
+      requestBody:
+        application/json: {"original_line": "<value>", "time": "2022-08-12T20:48:19.251Z", "session": "<value>", "hashcat_guess": {"guess_base": "<value>", "guess_base_count": 593946, "guess_base_offset": 380021, "guess_base_percentage": "4693.54", "guess_mod": "<value>", "guess_mod_count": 292965, "guess_mod_offset": 508837, "guess_mod_percentage": "2392.76", "guess_mode": 114928}, "status": 402894, "target": "<value>", "progress": [319182, 596493, 642941], "restore_point": 336085, "recovered_hashes": [896201, 370747, 65865], "recovered_salts": [572686, 925372, 270430], "rejected": 672868, "device_statuses": [{"device_id": 383051, "device_name": "<value>", "device_type": "GPU", "speed": 182572, "utilization": 740400, "temperature": 334336}, {"device_id": 330568, "device_name": "<value>", "device_type": "CPU", "speed": 364941, "utilization": 953679, "temperature": 240269}, {"device_id": 556137, "device_name": "<value>", "device_type": "CPU", "speed": 923394, "utilization": 990009, "temperature": 440098}], "time_start": "2022-12-21T12:08:07.379Z", "estimated_stop": "2022-10-27T18:57:43.860Z"}
+      responses:
+        "401":
+          application/json: {"error": "Guess not found"}
+  setTaskAccepted:
+    test_example:
+      parameters:
+        path:
+          id: 893037
+      responses:
+        "404":
+          application/json: {"error": "Task already completed"}
+  setTaskExhausted:
+    test_example:
+      parameters:
+        path:
+          id: 700537
+      responses:
+        "401":
+          application/json: {"error": "Record not found"}
+  setTaskAbandoned:
+    test_example:
+      parameters:
+        path:
+          id: 885883
+      responses:
+        "401":
+          application/json: {"error": "Record not found"}
+        "422":
+          application/json: {"state": ["cannot transition via \"abandon\""]}
+  getTaskZaps:
+    test_example:
+      parameters:
+        path:
+          id: 174947
+      responses:
+        "200":
+          text/plain: ""
+  getConfiguration:
+    test_example:
+      responses:
+        "200":
+          application/json: {"config": {"agent_update_interval": 52, "use_native_hashcat": false, "backend_device": null, "opencl_devices": null, "enable_additional_hash_types": false}, "api_version": 1}
+        "401":
+          application/json: {"error": "Bad credentials"}
+  authenticate:
+    test_example:
+      responses:
+        "200":
+          application/json: {"authenticated": true, "agent_id": 148}
+        "401":
+          application/json: {"error": "Bad credentials"}

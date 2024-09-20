@@ -1,9 +1,9 @@
-speakeasyVersion: 1.379.0
+speakeasyVersion: 1.400.1
 sources:
     CipherSwarm_agent_api:
         sourceNamespace: cipher-swarm-agent-api
-        sourceRevisionDigest: sha256:abb0a124fd1e548164b96b8e56803106daadc61116cecc0042426a24ea65afb4
-        sourceBlobDigest: sha256:756d43108a60dd436d2afd7c659609e4608fe45f36b01bf6be1ed50d1db7f83b
+        sourceRevisionDigest: sha256:f9787ad737cfb6a94a7230bcfabc8f5edd188432525efd4b67ddc7bb8f1a0e2e
+        sourceBlobDigest: sha256:93c3f31880777a5d06b7df353d9dffb8066729999e96794680edd65284d8c216
         tags:
             - latest
             - main
@@ -11,9 +11,8 @@ targets:
     golang-sdk:
         source: CipherSwarm_agent_api
         sourceNamespace: cipher-swarm-agent-api
-        sourceRevisionDigest: sha256:abb0a124fd1e548164b96b8e56803106daadc61116cecc0042426a24ea65afb4
-        sourceBlobDigest: sha256:756d43108a60dd436d2afd7c659609e4608fe45f36b01bf6be1ed50d1db7f83b
-        outLocation: /github/workspace/repo
+        sourceRevisionDigest: sha256:f9787ad737cfb6a94a7230bcfabc8f5edd188432525efd4b67ddc7bb8f1a0e2e
+        sourceBlobDigest: sha256:93c3f31880777a5d06b7df353d9dffb8066729999e96794680edd65284d8c216
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
