@@ -33,9 +33,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 135003
+
     ctx := context.Background()
-    res, err := s.Agents.GetAgent(ctx, id)
+    res, err := s.Agents.GetAgent(ctx, 135003)
     if err != nil {
         log.Fatal(err)
     }
@@ -76,8 +76,8 @@ package main
 
 import(
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/operations"
 	"context"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/operations"
 	"log"
 )
 
@@ -85,9 +85,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 828119
 
-    var requestBody *operations.UpdateAgentRequestBody = &operations.UpdateAgentRequestBody{
+    ctx := context.Background()
+    res, err := s.Agents.UpdateAgent(ctx, 828119, &operations.UpdateAgentRequestBody{
         ID: 96,
         Name: "effertz-frami",
         ClientSignature: "Plan 9, Plan 9 Fourth Edition",
@@ -96,9 +96,7 @@ func main() {
             "cpu",
             "GPU",
         },
-    }
-    ctx := context.Background()
-    res, err := s.Agents.UpdateAgent(ctx, id, requestBody)
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -148,9 +146,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 992386
+
     ctx := context.Background()
-    res, err := s.Agents.SendHeartbeat(ctx, id)
+    res, err := s.Agents.SendHeartbeat(ctx, 992386)
     if err != nil {
         log.Fatal(err)
     }
@@ -191,9 +189,9 @@ package main
 
 import(
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/operations"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
 	"context"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/components"
+	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/operations"
 	"log"
 )
 
@@ -201,9 +199,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 303399
 
-    requestBody := operations.SubmitBenchmarkRequestBody{
+    ctx := context.Background()
+    res, err := s.Agents.SubmitBenchmark(ctx, 306461, operations.SubmitBenchmarkRequestBody{
         HashcatBenchmarks: []components.HashcatBenchmark{
             components.HashcatBenchmark{
                 HashType: 442220,
@@ -212,9 +210,7 @@ func main() {
                 Device: 322052,
             },
         },
-    }
-    ctx := context.Background()
-    res, err := s.Agents.SubmitBenchmark(ctx, id, requestBody)
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -256,7 +252,6 @@ package main
 
 import(
 	cipherswarmagentsdkgo "github.com/unclesp1d3r/cipherswarm-agent-sdk-go"
-	"github.com/unclesp1d3r/cipherswarm-agent-sdk-go/models/operations"
 	"context"
 	"log"
 )
@@ -265,9 +260,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 607526
+
     ctx := context.Background()
-    res, err := s.Agents.SubmitErrorAgent(ctx, id, nil)
+    res, err := s.Agents.SubmitErrorAgent(ctx, 607526, nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -317,9 +312,9 @@ func main() {
     s := cipherswarmagentsdkgo.New(
         cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
     )
-    var id int64 = 811605
+
     ctx := context.Background()
-    res, err := s.Agents.SetAgentShutdown(ctx, id)
+    res, err := s.Agents.SetAgentShutdown(ctx, 811605)
     if err != nil {
         log.Fatal(err)
     }

@@ -44,6 +44,9 @@ func Float32(f float32) *float32 { return &f }
 // Float64 provides a helper function to return a pointer to a float64
 func Float64(f float64) *float64 { return &f }
 
+// Pointer provides a helper function to return a pointer to a type
+func Pointer[T any](v T) *T { return &v }
+
 type sdkConfiguration struct {
 	Client            HTTPClient
 	Security          func(context.Context) (interface{}, error)
@@ -197,9 +200,9 @@ func New(opts ...SDKOption) *CipherSwarmAgentSDK {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.3",
-			SDKVersion:        "0.8.3",
-			GenVersion:        "2.404.3",
-			UserAgent:         "speakeasy-sdk/go 0.8.3 2.404.3 1.3 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
+			SDKVersion:        "0.8.4",
+			GenVersion:        "2.420.2",
+			UserAgent:         "speakeasy-sdk/go 0.8.4 2.420.2 1.3 github.com/unclesp1d3r/cipherswarm-agent-sdk-go",
 			ServerDefaults: []map[string]string{
 				{
 					"defaultHost": "www.example.com",

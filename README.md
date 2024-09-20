@@ -20,9 +20,30 @@ Prerequisites
 - Go 1.16 or later
 - A working installation of the CipherSwarm platform. Refer to the [CipherSwarm documentation](https://github.com/unclesp1d3r/CipherSwarm) for setup instructions.
 
+<!-- Start Summary [summary] -->
+## Summary
+
+CipherSwarm Agent API: The CipherSwarm Agent API is used to allow agents to connect to the CipherSwarm server.
+<!-- End Summary [summary] -->
+
+<!-- Start Table of Contents [toc] -->
+## Table of Contents
+
+* [SDK Installation](#sdk-installation)
+* [SDK Example Usage](#sdk-example-usage)
+* [Available Resources and Operations](#available-resources-and-operations)
+* [Retries](#retries)
+* [Error Handling](#error-handling)
+* [Server Selection](#server-selection)
+* [Custom HTTP Client](#custom-http-client)
+* [Authentication](#authentication)
+* [Special Types](#special-types)
+<!-- End Table of Contents [toc] -->
+
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
+To add the SDK as a dependency to your project:
 ```bash
 go get github.com/unclesp1d3r/cipherswarm-agent-sdk-go
 ```
@@ -46,9 +67,9 @@ func main() {
 	s := cipherswarmagentsdkgo.New(
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-	var id int64 = 135003
+
 	ctx := context.Background()
-	res, err := s.Agents.GetAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, 135003)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -63,6 +84,9 @@ func main() {
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
 
+<details open>
+<summary>Available methods</summary>
+
 ### [Agents](docs/sdks/agents/README.md)
 
 * [GetAgent](docs/sdks/agents/README.md#getagent) - Gets an instance of an agent
@@ -76,6 +100,12 @@ func main() {
 
 * [GetAttack](docs/sdks/attacks/README.md#getattack) - show attack
 * [GetHashList](docs/sdks/attacks/README.md#gethashlist) - Get the hash list
+
+
+### [Client](docs/sdks/client/README.md)
+
+* [GetConfiguration](docs/sdks/client/README.md#getconfiguration) - Get Agent Configuration
+* [Authenticate](docs/sdks/client/README.md#authenticate) - Authenticate Client
 
 ### [Crackers](docs/sdks/crackers/README.md)
 
@@ -92,10 +122,7 @@ func main() {
 * [SetTaskAbandoned](docs/sdks/tasks/README.md#settaskabandoned) - Abandon Task
 * [GetTaskZaps](docs/sdks/tasks/README.md#gettaskzaps) - Get Completed Hashes
 
-### [Client](docs/sdks/client/README.md)
-
-* [GetConfiguration](docs/sdks/client/README.md#getconfiguration) - Get Agent Configuration
-* [Authenticate](docs/sdks/client/README.md#authenticate) - Authenticate Client
+</details>
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Error Handling [errors] -->
@@ -125,9 +152,9 @@ func main() {
 	s := cipherswarmagentsdkgo.New(
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-	var id int64 = 135003
+
 	ctx := context.Background()
-	res, err := s.Agents.GetAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, 135003)
 	if err != nil {
 
 		var e *sdkerrors.ErrorObject
@@ -175,9 +202,9 @@ func main() {
 		cipherswarmagentsdkgo.WithServerIndex(1),
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-	var id int64 = 135003
+
 	ctx := context.Background()
-	res, err := s.Agents.GetAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, 135003)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -212,9 +239,9 @@ func main() {
 		cipherswarmagentsdkgo.WithServerURL("https://{defaultHost}"),
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-	var id int64 = 135003
+
 	ctx := context.Background()
-	res, err := s.Agents.GetAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, 135003)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -280,9 +307,9 @@ func main() {
 	s := cipherswarmagentsdkgo.New(
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-	var id int64 = 135003
+
 	ctx := context.Background()
-	res, err := s.Agents.GetAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, 135003)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -321,9 +348,9 @@ func main() {
 	s := cipherswarmagentsdkgo.New(
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-	var id int64 = 135003
+
 	ctx := context.Background()
-	res, err := s.Agents.GetAgent(ctx, id, operations.WithRetries(
+	res, err := s.Agents.GetAgent(ctx, 135003, operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
 			Backoff: &retry.BackoffStrategy{
@@ -370,9 +397,9 @@ func main() {
 			}),
 		cipherswarmagentsdkgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
 	)
-	var id int64 = 135003
+
 	ctx := context.Background()
-	res, err := s.Agents.GetAgent(ctx, id)
+	res, err := s.Agents.GetAgent(ctx, 135003)
 	if err != nil {
 		log.Fatal(err)
 	}
