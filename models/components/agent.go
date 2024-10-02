@@ -44,7 +44,7 @@ type Agent struct {
 	// The id of the agent
 	ID int64 `json:"id"`
 	// The hostname of the agent
-	Name string `json:"name"`
+	HostName string `json:"host_name"`
 	// The signature of the client
 	ClientSignature string `json:"client_signature"`
 	// The state of the agent
@@ -62,11 +62,11 @@ func (o *Agent) GetID() int64 {
 	return o.ID
 }
 
-func (o *Agent) GetName() string {
+func (o *Agent) GetHostName() string {
 	if o == nil {
 		return ""
 	}
-	return o.Name
+	return o.HostName
 }
 
 func (o *Agent) GetClientSignature() string {

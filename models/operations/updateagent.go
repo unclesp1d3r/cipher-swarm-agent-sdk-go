@@ -11,7 +11,7 @@ type UpdateAgentRequestBody struct {
 	// The id of the agent
 	ID int64 `json:"id"`
 	// The hostname of the agent
-	Name string `json:"name"`
+	HostName string `json:"host_name"`
 	// The signature of the client
 	ClientSignature string `json:"client_signature"`
 	// The operating system of the agent
@@ -26,11 +26,11 @@ func (o *UpdateAgentRequestBody) GetID() int64 {
 	return o.ID
 }
 
-func (o *UpdateAgentRequestBody) GetName() string {
+func (o *UpdateAgentRequestBody) GetHostName() string {
 	if o == nil {
 		return ""
 	}
-	return o.Name
+	return o.HostName
 }
 
 func (o *UpdateAgentRequestBody) GetClientSignature() string {

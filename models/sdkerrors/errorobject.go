@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 )
 
-// ErrorObject - Not authorized
 type ErrorObject struct {
 	Error_ *string `json:"error,omitempty"`
 }
