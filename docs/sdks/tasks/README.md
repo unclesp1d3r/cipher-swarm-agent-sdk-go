@@ -60,11 +60,10 @@ func main() {
 
 ### Errors
 
-| Error Object          | Status Code           | Content Type          |
+| Error Type            | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
-
+| sdkerrors.SDKError    | 4XX, 5XX              | \*/\*                 |
 
 ## GetTask
 
@@ -111,11 +110,10 @@ func main() {
 
 ### Errors
 
-| Error Object          | Status Code           | Content Type          |
+| Error Type            | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
-| sdkerrors.ErrorObject | 401,404               | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
-
+| sdkerrors.ErrorObject | 401, 404              | application/json      |
+| sdkerrors.SDKError    | 4XX, 5XX              | \*/\*                 |
 
 ## SendCrack
 
@@ -141,7 +139,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Tasks.SendCrack(ctx, 302642, &components.HashcatResult{
-        Timestamp: types.MustTimeFromString("2024-08-25T21:36:04.134-04:00"),
+        Timestamp: types.MustTimeFromString("2024-10-01T21:16:43.171-04:00"),
         Hash: "dummy_hash_2",
         PlainText: "dummy_plain",
     })
@@ -169,11 +167,10 @@ func main() {
 
 ### Errors
 
-| Error Object          | Status Code           | Content Type          |
+| Error Type            | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 404                   | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
-
+| sdkerrors.SDKError    | 4XX, 5XX              | \*/\*                 |
 
 ## SendStatus
 
@@ -285,11 +282,10 @@ func main() {
 
 ### Errors
 
-| Error Object          | Status Code           | Content Type          |
+| Error Type            | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
-| sdkerrors.ErrorObject | 401,422               | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
-
+| sdkerrors.ErrorObject | 401, 422              | application/json      |
+| sdkerrors.SDKError    | 4XX, 5XX              | \*/\*                 |
 
 ## SetTaskAccepted
 
@@ -336,11 +332,10 @@ func main() {
 
 ### Errors
 
-| Error Object          | Status Code           | Content Type          |
+| Error Type            | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
-| sdkerrors.ErrorObject | 404,422               | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
-
+| sdkerrors.ErrorObject | 404, 422              | application/json      |
+| sdkerrors.SDKError    | 4XX, 5XX              | \*/\*                 |
 
 ## SetTaskExhausted
 
@@ -387,11 +382,10 @@ func main() {
 
 ### Errors
 
-| Error Object          | Status Code           | Content Type          |
+| Error Type            | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
-| sdkerrors.ErrorObject | 401,404               | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
-
+| sdkerrors.ErrorObject | 401, 404              | application/json      |
+| sdkerrors.SDKError    | 4XX, 5XX              | \*/\*                 |
 
 ## SetTaskAbandoned
 
@@ -438,12 +432,11 @@ func main() {
 
 ### Errors
 
-| Error Object                           | Status Code                            | Content Type                           |
+| Error Type                             | Status Code                            | Content Type                           |
 | -------------------------------------- | -------------------------------------- | -------------------------------------- |
-| sdkerrors.ErrorObject                  | 401,404                                | application/json                       |
+| sdkerrors.ErrorObject                  | 401, 404                               | application/json                       |
 | sdkerrors.SetTaskAbandonedResponseBody | 422                                    | application/json                       |
-| sdkerrors.SDKError                     | 4xx-5xx                                | */*                                    |
-
+| sdkerrors.SDKError                     | 4XX, 5XX                               | \*/\*                                  |
 
 ## GetTaskZaps
 
@@ -490,6 +483,6 @@ func main() {
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
+| sdkerrors.SDKError | 4XX, 5XX           | \*/\*              |

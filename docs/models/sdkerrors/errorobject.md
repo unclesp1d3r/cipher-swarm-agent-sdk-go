@@ -1,7 +1,5 @@
 # ErrorObject
 
-Not authorized
-
 
 ## Fields
 

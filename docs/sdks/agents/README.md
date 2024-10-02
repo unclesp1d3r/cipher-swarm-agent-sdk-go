@@ -59,11 +59,10 @@ func main() {
 
 ### Errors
 
-| Error Object          | Status Code           | Content Type          |
+| Error Type            | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
-
+| sdkerrors.SDKError    | 4XX, 5XX              | \*/\*                 |
 
 ## UpdateAgent
 
@@ -88,9 +87,9 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Agents.UpdateAgent(ctx, 828119, &operations.UpdateAgentRequestBody{
-        ID: 96,
-        Name: "effertz-frami",
-        ClientSignature: "Plan 9, Plan 9 Fourth Edition",
+        ID: 2573,
+        HostName: "stoltenberg",
+        ClientSignature: "Linux, RHEL 6.10",
         OperatingSystem: "linux",
         Devices: []string{
             "cpu",
@@ -121,11 +120,10 @@ func main() {
 
 ### Errors
 
-| Error Object          | Status Code           | Content Type          |
+| Error Type            | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
-
+| sdkerrors.SDKError    | 4XX, 5XX              | \*/\*                 |
 
 ## SendHeartbeat
 
@@ -172,11 +170,10 @@ func main() {
 
 ### Errors
 
-| Error Object          | Status Code           | Content Type          |
+| Error Type            | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
-
+| sdkerrors.SDKError    | 4XX, 5XX              | \*/\*                 |
 
 ## SubmitBenchmark
 
@@ -235,11 +232,10 @@ func main() {
 
 ### Errors
 
-| Error Object          | Status Code           | Content Type          |
+| Error Type            | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
-| sdkerrors.ErrorObject | 400,401               | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
-
+| sdkerrors.ErrorObject | 400, 401              | application/json      |
+| sdkerrors.SDKError    | 4XX, 5XX              | \*/\*                 |
 
 ## SubmitErrorAgent
 
@@ -287,11 +283,10 @@ func main() {
 
 ### Errors
 
-| Error Object          | Status Code           | Content Type          |
+| Error Type            | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
-
+| sdkerrors.SDKError    | 4XX, 5XX              | \*/\*                 |
 
 ## SetAgentShutdown
 
@@ -338,7 +333,7 @@ func main() {
 
 ### Errors
 
-| Error Object          | Status Code           | Content Type          |
+| Error Type            | Status Code           | Content Type          |
 | --------------------- | --------------------- | --------------------- |
 | sdkerrors.ErrorObject | 401                   | application/json      |
-| sdkerrors.SDKError    | 4xx-5xx               | */*                   |
+| sdkerrors.SDKError    | 4XX, 5XX              | \*/\*                 |
